@@ -16,3 +16,4 @@ Dr. Gary
 
 I have read and understood this readme-- Brian Bradley
 I have read and understood this readme-- Tanner Catherman
+I have read and understood this readme-- Alexander Briggs
