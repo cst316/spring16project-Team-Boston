@@ -135,6 +135,20 @@ public class TaskListImpl implements TaskList {
         
         return new TaskImpl(el, this);
     }
+    
+    /**
+     *  Task copying utility. Cannot copy tasks that have subtasks.
+     *  @param task the task to be copied
+     *  @throws IllegalArgumentException If task has subtasks.
+     *  @author Brian Bradley
+     *  @version 1.0
+     */
+    public Task createTask (Task task) throws IllegalArgumentException
+    {
+	    if (task.hasSubTasks (task.getID ()))
+		    throw new IllegalArgumentException ("Task cannot have subtasks");
+	    return createTask (task.getStartDate (), task.getEndDate (), task.getText (), task.getPriority (), task.getEffort (), task.getDescription (), task.getParentId ());
+    }
 	
 	/**
      * @see net.sf.memoranda.TaskList#removeTask(import net.sf.memoranda.Task)
