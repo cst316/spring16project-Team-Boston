@@ -142,6 +142,7 @@ public class TaskListImpl implements TaskList {
      *  @throws IllegalArgumentException If task has subtasks.
      *  @author Brian Bradley
      *  @version 1.0
+     *  @note could be used to implement process (collection of tasks), if the task copied could have child tasks
      */
     public Task createTask (Task task) throws IllegalArgumentException
     {
