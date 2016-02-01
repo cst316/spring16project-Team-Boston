@@ -73,8 +73,13 @@ public class TaskDialog extends JDialog
 	CalendarFrame startCalFrame = new CalendarFrame ();
 	CalendarFrame endCalFrame = new CalendarFrame ();
 	String[] priority =
-	{ Local.getString ("Lowest"), Local.getString ("Low"), Local.getString ("Normal"), Local.getString ("High"),
-			Local.getString ("Highest") };
+	{
+			Local.getString ("Lowest"),
+			Local.getString ("Low"),
+			Local.getString ("Normal"),
+			Local.getString ("High"),
+			Local.getString ("Highest")
+	};
 	boolean ignoreStartChanged = false;
 	boolean ignoreEndChanged = false;
 	JPanel jPanel4 = new JPanel (new FlowLayout (FlowLayout.RIGHT));
@@ -131,8 +136,7 @@ public class TaskDialog extends JDialog
 		this.setSize (new Dimension (430, 300));
 		border1 = BorderFactory.createEmptyBorder (5, 5, 5, 5);
 		border2 = BorderFactory.createEtchedBorder (Color.white, new Color (142, 142, 142));
-		border3 = new TitledBorder (BorderFactory.createEmptyBorder (0, 0, 10, 0), Local.getString ("To Do"),
-				TitledBorder.LEFT, TitledBorder.BELOW_TOP);
+		border3 = new TitledBorder (BorderFactory.createEmptyBorder (0, 0, 10, 0), Local.getString ("To Do"), TitledBorder.LEFT, TitledBorder.BELOW_TOP);
 		border4 = BorderFactory.createEmptyBorder (0, 5, 0, 5);
 		// border5 = BorderFactory.createEmptyBorder();
 		// border6 =
@@ -187,8 +191,7 @@ public class TaskDialog extends JDialog
 		header.setFont (new java.awt.Font ("Dialog", 0, 20));
 		header.setForeground (new Color (0, 0, 124));
 		header.setText (Local.getString ("To do"));
-		header.setIcon (new ImageIcon (
-				net.sf.memoranda.ui.TaskDialog.class.getResource ("resources/icons/task48.png")));
+		header.setIcon (new ImageIcon (net.sf.memoranda.ui.TaskDialog.class.getResource ("resources/icons/task48.png")));
 
 		GridBagLayout gbLayout = (GridBagLayout) jPanel8.getLayout ();
 		jPanel8.setBorder (border3);
@@ -240,8 +243,7 @@ public class TaskDialog extends JDialog
 			{
 				// it's an ugly hack so that the spinner can
 				// increase day by day
-				SpinnerDateModel sdm = new SpinnerDateModel ((Date) startDate.getModel ().getValue (),
-						null, null, Calendar.DAY_OF_WEEK);
+				SpinnerDateModel sdm = new SpinnerDateModel ((Date) startDate.getModel ().getValue (), null, null, Calendar.DAY_OF_WEEK);
 				startDate.setModel (sdm);
 
 				if (ignoreStartChanged) return;
@@ -275,8 +277,7 @@ public class TaskDialog extends JDialog
 		setStartDateB.setMinimumSize (new Dimension (24, 24));
 		setStartDateB.setPreferredSize (new Dimension (24, 24));
 		setStartDateB.setText ("");
-		setStartDateB.setIcon (new ImageIcon (
-				net.sf.memoranda.ui.AppFrame.class.getResource ("resources/icons/calendar.png")));
+		setStartDateB.setIcon (new ImageIcon (net.sf.memoranda.ui.AppFrame.class.getResource ("resources/icons/calendar.png")));
 		setStartDateB.addActionListener (new java.awt.event.ActionListener ()
 		{
 			public void actionPerformed (ActionEvent e)
@@ -303,8 +304,7 @@ public class TaskDialog extends JDialog
 			{
 				// it's an ugly hack so that the spinner can
 				// increase day by day
-				SpinnerDateModel sdm = new SpinnerDateModel ((Date) endDate.getModel ().getValue (),
-						null, null, Calendar.DAY_OF_WEEK);
+				SpinnerDateModel sdm = new SpinnerDateModel ((Date) endDate.getModel ().getValue (), null, null, Calendar.DAY_OF_WEEK);
 				endDate.setModel (sdm);
 
 				if (ignoreEndChanged) return;
@@ -333,8 +333,7 @@ public class TaskDialog extends JDialog
 		setEndDateB.setMinimumSize (new Dimension (24, 24));
 		setEndDateB.setPreferredSize (new Dimension (24, 24));
 		setEndDateB.setText ("");
-		setEndDateB.setIcon (new ImageIcon (
-				net.sf.memoranda.ui.AppFrame.class.getResource ("resources/icons/calendar.png")));
+		setEndDateB.setIcon (new ImageIcon (net.sf.memoranda.ui.AppFrame.class.getResource ("resources/icons/calendar.png")));
 		setEndDateB.addActionListener (new java.awt.event.ActionListener ()
 		{
 			public void actionPerformed (ActionEvent e)
@@ -344,8 +343,7 @@ public class TaskDialog extends JDialog
 		});
 
 		setNotifB.setText (Local.getString ("Set notification"));
-		setNotifB.setIcon (new ImageIcon (
-				net.sf.memoranda.ui.AppFrame.class.getResource ("resources/icons/notify.png")));
+		setNotifB.setIcon (new ImageIcon (net.sf.memoranda.ui.AppFrame.class.getResource ("resources/icons/notify.png")));
 		setNotifB.addActionListener (new java.awt.event.ActionListener ()
 		{
 			public void actionPerformed (ActionEvent e)
@@ -503,9 +501,7 @@ public class TaskDialog extends JDialog
 
 	void setNotifB_actionPerformed (ActionEvent e)
 	{
-		((AppFrame) App.getFrame ()).workPanel.dailyItemsPanel.eventsPanel.newEventB_actionPerformed (e,
-				this.todoField.getText (), (Date) startDate.getModel ().getValue (),
-				(Date) endDate.getModel ().getValue ());
+		((AppFrame) App.getFrame ()).workPanel.dailyItemsPanel.eventsPanel.newEventB_actionPerformed (e, this.todoField.getText (), (Date) startDate.getModel ().getValue (), (Date) endDate.getModel ().getValue ());
 	}
 
 }
