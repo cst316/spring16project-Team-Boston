@@ -84,10 +84,10 @@ public class TaskDialog extends JDialog
 	boolean ignoreEndChanged = false;
 	JPanel jPanel4 = new JPanel (new FlowLayout (FlowLayout.RIGHT));
 	JPanel jPanel6 = new JPanel (new FlowLayout (FlowLayout.LEFT));
-	JLabel jLabel6 = new JLabel ();
+	JLabel startDateLabel = new JLabel ();
 	JButton setStartDateB = new JButton ();
 	JPanel jPanel1 = new JPanel (new FlowLayout (FlowLayout.RIGHT));
-	JLabel jLabel2 = new JLabel ();
+	JLabel endDateLabel = new JLabel ();
 	JSpinner startDate;
 	JSpinner endDate;
 	// JSpinner endDate = new JSpinner(new SpinnerDateModel());
@@ -104,6 +104,7 @@ public class TaskDialog extends JDialog
 	JLabel jLabelEffort = new JLabel ();
 	JLabel jLabelDescription = new JLabel ();
 	JCheckBox chkEndDate = new JCheckBox ();
+	JCheckBox chkStartDate = new JCheckBox ();
 
 	JPanel jPanelProgress = new JPanel (new FlowLayout (FlowLayout.RIGHT));
 	JLabel jLabelProgress = new JLabel ();
@@ -167,6 +168,15 @@ public class TaskDialog extends JDialog
 			public void actionPerformed (ActionEvent e)
 			{
 				chkEndDate_actionPerformed (e);
+			}
+		});
+		chkStartDate.setSelected (false);
+		chkStartDate_actionPerformed (null);
+		chkStartDate.addActionListener (new java.awt.event.ActionListener ()
+		{
+			public void actionPerformed (ActionEvent e)
+			{
+				chkStartDate_actionPerformed (e);
 			}
 		});
 		okB.setMaximumSize (new Dimension (100, 26));
@@ -250,6 +260,8 @@ public class TaskDialog extends JDialog
 				ignoreStartChanged = true;
 				Date sd = (Date) startDate.getModel ().getValue ();
 				Date ed = (Date) endDate.getModel ().getValue ();
+				if (!chkStartDate.isSelected ())
+					return;
 				if (sd.after (ed) && chkEndDate.isSelected ())
 				{
 					startDate.getModel ().setValue (ed);
@@ -270,10 +282,10 @@ public class TaskDialog extends JDialog
 			}
 		});
 
-		jLabel6.setText (Local.getString ("Start date"));
-		// jLabel6.setPreferredSize(new Dimension(60, 16));
-		jLabel6.setMinimumSize (new Dimension (60, 16));
-		jLabel6.setMaximumSize (new Dimension (100, 16));
+		startDateLabel.setText (Local.getString ("Start date"));
+		// startDateLabel.setPreferredSize(new Dimension(60, 16));
+		startDateLabel.setMinimumSize (new Dimension (60, 16));
+		startDateLabel.setMaximumSize (new Dimension (100, 16));
 		setStartDateB.setMinimumSize (new Dimension (24, 24));
 		setStartDateB.setPreferredSize (new Dimension (24, 24));
 		setStartDateB.setText ("");
@@ -285,10 +297,10 @@ public class TaskDialog extends JDialog
 				setStartDateB_actionPerformed (e);
 			}
 		});
-		jLabel2.setMaximumSize (new Dimension (270, 16));
-		// jLabel2.setPreferredSize(new Dimension(60, 16));
-		jLabel2.setHorizontalAlignment (SwingConstants.RIGHT);
-		jLabel2.setText (Local.getString ("End date"));
+		endDateLabel.setMaximumSize (new Dimension (270, 16));
+		// endDateLabel.setPreferredSize(new Dimension(60, 16));
+		endDateLabel.setHorizontalAlignment (SwingConstants.RIGHT);
+		endDateLabel.setText (Local.getString ("End date"));
 		endDate.setBorder (border8);
 		endDate.setPreferredSize (new Dimension (80, 24));
 
@@ -371,12 +383,13 @@ public class TaskDialog extends JDialog
 		jPanel8.add (descriptionScrollPane, null);
 		areaPanel.add (jPanel2, BorderLayout.CENTER);
 		jPanel2.add (jPanel6, null);
-		jPanel6.add (jLabel6, null);
+		jPanel6.add (chkStartDate, null);
+		jPanel6.add (startDateLabel, null);
 		jPanel6.add (startDate, null);
 		jPanel6.add (setStartDateB, null);
 		jPanel2.add (jPanel1, null);
 		jPanel1.add (chkEndDate, null);
-		jPanel1.add (jLabel2, null);
+		jPanel1.add (endDateLabel, null);
 		jPanel1.add (endDate, null);
 		jPanel1.add (setEndDateB, null);
 		// added by rawsushi
@@ -470,7 +483,7 @@ public class TaskDialog extends JDialog
 	{
 		endDate.setEnabled (chkEndDate.isSelected ());
 		setEndDateB.setEnabled (chkEndDate.isSelected ());
-		jLabel2.setEnabled (chkEndDate.isSelected ());
+		endDateLabel.setEnabled (chkEndDate.isSelected ());
 		if (chkEndDate.isSelected ())
 		{
 			Date currentEndDate = (Date) endDate.getModel ().getValue ();
@@ -478,6 +491,22 @@ public class TaskDialog extends JDialog
 			if (currentEndDate.getTime () < currentStartDate.getTime ())
 			{
 				endDate.getModel ().setValue (currentStartDate);
+			}
+		}
+	}
+	
+	void chkStartDate_actionPerformed (ActionEvent e)
+	{
+		startDate.setEnabled (chkStartDate.isSelected ());
+		setStartDateB.setEnabled (chkStartDate.isSelected ());
+		startDateLabel.setEnabled (chkStartDate.isSelected ());
+		if (chkStartDate.isSelected ())
+		{
+			Date currentEndDate  = (Date) endDate.getModel ().getValue ();
+			Date currentStartDate = (Date) startDate.getModel ().getValue ();
+			if (currentEndDate.getTime () < currentStartDate.getTime ())
+			{
+				startDate.getModel ().setValue (currentEndDate);
 			}
 		}
 	}
