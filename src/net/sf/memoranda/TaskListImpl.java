@@ -51,7 +51,7 @@ public class TaskListImpl implements TaskList {
 		buildElements(_root);
     }
     
-    public TaskListImpl(Project prj) {            
+    public TaskListImpl(Project prj) {
             _root = new Element("tasklist");
             _doc = new Document(_root);
             _project = prj;
@@ -104,7 +104,7 @@ public class TaskListImpl implements TaskList {
     }
 
     public Task createTask(CalendarDate startDate, CalendarDate endDate, String text, int priority, long effort, String description, String parentTaskId) {
-        Element el = new Element("task");
+    	Element el = new Element("task");
         el.addAttribute(new Attribute("startDate", startDate.toString()));
         el.addAttribute(new Attribute("endDate", endDate != null? endDate.toString():""));
 		String id = Util.generateId();
@@ -134,21 +134,6 @@ public class TaskListImpl implements TaskList {
         Util.debug("Created task with parent " + parentTaskId);
         
         return new TaskImpl(el, this);
-    }
-    
-    /**
-     *  Task copying utility. Cannot copy tasks that have subtasks.
-     *  @param task the task to be copied
-     *  @throws IllegalArgumentException If task has subtasks.
-     *  @author Brian Bradley
-     *  @version 1.0
-     *  @note could be used to implement process (collection of tasks), if the task copied could have child tasks
-     */
-    public Task createTask (Task task) throws IllegalArgumentException
-    {
-	    if (task.hasSubTasks (task.getID ()))
-		    throw new IllegalArgumentException ("Task cannot have subtasks");
-	    return createTask (task.getStartDate (), task.getEndDate (), task.getText (), task.getPriority (), task.getEffort (), task.getDescription (), task.getParentId ());
     }
 	
 	/**
@@ -379,6 +364,12 @@ public class TaskListImpl implements TaskList {
     		return false;
     	}
     }
+
+	@Override
+	public Task createTask(Task task) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
     /*
      * deprecated methods below

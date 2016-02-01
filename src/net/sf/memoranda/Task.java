@@ -8,6 +8,7 @@
  */
 package net.sf.memoranda;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import net.sf.memoranda.date.CalendarDate;
@@ -86,4 +87,8 @@ public interface Task {
 	long getRate();
     
     nu.xom.Element getContent();
+	ArrayList<Task> getSubTasksArray();
+	boolean isUpdateChildren();
+	void setUpdateChildren(boolean updateChildren);
+	void updateFromChildren();
 }
