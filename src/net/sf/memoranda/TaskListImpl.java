@@ -51,7 +51,7 @@ public class TaskListImpl implements TaskList {
 		buildElements(_root);
     }
     
-    public TaskListImpl(Project prj) {            
+    public TaskListImpl(Project prj) {
             _root = new Element("tasklist");
             _doc = new Document(_root);
             _project = prj;
@@ -104,7 +104,7 @@ public class TaskListImpl implements TaskList {
     }
 
     public Task createTask(CalendarDate startDate, CalendarDate endDate, String text, int priority, long effort, String description, String parentTaskId) {
-        Element el = new Element("task");
+    	Element el = new Element("task");
         el.addAttribute(new Attribute("startDate", startDate.toString()));
         el.addAttribute(new Attribute("endDate", endDate != null? endDate.toString():""));
 		String id = Util.generateId();
@@ -364,6 +364,12 @@ public class TaskListImpl implements TaskList {
     		return false;
     	}
     }
+
+	@Override
+	public Task createTask(Task task) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
     /*
      * deprecated methods below
