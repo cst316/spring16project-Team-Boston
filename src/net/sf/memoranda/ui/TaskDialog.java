@@ -60,11 +60,14 @@ public class TaskDialog extends JDialog
 	Border border4;
 	// Border border5;
 	// Border border6;
-	JPanel jPanel2 = new JPanel (new GridLayout (3, 2));
+	// changed to (4,2) from (3,2)
+	JPanel jPanel2 = new JPanel (new GridLayout (4, 2));
 	JTextField todoField = new JTextField ();
 
 	// added by rawsushi
 	JTextField effortField = new JTextField ();
+	// effect acutal field
+	JTextField effortActualField = new JTextField ();
 	JTextArea descriptionField = new JTextArea ();
 	JScrollPane descriptionScrollPane = new JScrollPane (descriptionField);
 
@@ -95,6 +98,8 @@ public class TaskDialog extends JDialog
 	// JPanel jPanel3 = new JPanel(new FlowLayout(FlowLayout.LEFT));
 	JPanel jPanel3 = new JPanel (new FlowLayout (FlowLayout.LEFT));
 	JPanel jPanelEffort = new JPanel (new FlowLayout (FlowLayout.LEFT));
+	// new jpanel for actual effort
+	JPanel jPanelEffortActual = new JPanel (new FlowLayout (FlowLayout.LEFT));
 	// JPanel jPanelNotes = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
 	JButton setNotifB = new JButton ();
@@ -102,6 +107,8 @@ public class TaskDialog extends JDialog
 	JLabel jLabel7 = new JLabel ();
 	// added by rawsushi
 	JLabel jLabelEffort = new JLabel ();
+	// new label for actual effort
+	JLabel jLabelEffortActual = new JLabel ();
 	JLabel jLabelDescription = new JLabel ();
 	JCheckBox chkEndDate = new JCheckBox ();
 	JCheckBox chkStartDate = new JCheckBox ();
@@ -240,6 +247,13 @@ public class TaskDialog extends JDialog
 		effortField.setBorder (border8);
 		effortField.setPreferredSize (new Dimension (30, 24));
 
+		// new entry for actual effort
+		jLabelEffortActual.setMaximumSize (new Dimension (100, 16));
+		jLabelEffortActual.setMinimumSize (new Dimension (60, 16));
+		jLabelEffortActual.setText (Local.getString ("Act Effort(hrs)"));
+		effortActualField.setBorder (border8);
+		effortActualField.setPreferredSize (new Dimension (30, 24));
+		
 		startDate.setBorder (border8);
 		startDate.setPreferredSize (new Dimension (80, 24));
 		SimpleDateFormat sdf = new SimpleDateFormat ();
@@ -399,13 +413,21 @@ public class TaskDialog extends JDialog
 
 		jPanel2.add (jPanel4, null);
 		jPanel4.add (priorityCB, null);
+		
+		// add actual effort panel
+		jPanel2.add (jPanelEffortActual, null);
+		jPanelEffortActual.add (jLabelEffortActual, null);
+		jPanelEffortActual.add (effortActualField, null);
+		
+		// moved notification button
+		jLabelProgress.setText (Local.getString ("Progress"));
+		jPanelProgress.add (jLabelProgress, null);
+		jPanelProgress.add (progress, null);
 		jPanel2.add (jPanel3, null);
 
 		jPanel3.add (setNotifB, null);
 
-		jLabelProgress.setText (Local.getString ("Progress"));
-		jPanelProgress.add (jLabelProgress, null);
-		jPanelProgress.add (progress, null);
+		
 
 		jCheckBoxProgress.addActionListener (new ActionListener ()
 		{
