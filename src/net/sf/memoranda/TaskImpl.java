@@ -42,11 +42,23 @@ public class TaskImpl implements Task, Comparable {
 	}
 
 	public CalendarDate getStartDate() {
-		return new CalendarDate(_element.getAttribute("startDate").getValue());
+		String sd = _element.getAttribute("startDate").getValue();
+		if (sd != "")
+			return new CalendarDate(_element.getAttribute("startDate").getValue());
+		Task parent = this.getParentTask();
+		if (parent != null)
+			return parent.getStartDate();
+		Project pr = this._tl.getProject();
+		if (pr.getStartDate() != null)
+			return pr.getStartDate();
+		return new CalendarDate ();
 	}
 
 	public void setStartDate(CalendarDate date) {
-		setAttr("startDate", date.toString());
+		if (date == null)
+			setAttr("startDate", "");
+		else
+			setAttr("startDate", date.toString());
 	}
 
 	public CalendarDate getEndDate() {
@@ -66,7 +78,8 @@ public class TaskImpl implements Task, Comparable {
 	public void setEndDate(CalendarDate date) {
 		if (date == null)
 			setAttr("endDate", "");
-		setAttr("endDate", date.toString());
+		else
+			setAttr("endDate", date.toString());
 	}
 
 	public long getEffort() {

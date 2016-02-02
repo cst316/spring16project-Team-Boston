@@ -512,14 +512,14 @@ public class TaskPanel extends JPanel {
 		dlg.setVisible(true);
 		if (dlg.CANCELLED)
 			return;
-		CalendarDate sd = new CalendarDate((Date) dlg.startDate.getModel().getValue());
 		// CalendarDate ed = new CalendarDate((Date)
 		// dlg.endDate.getModel().getValue());
-		CalendarDate ed;
+		CalendarDate ed = null;
 		if (dlg.chkEndDate.isSelected())
 			ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
-		else
-			ed = null;
+		CalendarDate sd = null;
+		if (dlg.chkStartDate.isSelected())
+			sd = new CalendarDate((Date) dlg.startDate.getModel().getValue());
 		t.setStartDate(sd);
 		t.setEndDate(ed);
 		t.setText(dlg.todoField.getText());
@@ -600,8 +600,8 @@ public class TaskPanel extends JPanel {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-		taskTable.tableChanged();
 		CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
+		taskTable.tableChanged();
 		parentPanel.updateIndicators();
 	}
 
