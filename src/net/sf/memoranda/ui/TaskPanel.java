@@ -586,20 +586,11 @@ public class TaskPanel extends JPanel {
 	}
 
 	void copyTaskB_actionPerformed(ActionEvent e) {
-		String originalTaskID = taskTable.getModel().getValueAt(taskTable.getSelectedRow(), TaskTable.TASK_ID)
-				.toString();
-		int selectedRow = taskTable.getSelectedRow();
-		if (selectedRow == -1)
+		String originalTaskId = taskTable.getModel().getValueAt(taskTable.getSelectedRow(), TaskTable.TASK_ID).toString();
+		if (taskTable.getSelectedRow() == -1)
 			return;
-		if (CurrentProject.getTaskList().hasSubTasks(originalTaskID))
-			return;
+		duplicateTaskAndSubtasks (CurrentProject.getTaskList().getTask(originalTaskId), null);
 
-		Task originalTask = CurrentProject.getTaskList().getTask(originalTaskID);
-		try {
-			Task newTask = CurrentProject.getTaskList().createTask(originalTask);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
 		CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
 		taskTable.tableChanged();
 		parentPanel.updateIndicators();
@@ -858,5 +849,15 @@ public class TaskPanel extends JPanel {
 
 	void ppCalcTask_actionPerformed(ActionEvent e) {
 		calcTask_actionPerformed(e);
+	}
+	
+	private void duplicateTaskAndSubtasks (Task originalTask, String parentId)
+	{
+		try {
+			Task newTask = CurrentProject.getTaskList().createTask(originalTask, parentId);
+			CurrentProject.getTaskList ().getAllSubTasks (originalTask.getID ()).forEach (i -> duplicateTaskAndSubtasks ((Task)i, newTask.getID ()));
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 	}
 }
