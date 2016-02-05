@@ -70,7 +70,7 @@
 		<javac srcdir="${source.dir}" destdir="${build.classes.dir}"
 			excludes="**/Cvs/**,**/*.ini,**/~*" debug="${debug}" debuglevel="${debuglevel}"
 			optimize="${optimize}" deprecation="${deprecation}" failonerror="false"
-			source="1.8" target="1.8">
+			source="1.8" target="1.8" includeantruntime="false">
 			<!-- <compilerarg value="-Xlint:unchecked"/> -->
 			<classpath>
 				<path refid="classpath" />
