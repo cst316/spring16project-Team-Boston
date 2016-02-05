@@ -103,7 +103,7 @@ public class TaskListImpl implements TaskList {
         return filterActiveTasks(allTasks,date);
     }
 
-    public Task createTask(CalendarDate startDate, CalendarDate endDate, String text, int priority, long effort, String description, String parentTaskId) {
+    public Task createTask(CalendarDate startDate, CalendarDate endDate, String text, int priority, long effort, long effortActual, String description, String parentTaskId) {
     	Element el = new Element("task");
         el.addAttribute(new Attribute("startDate", startDate != null? startDate.toString():""));
         el.addAttribute(new Attribute("endDate", endDate != null? endDate.toString():""));
@@ -111,6 +111,8 @@ public class TaskListImpl implements TaskList {
         el.addAttribute(new Attribute("id", id));
         el.addAttribute(new Attribute("progress", "0"));
         el.addAttribute(new Attribute("effort", String.valueOf(effort)));
+        // add actual effort
+        el.addAttribute(new Attribute("effortActual", String.valueOf(effortActual)));
         el.addAttribute(new Attribute("priority", String.valueOf(priority)));
                 
         Element txt = new Element("text");
@@ -367,7 +369,7 @@ public class TaskListImpl implements TaskList {
 
 	@Override
 	public Task createTask(Task task, String parentId) {
-		return createTask (task.getStartDate (), task.getEndDate (), task.getText (), task.getPriority (), task.getEffort (), task.getDescription (), parentId);
+		return createTask (task.getStartDate (), task.getEndDate (), task.getText (), task.getPriority (), task.getEffort (), task.getEffortActual (), task.getDescription (), parentId);
 	}
 
     /*
