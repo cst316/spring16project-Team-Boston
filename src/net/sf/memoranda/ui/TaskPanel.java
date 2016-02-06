@@ -592,14 +592,20 @@ public class TaskPanel extends JPanel {
 	}
 
 	void copyTaskB_actionPerformed(ActionEvent e) {
-		String originalTaskId = taskTable.getModel().getValueAt(taskTable.getSelectedRow(), TaskTable.TASK_ID).toString();
-		if (taskTable.getSelectedRow() == -1)
-			return;
-		duplicateTaskAndSubtasks (CurrentProject.getTaskList().getTask(originalTaskId), null);
-
-		CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
+		Vector<Task> toCopy = new Vector<Task>();
+		for (int i = 0; i < taskTable.getSelectedRows().length; i++) {
+			Task t = CurrentProject.getTaskList().getTask(
+					taskTable.getModel().getValueAt(taskTable.getSelectedRows()[i], TaskTable.TASK_ID).toString());
+			if (t != null)
+				toCopy.add(t);
+		}
+		for (int i = 0; i < toCopy.size(); i++) {
+			duplicateTaskAndSubtasks(CurrentProject.getTaskList().getTask(toCopy.get(i).getID()), null);
+		}
 		taskTable.tableChanged();
+		CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
 		parentPanel.updateIndicators();
+		
 	}
 
 	void addSubTask_actionPerformed(ActionEvent e) {
