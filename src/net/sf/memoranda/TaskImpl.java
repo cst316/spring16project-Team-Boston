@@ -1,6 +1,12 @@
 package net.sf.memoranda;
 
 import java.util.Collection;
+import java.util.Iterator;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -13,12 +19,12 @@ public class TaskImpl implements Task, Comparable
 	private Collection<Task> children;
 	private String description;
 	private long effort;
-	private CalenderDate endDate;
+	private CalendarDate endDate;
 	private String id;
 	private Task parent;
 	private int priority;
 	private int progress;
-	private CalenderDate startDate;
+	private CalendarDate startDate;
 	private int status;
 	private String text;
 	private boolean updateChildren;
@@ -28,7 +34,7 @@ public class TaskImpl implements Task, Comparable
 		this.parent = parent;
 	}
 	
-	public boolean getActive
+	public boolean getActive()
 
 	{
 		return active;
@@ -52,14 +58,16 @@ public class TaskImpl implements Task, Comparable
 		return getStartDate ();
 	}
 
-	public String getId ();
+	public String getID ()
 	{
 		return id;
 	}
 
 	public String getParentId ()
 	{
-		if (parent != null) return parent.getID ();
+		if (parent != null){ 
+			return parent.getID();
+		}
 		return null;
 	}
 
@@ -80,7 +88,7 @@ public class TaskImpl implements Task, Comparable
 
 	public long getRate ()
 	{
-		CalenderDate d = CurrentDate.get ();
+		CalendarDate d = CurrentDate.get ();
 		Calendar endDateCal = getEndDate ().getCalendar ();
 		Calendar dateCal = d.getCalendar ();
 		int numOfDays = (endDateCal.get (Calendar.YEAR) * 365 + endDateCal.get (Calendar.DAY_OF_YEAR)) - (dateCal.get (Calendar.YEAR) * 365 + dateCal.get (Calendar.DAY_OF_YEAR));
@@ -98,8 +106,12 @@ public class TaskImpl implements Task, Comparable
 
 	public int getStatus (CalendarDate date)
 	{
-		if (isFrozen ()) return Task.FROZEN;
-		if (isCompleted ()) return Task.COMPLETED;
+		if (isFrozen ()){
+			return Task.FROZEN;
+		}
+		if (isCompleted ()){
+			return Task.COMPLETED;
+		}
 
 		if (date.inPeriod (startDate, endDate))
 		{
@@ -126,7 +138,7 @@ public class TaskImpl implements Task, Comparable
 		while (iter.hasNext ())
 		{
 			Task t = iter.next ();
-			if (t.getID == id) return t;
+			if (t.getID() == id) return t;
 		}
 		return null;
 	}
@@ -201,7 +213,7 @@ public class TaskImpl implements Task, Comparable
 		if (date == null)
 			startDate = "";
 		else
-			startDate = date.toString ();
+			startDate = date.toString();
 	}
 
 	public void setChildren (Collection<Task> children)
@@ -263,7 +275,7 @@ public class TaskImpl implements Task, Comparable
 	{
 		boolean a = o instanceof Task;
 		Task t = (Task) o;
-		boolean b = t.getId ().equals (this.getId ());
+		boolean b = t.getID().equals(this.getID());
 		return a && b;
 	}
 }

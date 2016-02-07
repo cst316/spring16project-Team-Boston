@@ -1,11 +1,16 @@
 package net.sf.memoranda;
 
-import java.util.ArrayList;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Collection;
 
 import net.sf.memoranda.date.CalendarDate;
 
-public interface Task
+public interface Task extends Serializable
 {
 	public static final int SCHEDULED = 0;
 	public static final int ACTIVE = 1;
@@ -24,7 +29,7 @@ public interface Task
 	String getDescription ();
 	long getEffort ();
 	CalendarDate getEndDate ();
-	String getId ();
+	String getID ();
 	String getParentId ();
 	Task getParentTask ();
 	int getPriority ();
@@ -55,4 +60,32 @@ public interface Task
 	void removeAllChildren ();
 	void removeChild (Task task);
 	void removeChildren (Collection<Task> tasks);
+	
+	/**
+	  Method: copyTask
+	  Inputs: Task
+	  Returns: Task
+
+	  Description: Copies Task input and all children and creates a completely new Task tree.
+	*/
+	public static Task copyTask(Task taskToCopy) {
+		Task newTask = null;
+		try {
+			// Serialize the object out to a byte array
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			ObjectOutputStream out = new ObjectOutputStream(bos);
+			out.writeObject(taskToCopy);
+			out.flush();
+			out.close();
+
+			// Deserialize object back in
+			ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(bos.toByteArray()));
+			newTask = (Task) in.readObject();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return newTask;
+	}
 }
