@@ -15,20 +15,6 @@ import net.sf.memoranda.date.CurrentDate;
 
 public class TaskImpl implements Task, Comparable
 {
-	private boolean active;
-	private Collection<Task> children;
-	private String description;
-	private long effort;
-	private CalendarDate endDate;
-	private String id;
-	private Task parent;
-	private int priority;
-	private int progress;
-	private CalendarDate startDate;
-	private int status;
-	private String text;
-	private boolean updateChildren;
-
 	public TaskImpl (Task parent)
 	{
 		this.parent = parent;
@@ -134,7 +120,7 @@ public class TaskImpl implements Task, Comparable
 
 	public Task getSubTask (String id)
 	{
-		Iterator<Task> iter = children.iterator ();
+		Iterator<Task> iter = SubTasks.iterator ();
 		while (iter.hasNext ())
 		{
 			Task t = iter.next ();
@@ -145,12 +131,12 @@ public class TaskImpl implements Task, Comparable
 
 	public Collection<Task> getSubTasks ()
 	{
-		return children;
+		return SubTasks;
 	}
 
-	public boolean getUpdateChildren ()
+	public boolean getUpdateSubTasks ()
 	{
-		return updateChildren;
+		return updateSubTasks;
 	}
 
 	public String getText ()
@@ -216,9 +202,9 @@ public class TaskImpl implements Task, Comparable
 			startDate = date.toString();
 	}
 
-	public void setChildren (Collection<Task> children)
+	public void setSubTasks (Collection<Task> SubTasks)
 	{
-		this.children = children;
+		this.SubTasks = SubTasks;
 	}
 
 	public void setText (String text)
@@ -229,34 +215,138 @@ public class TaskImpl implements Task, Comparable
 			this.text = text;
 	}
 
-	public void setUpdateChildren (boolean updateChildren)
+	public void setUpdateSubTasks (boolean updateSubTasks)
 	{
-		this.updateChildren = updateChildren;
+		this.updateSubTasks = updateSubTasks;
 	}
 
-	public void addChild (Task task)
+	public void addSubTask (Task task)
 	{
-		children.add (task);
+		SubTasks.add (task);
 	}
 
-	public void addChildren (Collection<Task> tasks)
+	public void addSubTasks (Collection<Task> tasks)
 	{
-		children.addAll (tasks);
+		SubTasks.addAll (tasks);
+	}
+	
+	public Task deepCopyTask(Task taskToCopy)
+	{
+		Task newTask = null;
+		try {
+			// Serialize the object out to a byte array
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			ObjectOutputStream out = new ObjectOutputStream(bos);
+			out.writeObject(taskToCopy);
+			out.flush();
+			out.close();
+
+			// Deserialize object back in
+			ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(bos.toByteArray()));
+			newTask = (Task) in.readObject();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return newTask;
+	}
+	
+	public long[] recursivelyModifyCompletionFromSubTasks ()
+	{
+		long[] res = new long[2];
+		long expendedEffort = 0;
+		long totalEffort = 0;
+		Collection subTasks = getSubTasks ();
+		if (subTasks == null || subTasks.size == 0)
+		{
+			long eff = getEffort ();
+			if (eff == 0)
+				eff = 1;
+			res[0] = Math.round((double)(getProgress()*eff)/100d);
+			res[1] = eff;
+			return res;
+		}
+		for (Iterator<Task> iter = subTasks.iterator (); iter.hasNext ();)
+		{
+			Task element = iter.next ();
+			long[] subTaskCompletion = element.recursivelyModifyCompletionFromSubTasks ();
+			expendedEffort = expendedEffort + subTaskCompletion[0];
+			totalEffort = totalEffort + subTaskCompletion[1];
+		}
+		int thisProgress = (int) Math.round((((double)expendedEffort / (double)totalEffort)*100));
+		setProgress (thisProgress);
+		res[0] = expendedEffort;
+		res[1] = totalEffort;
+		return res;
+	}
+	
+	CalenderDate recursivelyModifyEarliestEndDateFromSubTasks ()
+	{
+		CalenderDate d = getEndDate ();
+		Collection subTasks = getSubTasks ();
+		if (subTasks == null)
+			return startDate;
+		for (Iterator<Task> iter = subTasks.iterator (); iter.hasNext ();)
+		{
+			Task element = iter.next ();
+			CalenderDate dd = element.recursivelyModifyEarliestEndDateFromSubTasks ();
+			if (dd.after (d))
+			{
+				d = dd;
+			}
+		}
+		setEndDate (d);
+		return d;
 	}
 
-	public void removeAllChildren ()
+	CalenderDate recursivelyModifyLatestStartDateFromSubTasks ()
 	{
-		children.clear ();
+		CalenderDate d = getStartDate ();
+		Collection subTasks = getSubTasks ();
+		if (subTasks == null)
+			return startDate;
+		for (Iterator<Task> iter = subTasks.iterator (); iter.hasNext ();)
+		{
+			Task element = iter.next ();
+			CalenderDate dd = element.recursivelyModifyLatestEndStartFromSubTasks ();
+			if (dd.before (d))
+			{
+				d = dd;
+			}
+		}
+		setStartDate (d);
+		return d;
 	}
 
-	public void removeChild (Task task)
+	long recursivelyModifyEffortFromSubTasks ()
 	{
-		children.remove (task);
+		long totalEffort = 0;
+		Collection subTasks = getSubTasks ();
+		if (subTasks == null)
+			return effort;
+		for (Iterator<Task> iter = subTasks.iterator (); iter.hasNext ();)
+		{
+			Task element = iter.next ();
+			totalEffort = totalEffort +element.recursivelyModifyEffortFromSubTasks();
+		}
+		setEffort (totalEffort);
+		return totalEffort;
+	}
+	
+	public void removeAllSubTasks ()
+	{
+		SubTasks.clear ();
 	}
 
-	public void removeChildren (Collection<Task> tasks)
+	public void removeSubTask (Task task)
 	{
-		children.removeAll (tasks);
+		SubTasks.remove (task);
+	}
+
+	public void removeSubTasks (Collection<Task> tasks)
+	{
+		SubTasks.removeAll (tasks);
 	}
 
 	public int compareTo (Object o)
@@ -278,4 +368,18 @@ public class TaskImpl implements Task, Comparable
 		boolean b = t.getID().equals(this.getID());
 		return a && b;
 	}
+	
+	private boolean active;
+	private Collection<Task> SubTasks;
+	private String description;
+	private long effort;
+	private CalendarDate endDate;
+	private String id;
+	private Task parent;
+	private int priority;
+	private int progress;
+	private CalendarDate startDate;
+	private int status;
+	private String text;
+	private boolean updateSubTasks;
 }
