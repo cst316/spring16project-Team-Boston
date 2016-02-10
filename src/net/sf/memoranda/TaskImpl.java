@@ -463,7 +463,6 @@ public class TaskImpl implements Task, Comparable {
 
 	public boolean isUpdateChildren() {
 		Attribute uC = _element.getAttribute("updateChildren");
-		System.out.println("isUpdateChildren " + uC.getValue());
 		return Boolean.parseBoolean(uC.getValue());
 	}
 

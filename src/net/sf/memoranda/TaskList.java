@@ -19,7 +19,7 @@ public interface TaskList {
 	Project getProject();
     Task getTask(String id);
     // Add effortActual
-    Task createTask(CalendarDate startDate, CalendarDate endDate, String text, int priority, long effort, long effortActual, String description, String parentTaskId);
+    Task createTask(CalendarDate startDate, CalendarDate endDate, String text, int priority, long effort, long effortActual, String description, String parentTaskId, boolean updateFromChildren);
 
     Task createTask (Task task, String parentId);
     
