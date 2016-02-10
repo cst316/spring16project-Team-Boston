@@ -57,7 +57,7 @@ public interface Task extends Serializable
 	
 	void addSubTask (Task task);
 	void addSubTasks (Collection<Task> tasks);
-	Task deepCopyTask ();
+	Task deepCopy ();
 	long[] recursivelyModifyCompletionFromSubTasks ();
 	CalenderDate recursivelyModifyEarliestEndDateFromSubTasks ();
 	CalenderDate recursivelyModifyLatestStartDateFromSubTasks ();

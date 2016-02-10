@@ -230,14 +230,14 @@ public class TaskImpl implements Task, Comparable
 		SubTasks.addAll (tasks);
 	}
 	
-	public Task deepCopyTask(Task taskToCopy)
+	public Task deepCopy()
 	{
 		Task newTask = null;
 		try {
 			// Serialize the object out to a byte array
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
 			ObjectOutputStream out = new ObjectOutputStream(bos);
-			out.writeObject(taskToCopy);
+			out.writeObject(this);
 			out.flush();
 			out.close();
 
