@@ -495,17 +495,17 @@ public class TaskPanel extends JPanel {
 		dlg.effortField.setText(Util.getHoursFromMillis(t.getEffort()));
 		// Add actual effort
 		dlg.effortActualField.setText(Util.getHoursFromMillis(t.getEffortActual()));
-		System.out.println("Task list impl " + t.isUpdateChildren());
+		System.out.println("Task list impl " + t.getUpdateSubTasks());
 		if ((t.getStartDate().getDate()).after(t.getEndDate().getDate()))
 			dlg.chkEndDate.setSelected(false);
 		else
 			dlg.chkEndDate.setSelected(true);
 
-		if (t.isUpdateChildren()) {
+		if (t.getUpdateSubTasks()) {
 			dlg.jCheckBoxProgress.setSelected(true);
 			dlg.updateChildren = true;
 			((DefaultEditor) dlg.progress.getEditor()).getTextField().setEditable(false);
-		} else if (t.isUpdateChildren()) {
+		} else if (t.getUpdateSubTasks()) {
 			dlg.jCheckBoxProgress.setSelected(false);
 			dlg.updateChildren = false;
 		}
@@ -532,10 +532,10 @@ public class TaskPanel extends JPanel {
 		t.setEffortActual(Util.getMillisFromHours(dlg.effortActualField.getText()));
 		if (!dlg.updateChildren) {
 			t.setProgress(((Integer) dlg.progress.getValue()).intValue());
-			t.setUpdateChildren(false);
+			t.setUpdateSubTasks(false);
 		} else {
-			t.updateFromChildren();
-			t.setUpdateChildren(true);
+			t.recursivelyModifyCompletionFromSubTasks();
+			t.setUpdateSubTasks(true);
 		}
 
 		// CurrentProject.getTaskList().adjustParentTasks(t);
@@ -577,13 +577,13 @@ public class TaskPanel extends JPanel {
 		// dlg.priorityCB.getSelectedIndex(),effort,
 		// dlg.descriptionField.getText(),parentTaskId);
 		Task newTask = CurrentProject.getTaskList().createTask(sd, ed, dlg.todoField.getText(),
-				dlg.priorityCB.getSelectedIndex(), effort, effortActual, dlg.descriptionField.getText(), null);
+				dlg.priorityCB.getSelectedIndex(), effort, effortActual, dlg.descriptionField.getText(), null, dlg.updateChildren);
 		// CurrentProject.getTaskList().adjustParentTasks(newTask);
 		if (!dlg.updateChildren) {
 			newTask.setProgress(((Integer) dlg.progress.getValue()).intValue());
-			newTask.setUpdateChildren(false);
+			newTask.setUpdateSubTasks(false);
 		} else {
-			newTask.setUpdateChildren(true);
+			newTask.setUpdateSubTasks(true);
 		}
 		CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
 		taskTable.tableChanged();
@@ -639,14 +639,14 @@ public class TaskPanel extends JPanel {
 		// add actual effort
 		long effortActual = Util.getMillisFromHours(dlg.effortActualField.getText());
 		Task newTask = CurrentProject.getTaskList().createTask(sd, ed, dlg.todoField.getText(),
-				dlg.priorityCB.getSelectedIndex(), effort, effortActual, dlg.descriptionField.getText(), parentTaskId);
+				dlg.priorityCB.getSelectedIndex(), effort, effortActual, dlg.descriptionField.getText(), parentTaskId, dlg.updateChildren);
 
 		if (!dlg.updateChildren) {
 			newTask.setProgress(((Integer) dlg.progress.getValue()).intValue());
-			newTask.setUpdateChildren(false);
+			newTask.setUpdateSubTasks(false);
 		}
 		else{
-			newTask.setUpdateChildren(true);
+			newTask.setUpdateSubTasks(true);
 		}
 		// CurrentProject.getTaskList().adjustParentTasks(newTask);
 

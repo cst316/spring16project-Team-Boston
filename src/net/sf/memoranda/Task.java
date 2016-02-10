@@ -40,13 +40,13 @@ public interface Task extends Serializable
 	Task getSubTask (String id);
 	Collection<Task>  getSubTasks ();
 	String getText ();
-	boolean getUpdateChildren ();
+	boolean getUpdateSubTasks ();
 	
 	void setActive (boolean active);
 	void setDescription (String description);
 	void setEffort (long effort);
 	void setEndDate (CalendarDate date);
-	void setFrozen ();
+	void setFrozen (boolean frozen);
 	void setParentTask (Task task);
 	void setPriority (int p);
 	void setProgress (int p);
@@ -59,10 +59,13 @@ public interface Task extends Serializable
 	void addSubTasks (Collection<Task> tasks);
 	Task deepCopy ();
 	long[] recursivelyModifyCompletionFromSubTasks ();
-	CalenderDate recursivelyModifyEarliestEndDateFromSubTasks ();
-	CalenderDate recursivelyModifyLatestStartDateFromSubTasks ();
+	CalendarDate recursivelyModifyEarliestEndDateFromSubTasks ();
+	CalendarDate recursivelyModifyLatestStartDateFromSubTasks ();
 	long recursivelyModifyTotalEffortFromSubTasks ();
+	long recursivelyModifyEffortFromSubTasks ();
 	void removeAllSubTasks ();
 	void removeSubTask (Task task);
 	void removeSubTasks (Collection<Task> tasks);
+	void setEffortActual(long millisFromHours);
+	long getEffortActual();
 }
