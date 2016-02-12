@@ -58,13 +58,13 @@ TaskImpl implements Task, Comparable
 			return endDate;
 		}
 		if (parent != null)
-			{
+		{
 			return parent.getEndDate ();
-			}
+		}
 		if (project.getEndDate () != null)
-			{
+		{
 			return project.getEndDate ();
-			}
+		}
 		return getStartDate ();
 	}
 
@@ -77,7 +77,8 @@ TaskImpl implements Task, Comparable
 	public
 	String getParentId ()
 	{
-		if (parent != null){ 
+		if (parent != null)
+		{ 
 			return parent.getID();
 		}
 		return null;
@@ -116,17 +117,17 @@ TaskImpl implements Task, Comparable
 	getStartDate (Project project)
 	{
 		if (startDate != null) 
-			{
+		{
 			return startDate;
-			}
+		}
 		if (parent != null) 
-			{
+		{
 			return parent.getStartDate ();
-			}
+		}
 		if (project.getStartDate () != null) 
-			{
+		{
 			return project.getStartDate ();
-			}
+		}
 		return new CalendarDate ();
 	}
 
