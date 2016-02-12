@@ -369,7 +369,7 @@ public class TaskListImpl implements TaskList {
 
 	@Override
 	public Task createTask(Task task, String parentId) {
-		return createTask (task.getStartDate (), task.getEndDate (), task.getText (), task.getPriority (), task.getEffort (), task.getEffortActual (), task.getDescription (), parentId);
+		return createTask (task.getStartDate (), task.getEndDate (), task.getText (), task.getPriority (), task.getEffort (), task.getPredictedEffort (), task.getDescription (), parentId);
 	}
 
     /*
