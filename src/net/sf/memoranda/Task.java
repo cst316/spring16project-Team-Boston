@@ -28,6 +28,7 @@ public interface Task extends Serializable
 	boolean getActive ();
 	String getDescription ();
 	long getEffort ();
+	long getEffortActual();
 	CalendarDate getEndDate ();
 	String getID ();
 	String getParentId ();
@@ -45,6 +46,7 @@ public interface Task extends Serializable
 	void setActive (boolean active);
 	void setDescription (String description);
 	void setEffort (long effort);
+	void setEffortActual(long millisFromHours);
 	void setEndDate (CalendarDate date);
 	void setID (String id);
 	void setFrozen (boolean frozen);
@@ -67,6 +69,4 @@ public interface Task extends Serializable
 	void removeAllSubTasks ();
 	void removeSubTask (Task task);
 	void removeSubTasks (Collection<Task> tasks);
-	void setEffortActual(long millisFromHours);
-	long getEffortActual();
 }

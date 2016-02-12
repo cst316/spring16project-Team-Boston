@@ -38,6 +38,11 @@ public class TaskImpl implements Task, Comparable
 	{
 		return effort;
 	}
+	
+	public long getEffortActual ()
+	{
+		return effortActual;
+	}
 
 	public CalendarDate getEndDate (Project project)
 	{
