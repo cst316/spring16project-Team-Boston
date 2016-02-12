@@ -14,37 +14,44 @@ import java.util.Calendar;
 import net.sf.memoranda.date.CalendarDate;
 import net.sf.memoranda.date.CurrentDate;
 
-public class TaskImpl implements Task, Comparable
+public class
+TaskImpl implements Task, Comparable
 {
 	
-	public TaskImpl (Task parent)
+	public
+	TaskImpl (Task parent)
 	{
 		this.parent = parent;
 		SubTasks = new Vector<Task>();
 	}
 	
-	public boolean getActive()
+	public boolean
+	getActive()
 
 	{
 		return active;
 	}
 
-	public String getDescription ()
+	public String
+	getDescription ()
 	{
 		return description;
 	}
 
-	public long getEffort ()
+	public long
+	getEffort ()
 	{
 		return effort;
 	}
 	
-	public long getEffortActual ()
+	public long
+	getEffortActual ()
 	{
 		return effortActual;
 	}
 
-	public CalendarDate getEndDate (Project project)
+	public CalendarDate
+	getEndDate (Project project)
 	{
 		if (endDate != null) 
 		{
@@ -61,12 +68,14 @@ public class TaskImpl implements Task, Comparable
 		return getStartDate ();
 	}
 
-	public String getID ()
+	public
+	String getID ()
 	{
 		return id;
 	}
 
-	public String getParentId ()
+	public
+	String getParentId ()
 	{
 		if (parent != null){ 
 			return parent.getID();
@@ -74,22 +83,26 @@ public class TaskImpl implements Task, Comparable
 		return null;
 	}
 
-	public Task getParentTask ()
+	public Task
+	getParentTask ()
 	{
 		return parent;
 	}
 
-	public int getPriority ()
+	public int
+	getPriority ()
 	{
 		return priority;
 	}
 
-	public int getProgress ()
+	public int
+	getProgress ()
 	{
 		return progress;
 	}
 
-	public long getRate ()
+	public long
+	getRate ()
 	{
 		CalendarDate d = CurrentDate.get ();
 		Calendar endDateCal = getEndDate ().getCalendar ();
@@ -99,7 +112,8 @@ public class TaskImpl implements Task, Comparable
 		return -1 * (100 - getProgress ()) / (numOfDays + 1) * (getPriority () + 1);
 	}
 
-	public CalendarDate getStartDate (Project project)
+	public CalendarDate
+	getStartDate (Project project)
 	{
 		if (startDate != null) 
 			{
@@ -116,7 +130,8 @@ public class TaskImpl implements Task, Comparable
 		return new CalendarDate ();
 	}
 
-	public int getStatus (CalendarDate date)
+	public int
+	getStatus (CalendarDate date)
 	{
 		if (frozen){
 			return Task.FROZEN;
@@ -144,7 +159,8 @@ public class TaskImpl implements Task, Comparable
 		return Task.FAILED;
 	}
 
-	public Task getSubTask (String id)
+	public Task
+	getSubTask (String id)
 	{
 		Iterator<Task> iter = SubTasks.iterator ();
 		while (iter.hasNext ())
@@ -155,7 +171,8 @@ public class TaskImpl implements Task, Comparable
 		return null;
 	}
 
-	public Collection<Task> getSubTasks ()
+	public Collection<Task>
+	getSubTasks ()
 	{
 		if(SubTasks.size() > 0)
 		{
@@ -167,35 +184,42 @@ public class TaskImpl implements Task, Comparable
 		}
 	}
 
-	public boolean getUpdateSubTasks ()
+	public boolean
+	getUpdateSubTasks ()
 	{
 		return updateSubTasks;
 	}
 
-	public String getText ()
+	public String
+	getText ()
 	{
 		return text;
 	}
 	
-	public CalendarDate getEndDate() {
+	public CalendarDate
+	getEndDate() {
 		return endDate;
 	}
 	
-	public long getEffortActual() 
+	public long
+	getEffortActual() 
 	{
 		return effortActual;
 	}
 
-	public CalendarDate getStartDate() {
+	public CalendarDate
+	getStartDate() {
 		return startDate;
 	}
 
-	public void setActive (boolean active)
+	public void
+	setActive (boolean active)
 	{
 		this.active = active;
 	}
 
-	public void setDescription (String description)
+	public void
+	setDescription (String description)
 	{
 		if (description == null)
 			this.description = "";
@@ -203,22 +227,26 @@ public class TaskImpl implements Task, Comparable
 			this.description = description;
 	}
 	
-	public void setID (String id) 
+	public void
+	setID (String id) 
 	{
 		this.id = id;
 	}
 
-	public void setEffort (long effort)
+	public void
+	setEffort (long effort)
 	{
 		this.effort = effort;
 	}
 	
-	public void setEffortActual (long effortActual)
+	public void
+	setEffortActual (long effortActual)
 	{
 		this.effortActual = effortActual;
 	}
 
-	public void setEndDate (CalendarDate date)
+	public void
+	setEndDate (CalendarDate date)
 	{
 		if (date == null)
 		{
@@ -228,22 +256,26 @@ public class TaskImpl implements Task, Comparable
 			endDate = date;
 	}
 
-	public void setFrozen (boolean frozen)
+	public void
+	setFrozen (boolean frozen)
 	{
 		this.frozen = frozen;
 	}
 
-	public void setParentTask (Task task)
+	public void
+	setParentTask (Task task)
 	{
 		parent = task;
 	}
 
-	public void setPriority (int p)
+	public void
+	setPriority (int p)
 	{
 		priority = p;
 	}
 
-	public void setProgress (int p)
+	public void
+	setProgress (int p)
 	{
 		if ( (p >= 0) && (p <= 100))
 		{
@@ -255,7 +287,8 @@ public class TaskImpl implements Task, Comparable
 		}
 	}
 
-	public void setStartDate (CalendarDate date)
+	public void
+	setStartDate (CalendarDate date)
 	{
 		if (date == null)
 		{
@@ -267,12 +300,14 @@ public class TaskImpl implements Task, Comparable
 		}
 	}
 
-	public void setSubTasks (Collection<Task> SubTasks)
+	public void
+	setSubTasks (Collection<Task> SubTasks)
 	{
 		this.SubTasks = SubTasks;
 	}
 
-	public void setText (String text)
+	public void
+	setText (String text)
 	{
 		if (text == null)
 			this.text = "";
@@ -280,23 +315,27 @@ public class TaskImpl implements Task, Comparable
 			this.text = text;
 	}
 
-	public void setUpdateSubTasks (boolean updateSubTasks)
+	public void
+	setUpdateSubTasks (boolean updateSubTasks)
 	{
 		this.updateSubTasks = updateSubTasks;
 	}
 	
 
-	public void addSubTask (Task task)
+	public void
+	addSubTask (Task task)
 	{
 		SubTasks.add (task);
 	}
 
-	public void addSubTasks (Collection<Task> tasks)
+	public void
+	addSubTasks (Collection<Task> tasks)
 	{
 		SubTasks.addAll (tasks);
 	}
 	
-	public Task deepCopy()
+	public Task
+	deepCopy()
 	{
 		Task newTask = null;
 		try {
@@ -318,7 +357,8 @@ public class TaskImpl implements Task, Comparable
 		return newTask;
 	}
 	
-	public long[] recursivelyModifyCompletionFromSubTasks ()
+	public long[]
+	recursivelyModifyCompletionFromSubTasks ()
 	{
 		long[] res = new long[2];
 		long expendedEffort = 0;
@@ -347,7 +387,8 @@ public class TaskImpl implements Task, Comparable
 		return res;
 	}
 	
-	public CalendarDate recursivelyModifyEarliestEndDateFromSubTasks ()
+	public CalendarDate
+	recursivelyModifyEarliestEndDateFromSubTasks ()
 	{
 		CalendarDate d = getEndDate ();
 		Collection subTasks = getSubTasks ();
@@ -366,7 +407,8 @@ public class TaskImpl implements Task, Comparable
 		return d;
 	}
 
-	public CalendarDate recursivelyModifyLatestStartDateFromSubTasks ()
+	public CalendarDate
+	recursivelyModifyLatestStartDateFromSubTasks ()
 	{
 		CalendarDate d = getStartDate ();
 		Collection subTasks = getSubTasks ();
@@ -385,7 +427,8 @@ public class TaskImpl implements Task, Comparable
 		return d;
 	}
 
-	public long recursivelyModifyEffortFromSubTasks ()
+	public long
+	recursivelyModifyEffortFromSubTasks ()
 	{
 		long totalEffort = 0;
 		Collection subTasks = getSubTasks ();
@@ -400,22 +443,26 @@ public class TaskImpl implements Task, Comparable
 		return totalEffort;
 	}
 	
-	public void removeAllSubTasks ()
+	public void
+	removeAllSubTasks ()
 	{
 		SubTasks.clear ();
 	}
 
-	public void removeSubTask (Task task)
+	public void
+	removeSubTask (Task task)
 	{
 		SubTasks.remove (task);
 	}
 
-	public void removeSubTasks (Collection<Task> tasks)
+	public void
+	removeSubTasks (Collection<Task> tasks)
 	{
 		SubTasks.removeAll (tasks);
 	}
 
-	public int compareTo (Object o)
+	public int
+	compareTo (Object o)
 	{
 		Task task = (Task) o;
 		if (getRate () > task.getRate ())
@@ -427,15 +474,18 @@ public class TaskImpl implements Task, Comparable
 				return 0;
 	}
 
-	public boolean equals(Object o)
+	public boolean
+	equals (Object o)
 	{
 		boolean a = o instanceof Task;
 		Task t = (Task) o;
-		boolean b = t.getID().equals(this.getID());
+		boolean b = t.getID ().equals (this.getID ());
 		return a && b;
 	}
 	
-	public long recursivelyModifyTotalEffortFromSubTasks() {
+	public long
+	recursivelyModifyTotalEffortFromSubTasks ()
+	{
 		//Copied the method from recursivelyModifyEffortFromSubTasks not sure what the difference was
 		
 		long totalEffort = 0;

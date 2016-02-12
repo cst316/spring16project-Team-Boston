@@ -5,18 +5,22 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-public class TaskImplTest
+public class
+TaskImplTest
 {
 	private Task task = null;
 	
 	@Before
-	public void setUp () throws Exception
+	public void
+	setUp ()
+	throws Exception
 	{
 		task = new TaskImpl ();
 		assertTrue (task != null);
 	}
 
-	public void  getActiveTest ()
+	public void
+	getActiveTest ()
 	{
 		boolean param;
 		param = true;
@@ -24,7 +28,8 @@ public class TaskImplTest
 		assertEquals (task.getActive (),  param);
 	}
 	
-	public void  getDescriptionTest ()
+	public void
+	getDescriptionTest ()
 	{
 		String param;
 		param = "";
@@ -32,7 +37,8 @@ public class TaskImplTest
 		assertEquals (task.getDescription (), param);
 	}
 	
-	public void  getEffortTest ()
+	public void
+	getEffortTest ()
 	{
 		long param;
 		param = 0.0f;
@@ -40,7 +46,8 @@ public class TaskImplTest
 		assertEquals (task.getEffort (), param);
 	}
 	
-	public void  getEffortActualTest ()
+	public void
+	getEffortActualTest ()
 	{
 		long param;
 		param = 0.0f;
@@ -48,7 +55,8 @@ public class TaskImplTest
 		assertEquals (task.getEffortActual (), param);
 	}
 	
-	public void  getEndDateTest ()
+	public void
+	getEndDateTest ()
 	{
 		CalenderDate param;
 		param = new CalenderDate ();
@@ -56,7 +64,8 @@ public class TaskImplTest
 		assertEquals (task.getEndDate (), param);
 	}
 	
-	public void  getIDTest ()
+	public void
+	getIDTest ()
 	{
 		String param;
 		param = "";
@@ -64,7 +73,8 @@ public class TaskImplTest
 		assertEquals (task.getID (), param);
 	}
 	
-	public void  getParentIdTest ()
+	public void
+	getParentIdTest ()
 	{
 		String param;
 		param = "";
@@ -72,7 +82,8 @@ public class TaskImplTest
 		assertEquals (task.getParentID (), param);
 	}
 	
-	public void  getParentTaskTest ()
+	public void
+	getParentTaskTest ()
 	{
 		Task parent;
 		parent = new TaskImpl (null);
@@ -80,7 +91,8 @@ public class TaskImplTest
 		assertEquals (child.getParentTask (), parent);
 	}
 	
-	public void  getPriorityTest ()
+	public void
+	getPriorityTest ()
 	{
 		int param;
 		param = 0;
@@ -88,7 +100,8 @@ public class TaskImplTest
 		assertEquals (task.getPriority (), param);
 	}
 	
-	public void  getProgressTest ()
+	public void
+	getProgressTest ()
 	{
 		int param
 		param = 0;
@@ -96,7 +109,8 @@ public class TaskImplTest
 		assertEquals (task.getProgress (), param);
 	}
 	
-	public void  getRateTest ()
+	public void
+	getRateTest ()
 	{
 		long param;
 		param = 0.0f;
@@ -104,7 +118,8 @@ public class TaskImplTest
 		assertEquals (task.getRate (), param);
 	}
 	
-	public void  getStartDateTest ()
+	public void
+	getStartDateTest ()
 	{
 		CalenderDate param;
 		param = new CalenderDate ();
@@ -112,7 +127,8 @@ public class TaskImplTest
 		assertEquals (task.getStartDate (), param);
 	}
 	
-	public void  getStatusTest ()
+	public void
+	getStatusTest ()
 	{
 		int param;
 		param = Task.ACTIVE;
@@ -120,7 +136,8 @@ public class TaskImplTest
 		assertEquals (task.getStatus (), param);
 	}
 	
-	public void  getSubTaskTest ()
+	public void
+	getSubTaskTest ()
 	{
 		Task child;
 		child = new Task (task);
@@ -128,7 +145,8 @@ public class TaskImplTest
 		assertEquals (task.getSubTask ("child"), child);
 	}
 	
-	public void  getSubTasksTest ()
+	public void
+	getSubTasksTest ()
 	{
 		ArrayList<Task> param;
 		param = new ArrayList<Task> ();
@@ -138,7 +156,8 @@ public class TaskImplTest
 		assertEquals (task.getSubTasks (), param);
 	}
 	
-	public void getTextTest ()
+	public void
+	getTextTest ()
 	{
 		String param;
 		param = "";
@@ -146,7 +165,8 @@ public class TaskImplTest
 		assertEquals (task.getText (), param);
 	}
 	
-	public void getUpdateSubTasksTest ()
+	public void
+	getUpdateSubTasksTest ()
 	{
 		boolean param;
 		param = true;
@@ -155,128 +175,153 @@ public class TaskImplTest
 	}
 	
 	
-	public void setActiveTest ()
+	public void
+	setActiveTest ()
 	{
 		getActiveTest ();
 	}
 	
-	public void setDescriptionTest ()
+	public void
+	setDescriptionTest ()
 	{
 		getDescriptionTest ();
 	}
 	
-	public void setEffortTest ()
+	public void
+	setEffortTest ()
 	{
 		getEffortTest ();
 	}
 	
-	public void setEffortActualTest ()
+	public void
+	setEffortActualTest ()
 	{
 		getEffortActualTest ();
 	}
 	
-	public void setEndDateTest ()
+	public void
+	setEndDateTest ()
 	{
 		getEndDateTest ();
 	}
 	
-	public void setIDTest (String id)
+	public void
+	setIDTest (String id)
 	{
 		getIDTest (id);
 	}
 	
-	public void setFrozenTest ()
+	public void
+	setFrozenTest ()
 	{
 		getFrozenTest ();
 	}
 	
-	public void setParentTaskTest ()
+	public void
+	setParentTaskTest ()
 	{
 		getParentTaskTest ();
 	}
 	
-	public void setPriorityTest ()
+	public void
+	setPriorityTest ()
 	{
 		getPriorityTest ();
 	}
 	
-	public void setProgressTest ()
+	public void
+	setProgressTest ()
 	{
 		getProgressTest ();
 	}
 	
-	public void setStartDateTest ()
+	public void
+	setStartDateTest ()
 	{
 		getStartDateTest ();
 	}
 	
-	public void setSubTasksTest ()
+	public void
+	setSubTasksTest ()
 	{
 		getSubTasksTest ();
 	}
 	
-	public void setTextTest (String s)
+	public void
+	setTextTest (String s)
 	{
 		getTextTest ();
 	}
 	
-	public void setUpdateSubTasksTest ()
+	public void
+	setUpdateSubTasksTest ()
 	{
 		getUpdateSubTasksTest ();
 	}
 	
 	
-	void addSubTaskTest ()
+	public void
+	addSubTaskTest ()
 	{
 
 	}
 	
-	void addSubTasksTest (Collection<Task> tasks)
+	public void
+	addSubTasksTest (Collection<Task> tasks)
 	{
 		
 	}
 	
-	Task deepCopyTest ()
+	public void
+	deepCopyTest ()
 	{
 		
 	}
 	
-	long[] recursivelyModifyCompletionFromSubTasksTest ()
+	public void
+	recursivelyModifyCompletionFromSubTasksTest ()
 	{
 		
 	}
 	
-	CalendarDate recursivelyModifyEarliestEndDateFromSubTasksTest ()
+	public void
+	recursivelyModifyEarliestEndDateFromSubTasksTest ()
 	{
 		
 	}
 	
-	CalendarDate recursivelyModifyLatestStartDateFromSubTasksTest ()
+	public void
+	recursivelyModifyLatestStartDateFromSubTasksTest ()
 	{
 		
 	}
 	
-	long recursivelyModifyTotalEffortFromSubTasksTest ()
+	public void
+	recursivelyModifyTotalEffortFromSubTasksTest ()
 	{
 		
 	}
 	
-	long recursivelyModifyEffortFromSubTasksTest ()
+	public void
+	recursivelyModifyEffortFromSubTasksTest ()
 	{
 		
 	}
 	
-	void removeAllSubTasksTest ()
+	public void
+	removeAllSubTasksTest ()
 	{
 		
 	}
 	
-	void removeSubTaskTest (Task task)
+	public void
+	removeSubTaskTest (Task task)
 	{
 		
 	}
 	
-	void removeSubTasksTest (Collection<Task> tasks)
+	public void
+	removeSubTasksTest (Collection<Task> tasks)
 	{
 		
 	}
