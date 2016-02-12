@@ -17,7 +17,8 @@ import net.sf.memoranda.date.CalendarDate;
  * 
  */
 /*$Id: Task.java,v 1.9 2005/06/16 04:21:32 alexeya Exp $*/
-public interface Task {
+public interface Task 
+{
     
     public static final int SCHEDULED = 0;
 
@@ -43,24 +44,24 @@ public interface Task {
     
     public static final int PRIORITY_HIGHEST = 4;
     
-    CalendarDate getStartDate();
-    void setStartDate(CalendarDate date);
+    CalendarDate getStartDate ();
+    void setStartDate (CalendarDate date);
 
-    CalendarDate getEndDate();
-    void setEndDate(CalendarDate date);
+    CalendarDate getEndDate ();
+    void setEndDate (CalendarDate date);
     
-    int getStatus(CalendarDate date);
+    int getStatus (CalendarDate date);
     
-    int getProgress();
-    void setProgress(int p);
+    int getProgress ();
+    void setProgress (int p);
     
-    int getPriority();
-    void setPriority(int p);
+    int getPriority ();
+    void setPriority (int p);
     
-    String getID();
+    String getID ();
     
-    String getText();
-    void setText(String s);
+    String getText ();
+    void setText (String s);
     
     /*Collection getDependsFrom();
     
@@ -68,31 +69,32 @@ public interface Task {
     
     void removeDependsFrom(Task task);*/
             
-    Collection getSubTasks();    
-    Task getSubTask(String id);
+    Collection getSubTasks ();    
+    Task getSubTask (String id);
     
-    boolean hasSubTasks(String id);
+    boolean hasSubTasks (String id);
     
-    void setEffort(long effort);
-    long getEffort();
+    // actual estimated effort hours
+    void setEffort (long effort);
+    long getEffort ();
     
-    // Actual Effort Hours
-    void setEffortActual(long effortActual);
-    long getEffortActual();
+    // predicted estimated effort hours
+    void setPredictedEffort (long effortPredicted);
+    long getPredictedEffort ();
     
-    void setDescription(String description);
-    String getDescription();
+    void setDescription (String description);
+    String getDescription ();
 
-    Task getParentTask();
-    String getParentId();
+    Task getParentTask ();
+    String getParentId ();
     
-    void freeze();
-    void unfreeze();
-	long getRate();
+    void freeze ();
+    void unfreeze ();
+	long getRate ();
     
-    nu.xom.Element getContent();
-	ArrayList<Task> getSubTasksArray();
-	boolean isUpdateChildren();
-	void setUpdateChildren(boolean updateChildren);
-	void updateFromChildren();
+    nu.xom.Element getContent ();
+	ArrayList<Task> getSubTasksArray ();
+	boolean isUpdateChildren ();
+	void setUpdateChildren (boolean updateChildren);
+	void updateFromChildren ();
 }
