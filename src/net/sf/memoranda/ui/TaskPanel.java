@@ -495,7 +495,6 @@ public class TaskPanel extends JPanel {
 		dlg.effortField.setText(Util.getHoursFromMillis(t.getEffort()));
 		// Add actual effort
 		dlg.effortActualField.setText(Util.getHoursFromMillis(t.getEffortActual()));
-		System.out.println("Task list impl " + t.getUpdateSubTasks());
 		if ((t.getStartDate().getDate()).after(t.getEndDate().getDate()))
 			dlg.chkEndDate.setSelected(false);
 		else
@@ -594,8 +593,10 @@ public class TaskPanel extends JPanel {
 	void copyTaskB_actionPerformed(ActionEvent e) {
 		String originalTaskId = taskTable.getModel().getValueAt(taskTable.getSelectedRow(), TaskTable.TASK_ID).toString();
 		if (taskTable.getSelectedRow() == -1)
+		{
 			return;
-		duplicateTaskAndSubtasks (CurrentProject.getTaskList().getTask(originalTaskId), null);
+		}
+		CurrentProject.getTaskList().createTask(CurrentProject.getTaskList().getTask(originalTaskId));
 
 		CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
 		taskTable.tableChanged();
@@ -859,13 +860,4 @@ public class TaskPanel extends JPanel {
 		calcTask_actionPerformed(e);
 	}
 	
-	private void duplicateTaskAndSubtasks (Task originalTask, String parentId)
-	{
-		try {
-			Task newTask = CurrentProject.getTaskList().createTask(originalTask, parentId);
-			CurrentProject.getTaskList ().getAllSubTasks (originalTask.getID ()).forEach (i -> duplicateTaskAndSubtasks ((Task)i, newTask.getID ()));
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-	}
 }

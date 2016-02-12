@@ -2,6 +2,7 @@ package net.sf.memoranda;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Vector;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -19,6 +20,7 @@ public class TaskImpl implements Task, Comparable
 	public TaskImpl (Task parent)
 	{
 		this.parent = parent;
+		SubTasks = new Vector<Task>();
 	}
 	
 	public boolean getActive()
@@ -150,7 +152,14 @@ public class TaskImpl implements Task, Comparable
 
 	public Collection<Task> getSubTasks ()
 	{
-		return SubTasks;
+		if(SubTasks.size() > 0)
+		{
+			return SubTasks;
+		}
+		else
+		{
+			return new Vector<Task>();
+		}
 	}
 
 	public boolean getUpdateSubTasks ()
@@ -187,6 +196,11 @@ public class TaskImpl implements Task, Comparable
 			this.description = "";
 		else
 			this.description = description;
+	}
+	
+	public void setID (String id) 
+	{
+		this.id = id;
 	}
 
 	public void setEffort (long effort)
@@ -417,8 +431,19 @@ public class TaskImpl implements Task, Comparable
 	}
 	
 	public long recursivelyModifyTotalEffortFromSubTasks() {
-		// TODO Auto-generated method stub
-		return 0;
+		//Copied the method from recursivelyModifyEffortFromSubTasks not sure what the difference was
+		
+		long totalEffort = 0;
+		Collection subTasks = getSubTasks ();
+		if (subTasks == null)
+			return effort;
+		for (Iterator<Task> iter = subTasks.iterator (); iter.hasNext ();)
+		{
+			Task element = iter.next ();
+			totalEffort = totalEffort + element.recursivelyModifyEffortFromSubTasks ();
+		}
+		setEffort (totalEffort);
+		return totalEffort;
 	}
 	
 	private boolean active;

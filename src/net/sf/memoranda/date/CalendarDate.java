@@ -8,6 +8,7 @@
  */
 package net.sf.memoranda.date;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -19,7 +20,7 @@ import net.sf.memoranda.util.Util;
  *
  */
 /*$Id: CalendarDate.java,v 1.3 2004/01/30 12:17:41 alexeya Exp $*/
-public class CalendarDate {
+public class CalendarDate implements Serializable{
 
     private int _year;
     private int _month;

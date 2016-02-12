@@ -46,6 +46,7 @@ public interface Task extends Serializable
 	void setDescription (String description);
 	void setEffort (long effort);
 	void setEndDate (CalendarDate date);
+	void setID (String id);
 	void setFrozen (boolean frozen);
 	void setParentTask (Task task);
 	void setPriority (int p);

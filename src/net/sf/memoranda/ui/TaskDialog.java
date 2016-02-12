@@ -261,7 +261,7 @@ public class TaskDialog extends JDialog
 		// //Added by (jcscoobyrs) on 14-Nov-2003 at 10:45:16 PM
 		startDate.setEditor (new JSpinner.DateEditor (startDate, sdf.toPattern ()));
 
-		startDate.addChangeListener (new ChangeListener ()
+		/*startDate.addChangeListener (new ChangeListener ()
 		{
 			public void stateChanged (ChangeEvent e)
 			{
@@ -294,7 +294,7 @@ public class TaskDialog extends JDialog
 				startCalFrame.cal.set (new CalendarDate (sd));
 				ignoreStartChanged = false;
 			}
-		});
+		});*/
 
 		startDateLabel.setText (Local.getString ("Start date"));
 		// startDateLabel.setPreferredSize(new Dimension(60, 16));

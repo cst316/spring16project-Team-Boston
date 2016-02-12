@@ -8,6 +8,8 @@
  */
 package net.sf.memoranda;
 
+import java.io.Serializable;
+
 import net.sf.memoranda.date.CalendarDate;
 
 /**
@@ -15,7 +17,8 @@ import net.sf.memoranda.date.CalendarDate;
  */
 
 /*$Id: Project.java,v 1.5 2004/11/22 10:02:37 alexeya Exp $*/
-public interface Project {
+public interface Project extends Serializable
+{
     
     public static final int SCHEDULED = 0;
    

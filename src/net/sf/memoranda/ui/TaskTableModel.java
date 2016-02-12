@@ -147,17 +147,19 @@ public class TaskTableModel extends AbstractTreeTableModel implements TreeTableM
     /**
      * @see javax.swing.tree.TreeModel#getChildCount(java.lang.Object)
      */
-    public int getChildCount(Object parent) {
-        if (parent instanceof Project) {
-		if( activeOnly() ){
-			return CurrentProject.getTaskList().getActiveSubTasks(null, CurrentDate.get()).size();
+	public int getChildCount(Object parent) {
+		if (parent instanceof Project) {
+			if (activeOnly()) {
+				return CurrentProject.getTaskList().getActiveSubTasks(null, CurrentDate.get()).size();
+			} else
+				return CurrentProject.getTaskList().getTopLevelTasks().size();
 		}
-		else return CurrentProject.getTaskList().getTopLevelTasks().size();
-        }
-        Task t = (Task) parent;
-        if(activeOnly()) return CurrentProject.getTaskList().getActiveSubTasks(t.getID(), CurrentDate.get()).size();
-	else return t.getSubTasks().size();
-    }
+		Task t = (Task) parent;
+		if (activeOnly())
+			return CurrentProject.getTaskList().getActiveSubTasks(t.getID(), CurrentDate.get()).size();
+		else
+			return t.getSubTasks().size();
+	}
 
     /**
      * @see javax.swing.tree.TreeModel#getChild(java.lang.Object, int)
