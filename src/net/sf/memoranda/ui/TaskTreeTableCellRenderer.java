@@ -127,6 +127,18 @@ public class TaskTreeTableCellRenderer extends DefaultTreeCellRenderer implement
             label.setForeground(getColorForTaskStatus(t, false));
             return label;
         }
+        // if( column_name.equals( Local.getString("Predicted Effort(hrs") ) )
+        if (column == 7) {
+            label.setText(value.toString());
+            label.setForeground(getColorForTaskStatus(t, false));
+            return label;
+        }
+        // if( column_name.equals( Local.getString("Actual Effort(hrs)") ) )
+        if (column == 8) {
+            label.setText(value.toString());
+            label.setForeground(getColorForTaskStatus(t, false));
+            return label;
+        }
         label.setText(value.toString());
         return label;
     }
