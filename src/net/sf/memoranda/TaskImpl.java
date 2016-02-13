@@ -389,7 +389,7 @@ TaskImpl implements Task, Comparable
 	}
 	
 	public CalendarDate
-	recursivelyModifyEarliestEndDateFromSubTasks ()
+	recursivelyModifyEndDateFromSubTasks ()
 	{
 		CalendarDate d = getEndDate ();
 		Collection subTasks = getSubTasks ();
@@ -398,7 +398,7 @@ TaskImpl implements Task, Comparable
 		for (Iterator<Task> iter = subTasks.iterator (); iter.hasNext ();)
 		{
 			Task element = iter.next ();
-			CalendarDate dd = element.recursivelyModifyEarliestEndDateFromSubTasks ();
+			CalendarDate dd = element.recursivelyModifyEndDateFromSubTasks ();
 			if (dd.after (d))
 			{
 				d = dd;
@@ -409,7 +409,7 @@ TaskImpl implements Task, Comparable
 	}
 
 	public CalendarDate
-	recursivelyModifyLatestStartDateFromSubTasks ()
+	recursivelyModifyStartDateFromSubTasks ()
 	{
 		CalendarDate d = getStartDate ();
 		Collection subTasks = getSubTasks ();
@@ -418,7 +418,7 @@ TaskImpl implements Task, Comparable
 		for (Iterator<Task> iter = subTasks.iterator (); iter.hasNext ();)
 		{
 			Task element = iter.next ();
-			CalendarDate dd = element.recursivelyModifyLatestStartDateFromSubTasks ();
+			CalendarDate dd = element.recursivelyModifyStartDateFromSubTasks ();
 			if (dd.before (d))
 			{
 				d = dd;
@@ -431,6 +431,24 @@ TaskImpl implements Task, Comparable
 	public long
 	recursivelyModifyEffortFromSubTasks ()
 	{
+		long totalEffort = 0;
+		Collection subTasks = getSubTasks ();
+		if (subTasks == null)
+			return effort;
+		for (Iterator<Task> iter = subTasks.iterator (); iter.hasNext ();)
+		{
+			Task element = iter.next ();
+			totalEffort = totalEffort + element.recursivelyModifyEffortFromSubTasks ();
+		}
+		setEffort (totalEffort);
+		return totalEffort;
+	}
+	
+	public long
+	recursivelyModifyTotalEffortFromSubTasks ()
+	{
+		//Copied the method from recursivelyModifyEffortFromSubTasks not sure what the difference was
+		
 		long totalEffort = 0;
 		Collection subTasks = getSubTasks ();
 		if (subTasks == null)
@@ -482,24 +500,6 @@ TaskImpl implements Task, Comparable
 		Task t = (Task) o;
 		boolean b = t.getID ().equals (this.getID ());
 		return a && b;
-	}
-	
-	public long
-	recursivelyModifyTotalEffortFromSubTasks ()
-	{
-		//Copied the method from recursivelyModifyEffortFromSubTasks not sure what the difference was
-		
-		long totalEffort = 0;
-		Collection subTasks = getSubTasks ();
-		if (subTasks == null)
-			return effort;
-		for (Iterator<Task> iter = subTasks.iterator (); iter.hasNext ();)
-		{
-			Task element = iter.next ();
-			totalEffort = totalEffort + element.recursivelyModifyEffortFromSubTasks ();
-		}
-		setEffort (totalEffort);
-		return totalEffort;
 	}
 	
 	private boolean active;

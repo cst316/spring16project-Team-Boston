@@ -139,9 +139,13 @@ TaskImplTest
 	public void
 	getSubTaskTest ()
 	{
+		ArrayList<Task> container;
+		container = new ArrayList<Task> ();
 		Task child;
 		child = new Task (task);
 		child.setID ("child");
+		container.add (child);
+		task.setSubTasks (container);
 		assertEquals (task.getSubTask ("child"), child);
 	}
 	
@@ -263,19 +267,42 @@ TaskImplTest
 	public void
 	addSubTaskTest ()
 	{
-
+		ArrayList<Task> container;
+		container = new ArrayList<Task> ();
+		task.setSubTasks (container);
+		Task child;
+		child = new Task (task);
+		child.setID ("child");
+		task.addSubTask (child);
+		assertEquals (task.getSubTask ("child"), child);
 	}
 	
 	public void
 	addSubTasksTest (Collection<Task> tasks)
 	{
-		
+		ArrayList<Task> container;
+		container = new ArrayList<Task> ();
+		task.setSubTasks (container);
+		ArrayList<Task> param;
+		Task child0;
+		child0 = new Task (task);
+		child0.setID ("child0");
+		param.add (child0);
+		Task child1;
+		child1 = new Task (task);
+		child1.setID ("child1");
+		param.add (child1);
+		task.addSubTasks (param);
+		assertEquals (task.getSubTask ("child0"), child0);
+		assertEquals (task.getSubTask ("child1"), child1);
 	}
 	
 	public void
 	deepCopyTest ()
 	{
-		
+		Task param;
+		param = task.deepCopy ();
+		assertEquals (task, param);
 	}
 	
 	public void
@@ -285,13 +312,13 @@ TaskImplTest
 	}
 	
 	public void
-	recursivelyModifyEarliestEndDateFromSubTasksTest ()
+	recursivelyModifyEndDateFromSubTasksTest ()
 	{
 		
 	}
 	
 	public void
-	recursivelyModifyLatestStartDateFromSubTasksTest ()
+	recursivelyModifyStartDateFromSubTasksTest ()
 	{
 		
 	}
@@ -299,30 +326,126 @@ TaskImplTest
 	public void
 	recursivelyModifyTotalEffortFromSubTasksTest ()
 	{
-		
+		ArrayList<Task> taskContainer;
+		container = new ArrayList<Task> ();
+		taskContainer.add (new Task (task));
+		taskContainer.add (new Task (task));
+		taskContainer.add (new Task (task));
+		taskContainer.get (0).setTotalEffort (1);
+		taskContainer.get (1).setTotalEffort (2);
+		taskContainer.get (2).setTotalEffort (3);
+		ArrayList<Task> childContainer;
+		childContainer = new ArrayList<Task> ();
+		childContainer.add (new Task (container.get (0)));
+		childContainer.add (new Task (container.get (0)));
+		childContainer.add (new Task (container.get (0)));
+		childContainer.get (0).setTotalEffort (3);
+		childContainer.get (1).setTotalEffort (4);
+		childContainer.get (2).setTotalEffort (5);
+		task.recursivelyModifyTotalEffortFromSubtasks ();
+		assertEquals (task.getEffort (), 17);
+		assertEquals (taskContainer.get (0).getTotalEffort (), 12);
+		assertEquals (taskContainer.get (1).getTotalEffort (), 2);
+		assertEquals (taskContainer.get (2).getTotalEffort (), 3);
+		assertEquals (childContainer.get (0).getTotalEffort (), 3);
+		assertEquals (childContainer.get (1).getTotalEffort (), 4);
+		assertEquals (childContainer.get (2).getTotalEffort (), 5);
 	}
 	
 	public void
 	recursivelyModifyEffortFromSubTasksTest ()
 	{
-		
+		ArrayList<Task> taskContainer;
+		container = new ArrayList<Task> ();
+		taskContainer.add (new Task (task));
+		taskContainer.add (new Task (task));
+		taskContainer.add (new Task (task));
+		taskContainer.get (0).setEffort (1);
+		taskContainer.get (1).setEffort (2);
+		taskContainer.get (2).setEffort (3);
+		ArrayList<Task> childContainer;
+		childContainer = new ArrayList<Task> ();
+		childContainer.add (new Task (container.get (0)));
+		childContainer.add (new Task (container.get (0)));
+		childContainer.add (new Task (container.get (0)));
+		childContainer.get (0).setEffort (3);
+		childContainer.get (1).setEffort (4);
+		childContainer.get (2).setEffort (5);
+		task.recursivelyModifyEffortFromSubTasks ();
+		assertEquals (task.getEffort (), 17);
+		assertEquals (taskContainer.get (0).getEffort (), 12);
+		assertEquals (taskContainer.get (1).getEffort (), 2);
+		assertEquals (taskContainer.get (2).getEffort (), 3);
+		assertEquals (childContainer.get (0).getEffort (), 3);
+		assertEquals (childContainer.get (1).getEffort (), 4);
+		assertEquals (childContainer.get (2).getEffort (), 5);
 	}
 	
 	public void
 	removeAllSubTasksTest ()
 	{
-		
+		ArrayList<Task> container;
+		container = new ArrayList<Task> ();
+		Task child0;
+		child0 = new Task (task);
+		container.add (child0);
+		Task child1;
+		child1 = new Task (task);
+		container.add (child1);
+		task.setSubTasks (container);
+		task.removeAllSubTasks ();
+		assertEquals (task.getSubTasks ().size (), 0);
 	}
 	
 	public void
-	removeSubTaskTest (Task task)
+	removeSubTaskTest ()
 	{
-		
+		ArrayList<Task> container;
+		container = new ArrayList<Task> ();
+		Task child0;
+		child0 = new Task (task);
+		child0.setID ("child0");
+		container.add (child0);
+		Task child1;
+		child1 = new Task (task);
+		child1.setID ("child1");
+		container.add (child1);
+		task.setSubTasks (container);
+		task.removeSubTask (child0);
+		assertEquals (task.getSubTasks ().size (), 1);
+		assertNull (task.getSubTask ("child0"));
+		assertEquals (task.getSubTask ("child1"), child1);
 	}
 	
 	public void
-	removeSubTasksTest (Collection<Task> tasks)
+	removeSubTasksTest ()
 	{
-		
+		ArrayList<Task> container;
+		container = new ArrayList<Task> ();
+		Task child0;
+		child0 = new Task (task);
+		child0.setID ("child0");
+		container.add (child0);
+		Task child1;
+		child1 = new Task (task);
+		child1.setID ("child1");
+		container.add (child1);
+		Task child2;
+		child2 = new Task (task);
+		child2.setID ("child2");
+		container.add (child2);
+		task.setSubTasks (container);
+		ArrayList<Task> param;
+		child0prime = new Task (task);
+		child0prime.setID ("child0");
+		param.add (child0prime);
+		child2prime = new Task (task);
+		child2prime.setID ("child2");
+		param.add (child2prime);
+		task.removeSubTasks (param);
+		assertEquals (task.getSubTasks ().size (), 1);
+		assertNull (task.getSubTask ("child0"));
+		assertEquals (task.getSubTask ("child1"), child1);
+		assertNull (task.getSubTask ("child2"));
 	}
 }

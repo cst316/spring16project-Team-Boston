@@ -36,7 +36,7 @@ Task extends Serializable
 	getEffort ();
 	
 	long
-	getEffortActual();
+	getEffortActual ();
 	
 	CalendarDate
 	getEndDate ();
@@ -87,7 +87,7 @@ Task extends Serializable
 	setEffort (long effort);
 	
 	void
-	setEffortActual(long millisFromHours);
+	setEffortActual (long millisFromHours);
 	
 	void
 	setEndDate (CalendarDate date);
@@ -132,10 +132,10 @@ Task extends Serializable
 	recursivelyModifyCompletionFromSubTasks ();
 	
 	CalendarDate
-	recursivelyModifyEarliestEndDateFromSubTasks ();
+	recursivelyModifyEndDateFromSubTasks ();
 	
 	CalendarDate
-	recursivelyModifyLatestStartDateFromSubTasks ();
+	recursivelyModifyStartDateFromSubTasks ();
 	
 	long
 	recursivelyModifyTotalEffortFromSubTasks ();
