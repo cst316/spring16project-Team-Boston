@@ -129,7 +129,7 @@ public class TaskListImpl implements TaskList {
      */
 
     public void removeTask(Task task) {
-        String parentTaskId = task.getParentId();
+        String parentTaskId = task.getParentID();
         if (parentTaskId != null) {
         	Task parentNode = getTaskElement(parentTaskId);
             parentNode.removeSubTask(task);         
@@ -179,7 +179,7 @@ public class TaskListImpl implements TaskList {
      */
     public long calculateTotalEffortFromSubTasks(Task t) {
         if (t.getSubTasks().size() > 0) {
-            return t.recursivelyModifyTotalEffortFromSubTasks();          
+            return t.recursivelyModifyEffortFromSubTasks();          
         }
         else {
             return t.getEffort();

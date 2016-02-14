@@ -4,6 +4,10 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
+import java.util.ArrayList;
+import net.sf.memoranda.date.CalendarDate;
+import net.sf.memoranda.Task;
+import net.sf.memoranda.TaskImpl;
 
 public class
 TaskImplTest
@@ -15,19 +19,11 @@ TaskImplTest
 	setUp ()
 	throws Exception
 	{
-		task = new TaskImpl ();
+		task = new TaskImpl (null);
 		assertTrue (task != null);
 	}
-
-	public void
-	getActiveTest ()
-	{
-		boolean param;
-		param = true;
-		task.setActive (param);
-		assertEquals (task.getActive (),  param);
-	}
 	
+	@Test
 	public void
 	getDescriptionTest ()
 	{
@@ -37,33 +33,37 @@ TaskImplTest
 		assertEquals (task.getDescription (), param);
 	}
 	
+	@Test
 	public void
 	getEffortTest ()
 	{
 		long param;
-		param = 0.0f;
+		param = 0l;
 		task.setEffort (param);
 		assertEquals (task.getEffort (), param);
 	}
 	
+	@Test
 	public void
 	getEffortActualTest ()
 	{
 		long param;
-		param = 0.0f;
+		param = 0l;
 		task.setEffortActual (param);
 		assertEquals (task.getEffortActual (), param);
 	}
 	
+	@Test
 	public void
 	getEndDateTest ()
 	{
-		CalenderDate param;
-		param = new CalenderDate ();
+		CalendarDate param;
+		param = new CalendarDate ();
 		task.setEndDate (param);
 		assertEquals (task.getEndDate (), param);
 	}
 	
+	@Test
 	public void
 	getIDTest ()
 	{
@@ -73,15 +73,21 @@ TaskImplTest
 		assertEquals (task.getID (), param);
 	}
 	
+	@Test
 	public void
-	getParentIdTest ()
+	getParentIDTest ()
 	{
+		assertEquals (task.getParentID (), null);
 		String param;
 		param = "";
-		task.setParentID (param);
-		assertEquals (task.getParentID (), param);
+		task.setID (param);
+		Task child;
+		child = new TaskImpl (task);
+		task.addSubTask (child);
+		assertEquals (child.getParentID (), "");
 	}
 	
+	@Test
 	public void
 	getParentTaskTest ()
 	{
@@ -91,6 +97,7 @@ TaskImplTest
 		assertEquals (child.getParentTask (), parent);
 	}
 	
+	@Test
 	public void
 	getPriorityTest ()
 	{
@@ -100,66 +107,67 @@ TaskImplTest
 		assertEquals (task.getPriority (), param);
 	}
 	
+	@Test
 	public void
 	getProgressTest ()
 	{
-		int param
+		int param;
 		param = 0;
 		task.setProgress (param);
 		assertEquals (task.getProgress (), param);
 	}
 	
+	@Test
 	public void
 	getRateTest ()
 	{
-		long param;
-		param = 0.0f;
-		task.setRate (param);
-		assertEquals (task.getRate (), param);
+		assertTrue (false);
 	}
 	
+	@Test
 	public void
 	getStartDateTest ()
 	{
-		CalenderDate param;
-		param = new CalenderDate ();
+		CalendarDate param;
+		param = new CalendarDate ();
 		task.setStartDate (param);
 		assertEquals (task.getStartDate (), param);
 	}
 	
+	@Test
 	public void
 	getStatusTest ()
 	{
-		int param;
-		param = Task.ACTIVE;
-		task.setStatus (param);
-		assertEquals (task.getStatus (), param);
+		setFrozenTest ();
 	}
 	
+	@Test
 	public void
 	getSubTaskTest ()
 	{
 		ArrayList<Task> container;
 		container = new ArrayList<Task> ();
 		Task child;
-		child = new Task (task);
+		child = new TaskImpl (task);
 		child.setID ("child");
 		container.add (child);
 		task.setSubTasks (container);
 		assertEquals (task.getSubTask ("child"), child);
 	}
 	
+	@Test
 	public void
 	getSubTasksTest ()
 	{
 		ArrayList<Task> param;
 		param = new ArrayList<Task> ();
-		param.add (new Task (task));
-		param.add (new Task (task));
+		param.add (new TaskImpl (task));
+		param.add (new TaskImpl (task));
 		task.setSubTasks (param);
 		assertEquals (task.getSubTasks (), param);
 	}
 	
+	@Test
 	public void
 	getTextTest ()
 	{
@@ -169,6 +177,7 @@ TaskImplTest
 		assertEquals (task.getText (), param);
 	}
 	
+	@Test
 	public void
 	getUpdateSubTasksTest ()
 	{
@@ -178,92 +187,99 @@ TaskImplTest
 		assertEquals (task.getUpdateSubTasks (), param);
 	}
 	
-	
-	public void
-	setActiveTest ()
-	{
-		getActiveTest ();
-	}
-	
+	@Test
 	public void
 	setDescriptionTest ()
 	{
 		getDescriptionTest ();
 	}
 	
+	@Test
 	public void
 	setEffortTest ()
 	{
 		getEffortTest ();
 	}
 	
+	@Test
 	public void
 	setEffortActualTest ()
 	{
 		getEffortActualTest ();
 	}
 	
+	@Test
 	public void
 	setEndDateTest ()
 	{
 		getEndDateTest ();
 	}
 	
+	@Test
 	public void
-	setIDTest (String id)
+	setIDTest ()
 	{
-		getIDTest (id);
+		getIDTest ();
 	}
 	
+	@Test
 	public void
 	setFrozenTest ()
 	{
-		getFrozenTest ();
+		task.setFrozen (true);
+		assertEquals (task.getStatus (new CalendarDate (3, 5, 2016)), Task.FROZEN);
 	}
 	
+	@Test
 	public void
 	setParentTaskTest ()
 	{
 		getParentTaskTest ();
 	}
 	
+	@Test
 	public void
 	setPriorityTest ()
 	{
 		getPriorityTest ();
 	}
 	
+	@Test
 	public void
 	setProgressTest ()
 	{
 		getProgressTest ();
 	}
 	
+	@Test
 	public void
 	setStartDateTest ()
 	{
 		getStartDateTest ();
 	}
 	
+	@Test
 	public void
 	setSubTasksTest ()
 	{
 		getSubTasksTest ();
 	}
 	
+	@Test
 	public void
-	setTextTest (String s)
+	setTextTest ()
 	{
 		getTextTest ();
 	}
 	
+	@Test
 	public void
 	setUpdateSubTasksTest ()
 	{
 		getUpdateSubTasksTest ();
 	}
 	
-	
+	@Test
 	public void
 	addSubTaskTest ()
 	{
@@ -271,25 +287,27 @@ TaskImplTest
 		container = new ArrayList<Task> ();
 		task.setSubTasks (container);
 		Task child;
-		child = new Task (task);
+		child = new TaskImpl (task);
 		child.setID ("child");
 		task.addSubTask (child);
 		assertEquals (task.getSubTask ("child"), child);
 	}
 	
+	@Test
 	public void
-	addSubTasksTest (Collection<Task> tasks)
+	addSubTasksTest ()
 	{
 		ArrayList<Task> container;
 		container = new ArrayList<Task> ();
 		task.setSubTasks (container);
 		ArrayList<Task> param;
+		param = new ArrayList<Task> ();
 		Task child0;
-		child0 = new Task (task);
+		child0 = new TaskImpl (task);
 		child0.setID ("child0");
 		param.add (child0);
 		Task child1;
-		child1 = new Task (task);
+		child1 = new TaskImpl (task);
 		child1.setID ("child1");
 		param.add (child1);
 		task.addSubTasks (param);
@@ -297,6 +315,7 @@ TaskImplTest
 		assertEquals (task.getSubTask ("child1"), child1);
 	}
 	
+	@Test
 	public void
 	deepCopyTest ()
 	{
@@ -305,69 +324,80 @@ TaskImplTest
 		assertEquals (task, param);
 	}
 	
+	@Test
 	public void
 	recursivelyModifyCompletionFromSubTasksTest ()
 	{
-		
+		assertTrue (false);
 	}
 	
+	@Test
 	public void
 	recursivelyModifyEndDateFromSubTasksTest ()
 	{
-		
+		ArrayList<Task> taskContainer;
+		taskContainer = new ArrayList<Task> ();
+		taskContainer.add (new TaskImpl (task));
+		taskContainer.add (new TaskImpl (task));
+		taskContainer.add (new TaskImpl (task));
+		taskContainer.get (0).setEndDate (new CalendarDate (1, 1, 2014));
+		taskContainer.get (1).setEndDate (new CalendarDate (3, 4, 2016));
+		taskContainer.get (2).setEndDate (new CalendarDate (12, 12, 2016));
+		ArrayList<Task> childContainer;
+		childContainer = new ArrayList<Task> ();
+		childContainer.add (new TaskImpl (taskContainer.get (0)));
+		childContainer.add (new TaskImpl (taskContainer.get (0)));
+		childContainer.add (new TaskImpl (taskContainer.get (0)));
+		childContainer.get (0).setEndDate (new CalendarDate (5, 8, 2015));
+		childContainer.get (1).setEndDate (new CalendarDate (9, 7, 2015));
+		childContainer.get (2).setEndDate (new CalendarDate (10, 10, 2016));
+		task.recursivelyModifyEndDateFromSubTasks ();
+		assertEquals (task.getEndDate (), new CalendarDate (12, 12, 2016));
+		assertEquals (taskContainer.get (0).getEndDate (), new CalendarDate (10, 10, 2016));
 	}
 	
+	@Test
 	public void
 	recursivelyModifyStartDateFromSubTasksTest ()
 	{
-		
-	}
-	
-	public void
-	recursivelyModifyTotalEffortFromSubTasksTest ()
-	{
 		ArrayList<Task> taskContainer;
-		container = new ArrayList<Task> ();
-		taskContainer.add (new Task (task));
-		taskContainer.add (new Task (task));
-		taskContainer.add (new Task (task));
-		taskContainer.get (0).setTotalEffort (1);
-		taskContainer.get (1).setTotalEffort (2);
-		taskContainer.get (2).setTotalEffort (3);
+		taskContainer = new ArrayList<Task> ();
+		taskContainer.add (new TaskImpl (task));
+		taskContainer.add (new TaskImpl (task));
+		taskContainer.add (new TaskImpl (task));
+		taskContainer.get (0).setStartDate (new CalendarDate (1, 1, 2014));
+		taskContainer.get (1).setStartDate (new CalendarDate (3, 4, 2016));
+		taskContainer.get (2).setStartDate (new CalendarDate (12, 12, 2016));
 		ArrayList<Task> childContainer;
 		childContainer = new ArrayList<Task> ();
-		childContainer.add (new Task (container.get (0)));
-		childContainer.add (new Task (container.get (0)));
-		childContainer.add (new Task (container.get (0)));
-		childContainer.get (0).setTotalEffort (3);
-		childContainer.get (1).setTotalEffort (4);
-		childContainer.get (2).setTotalEffort (5);
-		task.recursivelyModifyTotalEffortFromSubtasks ();
-		assertEquals (task.getEffort (), 17);
-		assertEquals (taskContainer.get (0).getTotalEffort (), 12);
-		assertEquals (taskContainer.get (1).getTotalEffort (), 2);
-		assertEquals (taskContainer.get (2).getTotalEffort (), 3);
-		assertEquals (childContainer.get (0).getTotalEffort (), 3);
-		assertEquals (childContainer.get (1).getTotalEffort (), 4);
-		assertEquals (childContainer.get (2).getTotalEffort (), 5);
+		childContainer.add (new TaskImpl (taskContainer.get (0)));
+		childContainer.add (new TaskImpl (taskContainer.get (0)));
+		childContainer.add (new TaskImpl (taskContainer.get (0)));
+		childContainer.get (0).setStartDate (new CalendarDate (5, 8, 2015));
+		childContainer.get (1).setStartDate (new CalendarDate (9, 7, 2015));
+		childContainer.get (2).setStartDate (new CalendarDate (10, 10, 2016));
+		task.recursivelyModifyStartDateFromSubTasks ();
+		assertEquals (task.getStartDate (), new CalendarDate (1, 1, 2014));
+		assertEquals (taskContainer.get (0).getStartDate (), new CalendarDate (5, 8, 2015));
 	}
 	
+	@Test
 	public void
 	recursivelyModifyEffortFromSubTasksTest ()
 	{
 		ArrayList<Task> taskContainer;
-		container = new ArrayList<Task> ();
-		taskContainer.add (new Task (task));
-		taskContainer.add (new Task (task));
-		taskContainer.add (new Task (task));
+		taskContainer = new ArrayList<Task> ();
+		taskContainer.add (new TaskImpl (task));
+		taskContainer.add (new TaskImpl (task));
+		taskContainer.add (new TaskImpl (task));
 		taskContainer.get (0).setEffort (1);
 		taskContainer.get (1).setEffort (2);
 		taskContainer.get (2).setEffort (3);
 		ArrayList<Task> childContainer;
 		childContainer = new ArrayList<Task> ();
-		childContainer.add (new Task (container.get (0)));
-		childContainer.add (new Task (container.get (0)));
-		childContainer.add (new Task (container.get (0)));
+		childContainer.add (new TaskImpl (taskContainer.get (0)));
+		childContainer.add (new TaskImpl (taskContainer.get (0)));
+		childContainer.add (new TaskImpl (taskContainer.get (0)));
 		childContainer.get (0).setEffort (3);
 		childContainer.get (1).setEffort (4);
 		childContainer.get (2).setEffort (5);
@@ -381,33 +411,35 @@ TaskImplTest
 		assertEquals (childContainer.get (2).getEffort (), 5);
 	}
 	
+	@Test
 	public void
 	removeAllSubTasksTest ()
 	{
 		ArrayList<Task> container;
 		container = new ArrayList<Task> ();
 		Task child0;
-		child0 = new Task (task);
+		child0 = new TaskImpl (task);
 		container.add (child0);
 		Task child1;
-		child1 = new Task (task);
+		child1 = new TaskImpl (task);
 		container.add (child1);
 		task.setSubTasks (container);
 		task.removeAllSubTasks ();
 		assertEquals (task.getSubTasks ().size (), 0);
 	}
 	
+	@Test
 	public void
 	removeSubTaskTest ()
 	{
 		ArrayList<Task> container;
 		container = new ArrayList<Task> ();
 		Task child0;
-		child0 = new Task (task);
+		child0 = new TaskImpl (task);
 		child0.setID ("child0");
 		container.add (child0);
 		Task child1;
-		child1 = new Task (task);
+		child1 = new TaskImpl (task);
 		child1.setID ("child1");
 		container.add (child1);
 		task.setSubTasks (container);
@@ -417,29 +449,33 @@ TaskImplTest
 		assertEquals (task.getSubTask ("child1"), child1);
 	}
 	
+	@Test
 	public void
 	removeSubTasksTest ()
 	{
 		ArrayList<Task> container;
 		container = new ArrayList<Task> ();
 		Task child0;
-		child0 = new Task (task);
+		child0 = new TaskImpl (task);
 		child0.setID ("child0");
 		container.add (child0);
 		Task child1;
-		child1 = new Task (task);
+		child1 = new TaskImpl (task);
 		child1.setID ("child1");
 		container.add (child1);
 		Task child2;
-		child2 = new Task (task);
+		child2 = new TaskImpl (task);
 		child2.setID ("child2");
 		container.add (child2);
 		task.setSubTasks (container);
-		ArrayList<Task> param;
-		child0prime = new Task (task);
+		Task child0prime;
+		child0prime = new TaskImpl (task);
 		child0prime.setID ("child0");
+		ArrayList<Task> param;
+		param = new ArrayList<Task> ();
 		param.add (child0prime);
-		child2prime = new Task (task);
+		Task child2prime;
+		child2prime = new TaskImpl (task);
 		child2prime.setID ("child2");
 		param.add (child2prime);
 		task.removeSubTasks (param);

@@ -26,9 +26,6 @@ Task extends Serializable
 	public static final int PRIORITY_HIGH = 3;
 	public static final int PRIORITY_HIGHEST = 4;
 	
-	boolean
-	getActive ();
-	
 	String
 	getDescription ();
 	
@@ -45,7 +42,7 @@ Task extends Serializable
 	getID ();
 	
 	String
-	getParentId ();
+	getParentID ();
 	
 	Task
 	getParentTask ();
@@ -76,9 +73,6 @@ Task extends Serializable
 	
 	boolean
 	getUpdateSubTasks ();
-	
-	void
-	setActive (boolean active);
 	
 	void
 	setDescription (String description);
@@ -136,9 +130,6 @@ Task extends Serializable
 	
 	CalendarDate
 	recursivelyModifyStartDateFromSubTasks ();
-	
-	long
-	recursivelyModifyTotalEffortFromSubTasks ();
 	
 	long
 	recursivelyModifyEffortFromSubTasks ();

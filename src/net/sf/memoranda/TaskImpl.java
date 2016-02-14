@@ -24,13 +24,6 @@ TaskImpl implements Task, Comparable
 		this.parent = parent;
 		SubTasks = new Vector<Task>();
 	}
-	
-	public boolean
-	getActive()
-
-	{
-		return active;
-	}
 
 	public String
 	getDescription ()
@@ -51,7 +44,7 @@ TaskImpl implements Task, Comparable
 	}
 
 	public CalendarDate
-	getEndDate (Project project)
+	getEndDate ()
 	{
 		if (endDate != null) 
 		{
@@ -60,10 +53,6 @@ TaskImpl implements Task, Comparable
 		if (parent != null)
 		{
 			return parent.getEndDate ();
-		}
-		if (project.getEndDate () != null)
-		{
-			return project.getEndDate ();
 		}
 		return getStartDate ();
 	}
@@ -75,7 +64,7 @@ TaskImpl implements Task, Comparable
 	}
 
 	public
-	String getParentId ()
+	String getParentID ()
 	{
 		if (parent != null)
 		{ 
@@ -114,7 +103,7 @@ TaskImpl implements Task, Comparable
 	}
 
 	public CalendarDate
-	getStartDate (Project project)
+	getStartDate ()
 	{
 		if (startDate != null) 
 		{
@@ -123,10 +112,6 @@ TaskImpl implements Task, Comparable
 		if (parent != null) 
 		{
 			return parent.getStartDate ();
-		}
-		if (project.getStartDate () != null) 
-		{
-			return project.getStartDate ();
 		}
 		return new CalendarDate ();
 	}
@@ -195,28 +180,6 @@ TaskImpl implements Task, Comparable
 	getText ()
 	{
 		return text;
-	}
-	
-	public CalendarDate
-	getEndDate() {
-		return endDate;
-	}
-	
-	public long
-	getEffortActual() 
-	{
-		return effortActual;
-	}
-
-	public CalendarDate
-	getStartDate() {
-		return startDate;
-	}
-
-	public void
-	setActive (boolean active)
-	{
-		this.active = active;
 	}
 
 	public void
@@ -431,24 +394,6 @@ TaskImpl implements Task, Comparable
 	public long
 	recursivelyModifyEffortFromSubTasks ()
 	{
-		long totalEffort = 0;
-		Collection subTasks = getSubTasks ();
-		if (subTasks == null)
-			return effort;
-		for (Iterator<Task> iter = subTasks.iterator (); iter.hasNext ();)
-		{
-			Task element = iter.next ();
-			totalEffort = totalEffort + element.recursivelyModifyEffortFromSubTasks ();
-		}
-		setEffort (totalEffort);
-		return totalEffort;
-	}
-	
-	public long
-	recursivelyModifyTotalEffortFromSubTasks ()
-	{
-		//Copied the method from recursivelyModifyEffortFromSubTasks not sure what the difference was
-		
 		long totalEffort = 0;
 		Collection subTasks = getSubTasks ();
 		if (subTasks == null)
