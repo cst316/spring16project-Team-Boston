@@ -24,137 +24,177 @@ import nu.xom.Node;
  *
  */
 /* $Id: TaskImpl.java,v 1.15 2005/12/01 08:12:26 alexeya Exp $ */
-public class TaskImpl implements Task, Comparable {
-
+public class TaskImpl implements Task, Comparable 
+{
 	private Element _element = null;
 	private TaskList _tl = null;
 
 	/**
 	 * Constructor for DefaultTask.
 	 */
-	public TaskImpl(Element taskElement, TaskList tl) {
+	public TaskImpl (Element taskElement, TaskList tl) 
+	{
 		_element = taskElement;
 		_tl = tl;
 	}
 
-	public Element getContent() {
+	public Element getContent () 
+	{
 		return _element;
 	}
 
-	public CalendarDate getStartDate() {
-		String sd = _element.getAttribute("startDate").getValue();
+	public CalendarDate getStartDate () 
+	{
+		String sd = _element.getAttribute("startDate").getValue ();
 		if (sd != "")
-			return new CalendarDate(_element.getAttribute("startDate").getValue());
-		Task parent = this.getParentTask();
+			return new CalendarDate(_element.getAttribute ("startDate").getValue ());
+		Task parent = this.getParentTask ();
 		if (parent != null)
-			return parent.getStartDate();
-		Project pr = this._tl.getProject();
+			return parent.getStartDate ();
+		Project pr = this._tl.getProject ();
 		if (pr.getStartDate() != null)
-			return pr.getStartDate();
+			return pr.getStartDate ();
 		return new CalendarDate ();
 	}
 
-	public void setStartDate(CalendarDate date) {
+	public void setStartDate(CalendarDate date)
+	{
 		if (date == null)
-			setAttr("startDate", "");
+			setAttr ("startDate", "");
 		else
-			setAttr("startDate", date.toString());
+			setAttr ("startDate", date.toString());
 	}
 
-	public CalendarDate getEndDate() {
-		String ed = _element.getAttribute("endDate").getValue();
+	public CalendarDate getEndDate () 
+	{
+		String ed = _element.getAttribute ("endDate").getValue ();
 		if (ed != "")
-			return new CalendarDate(_element.getAttribute("endDate").getValue());
-		Task parent = this.getParentTask();
+			return new CalendarDate (_element.getAttribute ("endDate").getValue ());
+		Task parent = this.getParentTask ();
 		if (parent != null)
-			return parent.getEndDate();
-		Project pr = this._tl.getProject();
-		if (pr.getEndDate() != null)
-			return pr.getEndDate();
-		return this.getStartDate();
+			return parent.getEndDate ();
+		Project pr = this._tl.getProject ();
+		if (pr.getEndDate () != null)
+			return pr.getEndDate ();
+		return this.getStartDate ();
 
 	}
 
-	public void setEndDate(CalendarDate date) {
+	public void setEndDate(CalendarDate date)
+	{
 		if (date == null)
-			setAttr("endDate", "");
+			setAttr ("endDate", "");
 		else
-			setAttr("endDate", date.toString());
+			setAttr ("endDate", date.toString ());
 	}
-
-	public long getEffort() {
-		Attribute attr = _element.getAttribute("effort");
-		if (attr == null) {
+	/**
+	 * Get for actual estimated effort hours for tasks
+	 */
+	public long getEffort () 
+	{
+		Attribute attr = _element.getAttribute ("effort");
+		if (attr == null) 
+		{
 			return 0;
-		} else {
-			try {
-				return Long.parseLong(attr.getValue());
-			} catch (NumberFormatException e) {
+		} 
+		else 
+		{
+			try 
+			{
+				return Long.parseLong (attr.getValue ());
+			} 
+			catch (NumberFormatException e)
+			{
 				return 0;
 			}
 		}
 	}
-
-	public void setEffort(long effort) {
-		setAttr("effort", String.valueOf(effort));
+	/**
+	 * Set for actual estimated effort hours for tasks
+	 */
+	public void setEffort (long effort) 
+	{
+		setAttr ("effort", String.valueOf (effort));
 	}
 	
-	// Actual Effort Implement
-	public long getEffortActual() {
-		Attribute attr = _element.getAttribute("effortActual");
-		if (attr == null) {
+	/**
+	 * Get for predicted estimated effort hours for tasks
+	 */
+	public long getPredictedEffort () 
+	{
+		Attribute attr = _element.getAttribute ("effortPredicted");
+		if (attr == null)
+		{
 			return 0;
-		} else {
-			try {
-				return Long.parseLong(attr.getValue());
-			} catch (NumberFormatException e) {
+		} 
+		else 
+		{
+			try 
+			{
+				return Long.parseLong (attr.getValue ());
+			} catch (NumberFormatException e) 
+			{
 				return 0;
 			}
 		}
 	}
-
-	public void setEffortActual(long effortActual) {
-		setAttr("effortActual", String.valueOf(effortActual));
+	/**
+	 * Set for predicted estimated effort hours for tasks
+	 */
+	public void setPredictedEffort (long effortPredicted) 
+	{
+		setAttr ("effortPredicted", String.valueOf(effortPredicted));
 	}
 
 	/*
 	 * @see net.sf.memoranda.Task#getParentTask()
 	 */
-	public Task getParentTask() {
+	public Task getParentTask ()
+	{
 		Node parentNode = _element.getParent();
-		if (parentNode instanceof Element) {
+		if (parentNode instanceof Element)
+		{
 			Element parent = (Element) parentNode;
-			if (parent.getLocalName().equalsIgnoreCase("task"))
-				return new TaskImpl(parent, _tl);
+			if (parent.getLocalName ().equalsIgnoreCase ("task"))
+				return new TaskImpl (parent, _tl);
 		}
 		return null;
 	}
 
-	public String getParentId() {
-		Task parent = this.getParentTask();
+	public String getParentId () 
+	{
+		Task parent = this.getParentTask ();
 		if (parent != null)
-			return parent.getID();
+			return parent.getID ();
 		return null;
 	}
 
-	public String getDescription() {
-		Element thisElement = _element.getFirstChildElement("description");
-		if (thisElement == null) {
+	public String getDescription () 
+	{
+		Element thisElement = _element.getFirstChildElement ("description");
+		if (thisElement == null)
+		{
 			return null;
-		} else {
-			return thisElement.getValue();
+		} 
+		else 
+		{
+			return thisElement.getValue ();
 		}
 	}
 
-	public void setDescription(String s) {
-		Element desc = _element.getFirstChildElement("description");
-		if (desc == null) {
-			desc = new Element("description");
-			desc.appendChild(s);
-			_element.appendChild(desc);
-		} else {
-			desc.removeChildren();
-			desc.appendChild(s);
+	public void setDescription(String s)
+	{
+		Element desc = _element.getFirstChildElement ("description");
+		if (desc == null) 
+		{
+			desc = new Element ("description");
+			desc.appendChild (s);
+			_element.appendChild (desc);
+		} 
+		else 
+		{
+			desc.removeChildren ();
+			desc.appendChild (s);
 		}
 	}
 
@@ -163,24 +203,29 @@ public class TaskImpl implements Task, Comparable {
 	 * 
 	 * @see net.sf.memoranda.Task#getStatus()
 	 */
-	public int getStatus(CalendarDate date) {
-		CalendarDate start = getStartDate();
-		CalendarDate end = getEndDate();
-		if (isFrozen())
+	public int getStatus(CalendarDate date) 
+	{
+		CalendarDate start = getStartDate ();
+		CalendarDate end = getEndDate ();
+		if (isFrozen ())
 			return Task.FROZEN;
-		if (isCompleted())
+		if (isCompleted ())
 			return Task.COMPLETED;
 
-		if (date.inPeriod(start, end)) {
-			if (date.equals(end))
+		if (date.inPeriod(start, end)) 
+		{
+			if (date.equals (end))
 				return Task.DEADLINE;
 			else
 				return Task.ACTIVE;
-		} else if (date.before(start)) {
+		} 
+		else if (date.before (start)) 
+		{
 			return Task.SCHEDULED;
 		}
 
-		if (start.after(end)) {
+		if (start.after (end)) 
+		{
 			return Task.ACTIVE;
 		}
 
@@ -198,66 +243,76 @@ public class TaskImpl implements Task, Comparable {
 	 * v.elements(); en.hasMoreElements();) { Task t = (Task) en.nextElement();
 	 * if (t.getStatus() != Task.COMPLETED) check = false; } return check; }
 	 */
-	private boolean isFrozen() {
-		return _element.getAttribute("frozen") != null;
+	private boolean isFrozen () 
+	{
+		return _element.getAttribute ("frozen") != null;
 	}
 
-	private boolean isCompleted() {
-		return getProgress() == 100;
+	private boolean isCompleted () 
+	{
+		return getProgress () == 100;
 	}
 
 	/**
 	 * @see net.sf.memoranda.Task#getID()
 	 */
-	public String getID() {
-		return _element.getAttribute("id").getValue();
+	public String getID () 
+	{
+		return _element.getAttribute ("id").getValue ();
 	}
 
 	/**
 	 * @see net.sf.memoranda.Task#getText()
 	 */
-	public String getText() {
-		return _element.getFirstChildElement("text").getValue();
+	public String getText ()
+	{
+		return _element.getFirstChildElement ("text").getValue ();
 	}
 
-	public String toString() {
-		return getText();
+	public String toString () 
+	{
+		return getText ();
 	}
 
 	/**
 	 * @see net.sf.memoranda.Task#setText()
 	 */
-	public void setText(String s) {
-		_element.getFirstChildElement("text").removeChildren();
-		_element.getFirstChildElement("text").appendChild(s);
+	public void setText (String s)
+	{
+		_element.getFirstChildElement ("text").removeChildren ();
+		_element.getFirstChildElement ("text").appendChild (s);
 	}
 
 	/**
 	 * @see net.sf.memoranda.Task#freeze()
 	 */
-	public void freeze() {
-		setAttr("frozen", "yes");
+	public void freeze () 
+	{
+		setAttr ("frozen", "yes");
 	}
 
 	/**
 	 * @see net.sf.memoranda.Task#unfreeze()
 	 */
-	public void unfreeze() {
-		if (this.isFrozen())
-			_element.removeAttribute(new Attribute("frozen", "yes"));
+	public void unfreeze () 
+	{
+		if (this.isFrozen ())
+			_element.removeAttribute (new Attribute ("frozen", "yes"));
 	}
 
 	/**
 	 * @see net.sf.memoranda.Task#getDependsFrom()
 	 */
-	public Collection getDependsFrom() {
-		Vector v = new Vector();
-		Elements deps = _element.getChildElements("dependsFrom");
-		for (int i = 0; i < deps.size(); i++) {
-			String id = deps.get(i).getAttribute("idRef").getValue();
-			Task t = _tl.getTask(id);
+	public Collection getDependsFrom () 
+	{
+		Vector v = new Vector ();
+		Elements deps = _element.getChildElements ("dependsFrom");
+		for (int i = 0; i < deps.size (); i++) 
+		{
+			String id = deps.get (i).getAttribute ("idRef").getValue ();
+			Task t = _tl.getTask (id);
 			if (t != null)
-				v.add(t);
+				v.add (t);
 		}
 		return v;
 	}
@@ -265,21 +320,25 @@ public class TaskImpl implements Task, Comparable {
 	/**
 	 * @see net.sf.memoranda.Task#addDependsFrom(net.sf.memoranda.Task)
 	 */
-	public void addDependsFrom(Task task) {
-		Element dep = new Element("dependsFrom");
-		dep.addAttribute(new Attribute("idRef", task.getID()));
-		_element.appendChild(dep);
+	public void addDependsFrom (Task task)
+	{
+		Element dep = new Element ("dependsFrom");
+		dep.addAttribute (new Attribute ("idRef", task.getID ()));
+		_element.appendChild (dep);
 	}
 
 	/**
 	 * @see net.sf.memoranda.Task#removeDependsFrom(net.sf.memoranda.Task)
 	 */
-	public void removeDependsFrom(Task task) {
-		Elements deps = _element.getChildElements("dependsFrom");
-		for (int i = 0; i < deps.size(); i++) {
-			String id = deps.get(i).getAttribute("idRef").getValue();
-			if (id.equals(task.getID())) {
-				_element.removeChild(deps.get(i));
+	public void removeDependsFrom (Task task) 
+	{
+		Elements deps = _element.getChildElements ("dependsFrom");
+		for (int i = 0; i < deps.size (); i++) 
+		{
+			String id = deps.get(i).getAttribute ("idRef").getValue ();
+			if (id.equals (task.getID ())) 
+			{
+				_element.removeChild (deps.get (i));
 				return;
 			}
 		}
@@ -288,44 +347,50 @@ public class TaskImpl implements Task, Comparable {
 	/**
 	 * @see net.sf.memoranda.Task#getProgress()
 	 */
-	public int getProgress() {
-		return new Integer(_element.getAttribute("progress").getValue()).intValue();
+	public int getProgress () 
+	{
+		return new Integer (_element.getAttribute ("progress").getValue ()).intValue ();
 	}
 
 	/**
 	 * @see net.sf.memoranda.Task#setProgress(int)
 	 */
-	public void setProgress(int p) {
-		if ((p >= 0) && (p <= 100))
-			setAttr("progress", new Integer(p).toString());
-		if (this.getParentTask() != null) {
-			updateParentProgress(this.getParentTask());
+	public void setProgress(int p) 
+	{
+		if ( (p >= 0) && (p <= 100))
+			setAttr ("progress", new Integer (p).toString ());
+		if (this.getParentTask () != null) 
+		{
+			updateParentProgress (this.getParentTask ());
 		}
 	}
 
 	/**
 	 * @see net.sf.memoranda.Task#getPriority()
 	 */
-	public int getPriority() {
-		Attribute pa = _element.getAttribute("priority");
+	public int getPriority () 
+	{
+		Attribute pa = _element.getAttribute ("priority");
 		if (pa == null)
 			return Task.PRIORITY_NORMAL;
-		return new Integer(pa.getValue()).intValue();
+		return new Integer (pa.getValue ()).intValue ();
 	}
 
 	/**
 	 * @see net.sf.memoranda.Task#setPriority(int)
 	 */
-	public void setPriority(int p) {
-		setAttr("priority", String.valueOf(p));
+	public void setPriority (int p) 
+	{
+		setAttr ("priority", String.valueOf (p));
 	}
 
-	private void setAttr(String a, String value) {
+	private void setAttr (String a, String value) 
+	{
 		Attribute attr = _element.getAttribute(a);
 		if (attr == null)
-			_element.addAttribute(new Attribute(a, value));
+			_element.addAttribute (new Attribute (a, value));
 		else
-			attr.setValue(value);
+			attr.setValue (value);
 	}
 
 	/**
@@ -338,11 +403,12 @@ public class TaskImpl implements Task, Comparable {
 	 * @return long
 	 */
 
-	private long calcTaskRate(CalendarDate d) {
-		Calendar endDateCal = getEndDate().getCalendar();
-		Calendar dateCal = d.getCalendar();
-		int numOfDays = (endDateCal.get(Calendar.YEAR) * 365 + endDateCal.get(Calendar.DAY_OF_YEAR))
-				- (dateCal.get(Calendar.YEAR) * 365 + dateCal.get(Calendar.DAY_OF_YEAR));
+	private long calcTaskRate (CalendarDate d) 
+	{
+		Calendar endDateCal = getEndDate ().getCalendar ();
+		Calendar dateCal = d.getCalendar ();
+		int numOfDays = (endDateCal.get (Calendar.YEAR) * 365 + endDateCal.get (Calendar.DAY_OF_YEAR))
+				- (dateCal.get (Calendar.YEAR) * 365 + dateCal.get (Calendar.DAY_OF_YEAR));
 		if (numOfDays < 0)
 			return -1; // Something wrong ?
 		return (100 - getProgress()) / (numOfDays + 1) * (getPriority() + 1);
@@ -352,7 +418,8 @@ public class TaskImpl implements Task, Comparable {
 	 * @see net.sf.memoranda.Task#getRate()
 	 */
 
-	public long getRate() {
+	public long getRate () 
+	{
 		/*
 		 * Task t = (Task)task; switch (mode) { case BY_IMP_RATE: return
 		 * -1*calcTaskRate(t, date); case BY_END_DATE: return
@@ -360,50 +427,57 @@ public class TaskImpl implements Task, Comparable {
 		 * 5-t.getPriority(); case BY_COMPLETION: return 100-t.getProgress(); }
 		 * return -1;
 		 */
-		return -1 * calcTaskRate(CurrentDate.get());
+		return -1 * calcTaskRate (CurrentDate.get());
 	}
 
 	/*
 	 * Comparable interface
 	 */
 
-	public int compareTo(Object o) {
+	public int compareTo (Object o) 
+	{
 		Task task = (Task) o;
-		if (getRate() > task.getRate())
+		if (getRate () > task.getRate ())
 			return 1;
-		else if (getRate() < task.getRate())
+		else if (getRate () < task.getRate ())
 			return -1;
 		else
 			return 0;
 	}
 
-	public boolean equals(Object o) {
-		return ((o instanceof Task) && (((Task) o).getID().equals(this.getID())));
+	public boolean equals (Object o) 
+	{
+		return ( (o instanceof Task) && ( ( (Task) o).getID ().equals (this.getID ())));
 	}
 
 	/*
 	 * @see net.sf.memoranda.Task#getSubTasks()
 	 */
-	public Collection getSubTasks() {
-		Elements subTasks = _element.getChildElements("task");
-		return convertToTaskObjects(subTasks);
+	public Collection getSubTasks () 
+	{
+		Elements subTasks = _element.getChildElements ("task");
+		return convertToTaskObjects (subTasks);
 	}
 
-	private Collection convertToTaskObjects(Elements tasks) {
-		Vector v = new Vector();
-		for (int i = 0; i < tasks.size(); i++) {
-			Task t = new TaskImpl(tasks.get(i), _tl);
-			v.add(t);
+	private Collection convertToTaskObjects (Elements tasks)
+	{
+		Vector v = new Vector ();
+		for (int i = 0; i < tasks.size (); i++) 
+		{
+			Task t = new TaskImpl (tasks.get (i), _tl);
+			v.add (t);
 		}
 		return v;
 	}
 
-	public ArrayList getSubTasksArray() {
-		Elements subTasks = _element.getChildElements("task");
-		ArrayList<Task> list = new ArrayList<Task>();
-		for (int i = 0; i < subTasks.size(); i++) {
-			Task t = new TaskImpl(subTasks.get(i), _tl);
-			list.add(t);
+	public ArrayList getSubTasksArray () 
+	{
+		Elements subTasks = _element.getChildElements ("task");
+		ArrayList<Task> list = new ArrayList<Task> ();
+		for (int i = 0; i < subTasks.size (); i++) 
+		{
+			Task t = new TaskImpl (subTasks.get (i), _tl);
+			list.add (t);
 		}
 		return list;
 
@@ -412,11 +486,13 @@ public class TaskImpl implements Task, Comparable {
 	/*
 	 * @see net.sf.memoranda.Task#getSubTask(java.lang.String)
 	 */
-	public Task getSubTask(String id) {
-		Elements subTasks = _element.getChildElements("task");
-		for (int i = 0; i < subTasks.size(); i++) {
-			if (subTasks.get(i).getAttribute("id").getValue().equals(id))
-				return new TaskImpl(subTasks.get(i), _tl);
+	public Task getSubTask (String id) 
+	{
+		Elements subTasks = _element.getChildElements ("task");
+		for (int i = 0; i < subTasks.size (); i++) 
+		{
+			if (subTasks.get (i).getAttribute ("id").getValue ().equals (id))
+				return new TaskImpl (subTasks.get (i), _tl);
 		}
 		return null;
 	}
@@ -424,52 +500,62 @@ public class TaskImpl implements Task, Comparable {
 	/*
 	 * @see net.sf.memoranda.Task#hasSubTasks()
 	 */
-	public boolean hasSubTasks(String id) {
-		Elements subTasks = _element.getChildElements("task");
+	public boolean hasSubTasks (String id)
+	{
+		Elements subTasks = _element.getChildElements ("task");
 		for (int i = 0; i < subTasks.size(); i++)
-			if (subTasks.get(i).getAttribute("id").getValue().equals(id))
+			if (subTasks.get (i).getAttribute ("id").getValue ().equals (id))
 				return true;
 		return false;
 	}
 
-	public void updateParentProgress(Task parent) {
-		ArrayList<Task> subtasks = parent.getSubTasksArray();
+	public void updateParentProgress (Task parent) 
+	{
+		ArrayList<Task> subtasks = parent.getSubTasksArray ();
 
 		int totalProgress = 0;
-		for (int i = 0; i < subtasks.size(); i++) {
-			totalProgress += subtasks.get(i).getProgress();
+		for (int i = 0; i < subtasks.size (); i++)
+		{
+			totalProgress += subtasks.get (i).getProgress ();
 		}
-		parent.setProgress(totalProgress / subtasks.size());
+		parent.setProgress (totalProgress / subtasks.size ());
 
-		if (parent.getParentTask() != null) {
-			updateParentProgress(parent.getParentTask());
+		if (parent.getParentTask() != null) 
+		{
+			updateParentProgress (parent.getParentTask ());
 		}
 	}
 
-	public void updateFromChildren() {
-		ArrayList<Task> subtasks = this.getSubTasksArray();
+	public void updateFromChildren () 
+	{
+		ArrayList<Task> subtasks = this.getSubTasksArray ();
 
 		int totalProgress = 0;
-		if (subtasks.size() > 0) {
-			for (int i = 0; i < subtasks.size(); i++) {
-				totalProgress += subtasks.get(i).getProgress();
+		if (subtasks.size () > 0) 
+		{
+			for (int i = 0; i < subtasks.size(); i++) 
+			{
+				totalProgress += subtasks.get(i).getProgress ();
 			}
-			this.setProgress(totalProgress / subtasks.size());
+			this.setProgress(totalProgress / subtasks.size ());
 		}
-		if (this.getParentTask() != null) {
-			updateParentProgress(this.getParentTask());
+		if (this.getParentTask() != null)
+		{
+			updateParentProgress (this.getParentTask ());
 		}
 	}
 
-	public boolean isUpdateChildren() {
-		Attribute uC = _element.getAttribute("updateChildren");
-		System.out.println("isUpdateChildren " + uC.getValue());
-		return Boolean.parseBoolean(uC.getValue());
+	public boolean isUpdateChildren () 
+	{
+		Attribute uC = _element.getAttribute ("updateChildren");
+		System.out.println ("isUpdateChildren " + uC.getValue ());
+		return Boolean.parseBoolean (uC.getValue ());
 	}
 
-	public void setUpdateChildren(boolean updateChildren) {
-		setAttr("updateChildren", updateChildren + "");
-		System.out.println("Set to " + updateChildren);
+	public void setUpdateChildren (boolean updateChildren) 
+	{
+		setAttr ("updateChildren", updateChildren + "");
+		System.out.println ("Set to " + updateChildren);
 	}
 
 }

@@ -66,8 +66,8 @@ public class TaskDialog extends JDialog
 
 	// added by rawsushi
 	JTextField effortField = new JTextField ();
-	// effect acutal field
-	JTextField effortActualField = new JTextField ();
+	// effect predicted field
+	JTextField effortPredictedField = new JTextField ();
 	JTextArea descriptionField = new JTextArea ();
 	JScrollPane descriptionScrollPane = new JScrollPane (descriptionField);
 
@@ -98,8 +98,8 @@ public class TaskDialog extends JDialog
 	// JPanel jPanel3 = new JPanel(new FlowLayout(FlowLayout.LEFT));
 	JPanel jPanel3 = new JPanel (new FlowLayout (FlowLayout.LEFT));
 	JPanel jPanelEffort = new JPanel (new FlowLayout (FlowLayout.LEFT));
-	// new jpanel for actual effort
-	JPanel jPanelEffortActual = new JPanel (new FlowLayout (FlowLayout.LEFT));
+	// new jpanel for predicted effort
+	JPanel jPanelEffortPredicted = new JPanel (new FlowLayout (FlowLayout.LEFT));
 	// JPanel jPanelNotes = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
 	JButton setNotifB = new JButton ();
@@ -107,8 +107,8 @@ public class TaskDialog extends JDialog
 	JLabel jLabel7 = new JLabel ();
 	// added by rawsushi
 	JLabel jLabelEffort = new JLabel ();
-	// new label for actual effort
-	JLabel jLabelEffortActual = new JLabel ();
+	// new label for predicted effort
+	JLabel jLabelEffortPredicted = new JLabel ();
 	JLabel jLabelDescription = new JLabel ();
 	JCheckBox chkEndDate = new JCheckBox ();
 	JCheckBox chkStartDate = new JCheckBox ();
@@ -243,16 +243,16 @@ public class TaskDialog extends JDialog
 
 		jLabelEffort.setMaximumSize (new Dimension (100, 16));
 		jLabelEffort.setMinimumSize (new Dimension (60, 16));
-		jLabelEffort.setText (Local.getString ("Est Effort(hrs)"));
+		jLabelEffort.setText (Local.getString ("Actual Effort(hrs)"));
 		effortField.setBorder (border8);
 		effortField.setPreferredSize (new Dimension (30, 24));
 
-		// new entry for actual effort
-		jLabelEffortActual.setMaximumSize (new Dimension (100, 16));
-		jLabelEffortActual.setMinimumSize (new Dimension (60, 16));
-		jLabelEffortActual.setText (Local.getString ("Act Effort(hrs)"));
-		effortActualField.setBorder (border8);
-		effortActualField.setPreferredSize (new Dimension (30, 24));
+		// new entry for predicted effort hours
+		jLabelEffortPredicted.setMaximumSize (new Dimension (100, 16));
+		jLabelEffortPredicted.setMinimumSize (new Dimension (60, 16));
+		jLabelEffortPredicted.setText (Local.getString ("Predicted Effort(hrs)"));
+		effortPredictedField.setBorder (border8);
+		effortPredictedField.setPreferredSize (new Dimension (30, 24));
 		
 		startDate.setBorder (border8);
 		startDate.setPreferredSize (new Dimension (80, 24));
@@ -414,10 +414,10 @@ public class TaskDialog extends JDialog
 		jPanel2.add (jPanel4, null);
 		jPanel4.add (priorityCB, null);
 		
-		// add actual effort panel
-		jPanel2.add (jPanelEffortActual, null);
-		jPanelEffortActual.add (jLabelEffortActual, null);
-		jPanelEffortActual.add (effortActualField, null);
+		// add predicted effort panel
+		jPanel2.add (jPanelEffortPredicted, null);
+		jPanelEffortPredicted.add (jLabelEffortPredicted, null);
+		jPanelEffortPredicted.add (effortPredictedField, null);
 		
 		// moved notification button
 		jLabelProgress.setText (Local.getString ("Progress"));

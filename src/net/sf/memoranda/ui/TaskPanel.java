@@ -493,8 +493,8 @@ public class TaskPanel extends JPanel {
 		dlg.endDate.getModel().setValue(t.getEndDate().getDate());
 		dlg.priorityCB.setSelectedIndex(t.getPriority());
 		dlg.effortField.setText(Util.getHoursFromMillis(t.getEffort()));
-		// Add actual effort
-		dlg.effortActualField.setText(Util.getHoursFromMillis(t.getEffortActual()));
+		// Add predicted effort hours
+		dlg.effortPredictedField.setText(Util.getHoursFromMillis(t.getPredictedEffort()));
 		System.out.println("Task list impl " + t.isUpdateChildren());
 		if ((t.getStartDate().getDate()).after(t.getEndDate().getDate()))
 			dlg.chkEndDate.setSelected(false);
@@ -528,8 +528,8 @@ public class TaskPanel extends JPanel {
 		t.setDescription(dlg.descriptionField.getText());
 		t.setPriority(dlg.priorityCB.getSelectedIndex());
 		t.setEffort(Util.getMillisFromHours(dlg.effortField.getText()));
-		// add actual effort
-		t.setEffortActual(Util.getMillisFromHours(dlg.effortActualField.getText()));
+		// add predicted effort hours
+		t.setPredictedEffort(Util.getMillisFromHours(dlg.effortPredictedField.getText()));
 		if (!dlg.updateChildren) {
 			t.setProgress(((Integer) dlg.progress.getValue()).intValue());
 			t.setUpdateChildren(false);
@@ -569,15 +569,15 @@ public class TaskPanel extends JPanel {
 		else
 			ed = null;
 		long effort = Util.getMillisFromHours(dlg.effortField.getText());
-		// add actual effort
-		long effortActual = Util.getMillisFromHours(dlg.effortActualField.getText());
+		// add predicted effort
+		long effortPredicted = Util.getMillisFromHours(dlg.effortPredictedField.getText());
 		// XXX Task newTask =
 		// CurrentProject.getTaskList().createTask(sd, ed,
 		// dlg.todoField.getText(),
 		// dlg.priorityCB.getSelectedIndex(),effort,
 		// dlg.descriptionField.getText(),parentTaskId);
 		Task newTask = CurrentProject.getTaskList().createTask(sd, ed, dlg.todoField.getText(),
-				dlg.priorityCB.getSelectedIndex(), effort, effortActual, dlg.descriptionField.getText(), null);
+				dlg.priorityCB.getSelectedIndex(), effort, effortPredicted, dlg.descriptionField.getText(), null);
 		// CurrentProject.getTaskList().adjustParentTasks(newTask);
 		if (!dlg.updateChildren) {
 			newTask.setProgress(((Integer) dlg.progress.getValue()).intValue());
@@ -642,10 +642,10 @@ public class TaskPanel extends JPanel {
 		else
 			ed = null;
 		long effort = Util.getMillisFromHours(dlg.effortField.getText());
-		// add actual effort
-		long effortActual = Util.getMillisFromHours(dlg.effortActualField.getText());
+		// add predicted effort
+		long effortPredicted = Util.getMillisFromHours(dlg.effortPredictedField.getText());
 		Task newTask = CurrentProject.getTaskList().createTask(sd, ed, dlg.todoField.getText(),
-				dlg.priorityCB.getSelectedIndex(), effort, effortActual, dlg.descriptionField.getText(), parentTaskId);
+				dlg.priorityCB.getSelectedIndex(), effort, effortPredicted, dlg.descriptionField.getText(), parentTaskId);
 
 		if (!dlg.updateChildren) {
 			newTask.setProgress(((Integer) dlg.progress.getValue()).intValue());
