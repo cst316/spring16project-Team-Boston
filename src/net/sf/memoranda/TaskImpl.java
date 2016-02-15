@@ -2,13 +2,11 @@ package net.sf.memoranda;
 
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Vector;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
 import java.util.Calendar;
 
 import net.sf.memoranda.date.CalendarDate;
@@ -20,10 +18,9 @@ TaskImpl implements Task, Comparable<Object>
 	private static final long serialVersionUID = 1295565190499990928L;
 	
 	public
-	TaskImpl (Task parent)
+	TaskImpl (Collection<Task> taskStorage)
 	{
-		this.parent = parent;
-		SubTasks = new Vector<Task>();
+		subTasks = taskStorage;
 	}
 
 	public String
@@ -149,7 +146,7 @@ TaskImpl implements Task, Comparable<Object>
 	public Task
 	getSubTask (String id)
 	{
-		Iterator<Task> iter = SubTasks.iterator ();
+		Iterator<Task> iter = subTasks.iterator ();
 		while (iter.hasNext ())
 		{
 			Task t = iter.next ();
@@ -161,14 +158,7 @@ TaskImpl implements Task, Comparable<Object>
 	public Collection<Task>
 	getSubTasks ()
 	{
-		if(SubTasks.size() > 0)
-		{
-			return SubTasks;
-		}
-		else
-		{
-			return new Vector<Task>();
-		}
+		return subTasks;
 	}
 
 	public boolean
@@ -268,7 +258,7 @@ TaskImpl implements Task, Comparable<Object>
 	public void
 	setSubTasks (Collection<Task> SubTasks)
 	{
-		this.SubTasks = SubTasks;
+		this.subTasks = SubTasks;
 	}
 
 	public void
@@ -290,13 +280,17 @@ TaskImpl implements Task, Comparable<Object>
 	public void
 	addSubTask (Task task)
 	{
-		SubTasks.add (task);
+		task.setParentTask (this);
+		subTasks.add (task);
 	}
 
 	public void
 	addSubTasks (Collection<Task> tasks)
 	{
-		SubTasks.addAll (tasks);
+		Iterator<Task> iter = tasks.iterator ();
+		while (iter.hasNext ())
+			iter.next ().setParentTask (this);
+		subTasks.addAll (tasks);
 	}
 	
 	public Task
@@ -411,19 +405,19 @@ TaskImpl implements Task, Comparable<Object>
 	public void
 	removeAllSubTasks ()
 	{
-		SubTasks.clear ();
+		subTasks.clear ();
 	}
 
 	public void
 	removeSubTask (Task task)
 	{
-		SubTasks.remove (task);
+		subTasks.remove (task);
 	}
 
 	public void
 	removeSubTasks (Collection<Task> tasks)
 	{
-		SubTasks.removeAll (tasks);
+		subTasks.removeAll (tasks);
 	}
 
 	public int
@@ -448,12 +442,12 @@ TaskImpl implements Task, Comparable<Object>
 		return a && b;
 	}
 	
-	private Collection<Task> SubTasks;
+	private Collection<Task> subTasks;
 	private String description;
 	private long effort, effortActual;
 	private CalendarDate endDate;
 	private String id;
-	private Task parent;
+	private Task parent = null;
 	private int priority;
 	private int progress;
 	private CalendarDate startDate;

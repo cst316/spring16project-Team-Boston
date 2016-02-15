@@ -82,7 +82,7 @@ TaskImplTest
 		param = "";
 		task.setID (param);
 		Task child;
-		child = new TaskImpl (task);
+		child = new TaskImpl (new ArrayList<Task>());
 		task.addSubTask (child);
 		assertEquals (child.getParentID (), "");
 	}
@@ -94,7 +94,7 @@ TaskImplTest
 		Task parent;
 		parent = new TaskImpl (null);
 		parent.setID ("sameID");
-		Task child = new TaskImpl (parent);
+		Task child = new TaskImpl (new ArrayList<Task> ());
 		child.setID ("sameID");
 		assertEquals (child.getParentTask (), parent);
 	}
@@ -150,7 +150,7 @@ TaskImplTest
 		ArrayList<Task> container;
 		container = new ArrayList<Task> ();
 		Task child;
-		child = new TaskImpl (task);
+		child = new TaskImpl (new ArrayList<Task>());
 		child.setID ("child");
 		container.add (child);
 		task.setSubTasks (container);
@@ -163,8 +163,8 @@ TaskImplTest
 	{
 		ArrayList<Task> param;
 		param = new ArrayList<Task> ();
-		param.add (new TaskImpl (task));
-		param.add (new TaskImpl (task));
+		param.add (new TaskImpl (new ArrayList<Task>()));
+		param.add (new TaskImpl (new ArrayList<Task>()));
 		task.setSubTasks (param);
 		assertEquals (task.getSubTasks (), param);
 	}
@@ -289,7 +289,7 @@ TaskImplTest
 		container = new ArrayList<Task> ();
 		task.setSubTasks (container);
 		Task child;
-		child = new TaskImpl (task);
+		child = new TaskImpl (new ArrayList<Task>());
 		child.setID ("child");
 		task.addSubTask (child);
 		assertEquals (task.getSubTask ("child"), child);
@@ -305,11 +305,11 @@ TaskImplTest
 		ArrayList<Task> param;
 		param = new ArrayList<Task> ();
 		Task child0;
-		child0 = new TaskImpl (task);
+		child0 = new TaskImpl (new ArrayList<Task>());
 		child0.setID ("child0");
 		param.add (child0);
 		Task child1;
-		child1 = new TaskImpl (task);
+		child1 = new TaskImpl (new ArrayList<Task>());
 		child1.setID ("child1");
 		param.add (child1);
 		task.addSubTasks (param);
@@ -340,17 +340,19 @@ TaskImplTest
 	{
 		ArrayList<Task> taskContainer;
 		taskContainer = new ArrayList<Task> ();
-		taskContainer.add (new TaskImpl (task));
-		taskContainer.add (new TaskImpl (task));
-		taskContainer.add (new TaskImpl (task));
+		task.setSubTasks (taskContainer);
+		taskContainer.add (new TaskImpl (new ArrayList<Task>()));
+		taskContainer.add (new TaskImpl (new ArrayList<Task>()));
+		taskContainer.add (new TaskImpl (new ArrayList<Task>()));
 		taskContainer.get (0).setEndDate (new CalendarDate (1, 1, 2014));
 		taskContainer.get (1).setEndDate (new CalendarDate (3, 4, 2016));
 		taskContainer.get (2).setEndDate (new CalendarDate (12, 12, 2016));
 		ArrayList<Task> childContainer;
 		childContainer = new ArrayList<Task> ();
-		childContainer.add (new TaskImpl (taskContainer.get (0)));
-		childContainer.add (new TaskImpl (taskContainer.get (0)));
-		childContainer.add (new TaskImpl (taskContainer.get (0)));
+		taskContainer.get (0).setSubTasks (childContainer);
+		childContainer.add (new TaskImpl (new ArrayList<Task>()));
+		childContainer.add (new TaskImpl (new ArrayList<Task>()));
+		childContainer.add (new TaskImpl (new ArrayList<Task>()));
 		childContainer.get (0).setEndDate (new CalendarDate (5, 8, 2015));
 		childContainer.get (1).setEndDate (new CalendarDate (9, 7, 2015));
 		childContainer.get (2).setEndDate (new CalendarDate (10, 10, 2016));
@@ -365,17 +367,19 @@ TaskImplTest
 	{
 		ArrayList<Task> taskContainer;
 		taskContainer = new ArrayList<Task> ();
-		taskContainer.add (new TaskImpl (task));
-		taskContainer.add (new TaskImpl (task));
-		taskContainer.add (new TaskImpl (task));
+		task.setSubTasks (taskContainer);
+		taskContainer.add (new TaskImpl (new ArrayList<Task>()));
+		taskContainer.add (new TaskImpl (new ArrayList<Task>()));
+		taskContainer.add (new TaskImpl (new ArrayList<Task>()));
 		taskContainer.get (0).setStartDate (new CalendarDate (1, 1, 2014));
 		taskContainer.get (1).setStartDate (new CalendarDate (3, 4, 2016));
 		taskContainer.get (2).setStartDate (new CalendarDate (12, 12, 2016));
 		ArrayList<Task> childContainer;
 		childContainer = new ArrayList<Task> ();
-		childContainer.add (new TaskImpl (taskContainer.get (0)));
-		childContainer.add (new TaskImpl (taskContainer.get (0)));
-		childContainer.add (new TaskImpl (taskContainer.get (0)));
+		taskContainer.get (0).setSubTasks (childContainer);
+		childContainer.add (new TaskImpl (new ArrayList<Task>()));
+		childContainer.add (new TaskImpl (new ArrayList<Task>()));
+		childContainer.add (new TaskImpl (new ArrayList<Task>()));
 		childContainer.get (0).setStartDate (new CalendarDate (5, 8, 2015));
 		childContainer.get (1).setStartDate (new CalendarDate (9, 7, 2015));
 		childContainer.get (2).setStartDate (new CalendarDate (10, 10, 2016));
@@ -390,17 +394,18 @@ TaskImplTest
 	{
 		ArrayList<Task> taskContainer;
 		taskContainer = new ArrayList<Task> ();
-		taskContainer.add (new TaskImpl (task));
-		taskContainer.add (new TaskImpl (task));
-		taskContainer.add (new TaskImpl (task));
+		task.setSubTasks (taskContainer);
+		taskContainer.add (new TaskImpl (new ArrayList<Task>()));
+		taskContainer.add (new TaskImpl (new ArrayList<Task>()));
+		taskContainer.add (new TaskImpl (new ArrayList<Task>()));
 		taskContainer.get (0).setEffort (1);
 		taskContainer.get (1).setEffort (2);
 		taskContainer.get (2).setEffort (3);
 		ArrayList<Task> childContainer;
 		childContainer = new ArrayList<Task> ();
-		childContainer.add (new TaskImpl (taskContainer.get (0)));
-		childContainer.add (new TaskImpl (taskContainer.get (0)));
-		childContainer.add (new TaskImpl (taskContainer.get (0)));
+		childContainer.add (new TaskImpl (new ArrayList<Task>()));
+		childContainer.add (new TaskImpl (new ArrayList<Task>()));
+		childContainer.add (new TaskImpl (new ArrayList<Task>()));
 		childContainer.get (0).setEffort (3);
 		childContainer.get (1).setEffort (4);
 		childContainer.get (2).setEffort (5);
@@ -421,10 +426,10 @@ TaskImplTest
 		ArrayList<Task> container;
 		container = new ArrayList<Task> ();
 		Task child0;
-		child0 = new TaskImpl (task);
+		child0 = new TaskImpl (new ArrayList<Task>());
 		container.add (child0);
 		Task child1;
-		child1 = new TaskImpl (task);
+		child1 = new TaskImpl (new ArrayList<Task>());
 		container.add (child1);
 		task.setSubTasks (container);
 		task.removeAllSubTasks ();
@@ -438,11 +443,11 @@ TaskImplTest
 		ArrayList<Task> container;
 		container = new ArrayList<Task> ();
 		Task child0;
-		child0 = new TaskImpl (task);
+		child0 = new TaskImpl (new ArrayList<Task>());
 		child0.setID ("child0");
 		container.add (child0);
 		Task child1;
-		child1 = new TaskImpl (task);
+		child1 = new TaskImpl (new ArrayList<Task>());
 		child1.setID ("child1");
 		container.add (child1);
 		task.setSubTasks (container);
@@ -459,26 +464,26 @@ TaskImplTest
 		ArrayList<Task> container;
 		container = new ArrayList<Task> ();
 		Task child0;
-		child0 = new TaskImpl (task);
+		child0 = new TaskImpl (new ArrayList<Task>());
 		child0.setID ("child0");
 		container.add (child0);
 		Task child1;
-		child1 = new TaskImpl (task);
+		child1 = new TaskImpl (new ArrayList<Task>());
 		child1.setID ("child1");
 		container.add (child1);
 		Task child2;
-		child2 = new TaskImpl (task);
+		child2 = new TaskImpl (new ArrayList<Task>());
 		child2.setID ("child2");
 		container.add (child2);
 		task.setSubTasks (container);
 		Task child0prime;
-		child0prime = new TaskImpl (task);
+		child0prime = new TaskImpl (new ArrayList<Task>());
 		child0prime.setID ("child0");
 		ArrayList<Task> param;
 		param = new ArrayList<Task> ();
 		param.add (child0prime);
 		Task child2prime;
-		child2prime = new TaskImpl (task);
+		child2prime = new TaskImpl (new ArrayList<Task>());
 		child2prime.setID ("child2");
 		param.add (child2prime);
 		task.removeSubTasks (param);
