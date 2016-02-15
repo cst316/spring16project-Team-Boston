@@ -350,6 +350,22 @@ public class TaskListImpl implements TaskList {
             return res;
         }
     }    
+    public Task 
+	duplicateTaskAndSubtasks (Task originalTask, String parentId)
+	{
+		try {
+			Task newTask = createTask(originalTask, parentId);
+			newTask.setText (newTask.getText () + " <Copy>");
+			getAllSubTasks (originalTask.getID ()).forEach (i -> duplicateTaskAndSubtasks ((Task)i, newTask.getID ()));
+			
+			return newTask;
+		} 
+		catch (Exception ex) 
+		{
+			ex.printStackTrace ();
+		}
+		return null;
+	}
     /*
      * private methods below this line
      */
@@ -436,5 +452,7 @@ public class TaskListImpl implements TaskList {
 	 * (ID => element) 
 	 */
 	private Hashtable elements = new Hashtable ();
+
+	
 
 }

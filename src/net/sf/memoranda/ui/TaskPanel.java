@@ -609,7 +609,7 @@ public class TaskPanel extends JPanel {
 		}
 		for (int i = 0; i < toCopy.size(); i++) 
 		{
-			duplicateTaskAndSubtasks (toCopy.get(i), null);
+			CurrentProject.getTaskList ().duplicateTaskAndSubtasks (toCopy.get(i), "");
 		}
 		
 		CurrentStorage.get ().storeTaskList (CurrentProject.getTaskList (), CurrentProject.get ());
@@ -874,17 +874,4 @@ public class TaskPanel extends JPanel {
 		calcTask_actionPerformed(e);
 	}
 	
-	private void 
-	duplicateTaskAndSubtasks (Task originalTask, String parentId)
-	{
-		try {
-			Task newTask = CurrentProject.getTaskList ().createTask(originalTask, parentId);
-			newTask.setText (newTask.getText () + " <Copy>");
-			CurrentProject.getTaskList ().getAllSubTasks (originalTask.getID ()).forEach (i -> duplicateTaskAndSubtasks ((Task)i, newTask.getID ()));
-		} 
-		catch (Exception ex) 
-		{
-			ex.printStackTrace ();
-		}
-	}
 }

@@ -42,5 +42,6 @@ public interface TaskList {
     public long[] calculateCompletionFromSubTasks(Task t);
 
     nu.xom.Document getXMLContent();
+	Task duplicateTaskAndSubtasks(Task task, String parentId);
 
 }
