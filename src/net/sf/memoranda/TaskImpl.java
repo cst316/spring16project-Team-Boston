@@ -15,8 +15,9 @@ import net.sf.memoranda.date.CalendarDate;
 import net.sf.memoranda.date.CurrentDate;
 
 public class
-TaskImpl implements Task, Comparable
+TaskImpl implements Task, Comparable<Object>
 {
+	private static final long serialVersionUID = 1295565190499990928L;
 	
 	public
 	TaskImpl (Task parent)
@@ -327,7 +328,7 @@ TaskImpl implements Task, Comparable
 		long[] res = new long[2];
 		long expendedEffort = 0;
 		long totalEffort = 0;
-		Collection subTasks = getSubTasks ();
+		Collection<Task> subTasks = getSubTasks ();
 		if (subTasks == null || subTasks.size() == 0)
 		{
 			long eff = getEffort ();
@@ -355,7 +356,7 @@ TaskImpl implements Task, Comparable
 	recursivelyModifyEndDateFromSubTasks ()
 	{
 		CalendarDate d = getEndDate ();
-		Collection subTasks = getSubTasks ();
+		Collection<Task> subTasks = getSubTasks ();
 		if (subTasks == null)
 			return startDate;
 		for (Iterator<Task> iter = subTasks.iterator (); iter.hasNext ();)
@@ -375,7 +376,7 @@ TaskImpl implements Task, Comparable
 	recursivelyModifyStartDateFromSubTasks ()
 	{
 		CalendarDate d = getStartDate ();
-		Collection subTasks = getSubTasks ();
+		Collection<Task> subTasks = getSubTasks ();
 		if (subTasks == null)
 			return startDate;
 		for (Iterator<Task> iter = subTasks.iterator (); iter.hasNext ();)
@@ -395,7 +396,7 @@ TaskImpl implements Task, Comparable
 	recursivelyModifyEffortFromSubTasks ()
 	{
 		long totalEffort = 0;
-		Collection subTasks = getSubTasks ();
+		Collection<Task> subTasks = getSubTasks ();
 		if (subTasks == null)
 			return effort;
 		for (Iterator<Task> iter = subTasks.iterator (); iter.hasNext ();)
@@ -447,7 +448,6 @@ TaskImpl implements Task, Comparable
 		return a && b;
 	}
 	
-	private boolean active;
 	private Collection<Task> SubTasks;
 	private String description;
 	private long effort, effortActual;
@@ -457,8 +457,7 @@ TaskImpl implements Task, Comparable
 	private int priority;
 	private int progress;
 	private CalendarDate startDate;
-	private int status;
 	private String text;
-	private boolean updateSubTasks, frozen, updateChildren;
+	private boolean updateSubTasks, frozen;
 	
 }
