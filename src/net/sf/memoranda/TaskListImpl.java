@@ -25,11 +25,43 @@ public class TaskListImpl implements TaskList
 	 * Constructor for TaskListImpl.
 	 */
 
-	public TaskListImpl (Project prj)
+	public
+	TaskListImpl (Project prj)
 	{
 		// _project = prj;
 		taskList = new Hashtable<String, Task> ();
 		rootTaskList = new ArrayList<Task> ();
+	}
+	
+	/**
+	 * Looks through the entire sub task tree and calculates progress on all
+	 * parent task nodes
+	 * 
+	 * @param t
+	 * @return long[] of size 2. First long is expended effort in
+	 *         milliseconds, 2nd long is total effort in milliseconds
+	 */
+	public long[]
+	calculateCompletionFromSubTasks (Task t)
+	{
+		return t.recursivelyModifyCompletionFromSubTasks ();
+	}
+
+	/**
+	 * Recursively calculate total effort based on subtasks for every node
+	 * in the task tree The values are saved as they are calculated as well
+	 * 
+	 * @param t
+	 * @return
+	 */
+	public long calculateTotalEffortFromSubTasks (Task t)
+	{
+		return t.recursivelyModifyEffortFromSubTasks ();
+	}
+
+	public Collection<Task> getTopLevelTasks ()
+	{
+		return getAllRootTasks ();
 	}
 
 	/**
@@ -37,7 +69,20 @@ public class TaskListImpl implements TaskList
 	 * getAllSubTasks and getActiveSubTasks. If a root task is required,
 	 * just send a null taskId
 	 */
-	public Collection<Task> getAllSubTasks (String taskId)
+	public Collection<Task>
+	getActiveSubTasks (String taskId, CalendarDate date)
+	{
+		Collection<Task> allTasks = getAllSubTasks (taskId);
+		return filterActiveTasks (allTasks, date);
+	}
+
+	/**
+	 * All methods to obtain list of tasks are consolidated under
+	 * getAllSubTasks and getActiveSubTasks. If a root task is required,
+	 * just send a null taskId
+	 */
+	public Collection<Task>
+	getAllSubTasks (String taskId)
 	{
 		if ( (taskId == null) || (taskId.length () == 0))
 		{
@@ -54,23 +99,77 @@ public class TaskListImpl implements TaskList
 		}
 	}
 
-	public Collection<Task> getTopLevelTasks ()
+	/**
+	 * Looks through the entire sub task tree and corrects any
+	 * inconsistencies in start dates
+	 * 
+	 * @param t
+	 * @return
+	 */
+	public CalendarDate
+	getEarliestStartDateFromSubTasks (Task t)
 	{
-		return getAllRootTasks ();
+		return t.recursivelyModifyStartDateFromSubTasks ();
 	}
 
 	/**
-	 * All methods to obtain list of tasks are consolidated under
-	 * getAllSubTasks and getActiveSubTasks. If a root task is required,
-	 * just send a null taskId
+	 * Looks through the entire sub task tree and corrects any
+	 * inconsistencies in start dates
+	 * 
+	 * @param t
+	 * @return
 	 */
-	public Collection<Task> getActiveSubTasks (String taskId, CalendarDate date)
+	public CalendarDate
+	getLatestEndDateFromSubTasks (Task t)
 	{
-		Collection<Task> allTasks = getAllSubTasks (taskId);
-		return filterActiveTasks (allTasks, date);
+		return t.recursivelyModifyEndDateFromSubTasks ();
 	}
 
-	public Task createTask (CalendarDate startDate, CalendarDate endDate, String text, int priority, long effort, long effortActual, String description, String parentTaskId, boolean updateFromChildren)
+	public boolean
+	hasParentTask (String id)
+	{
+		Task t = getTaskElement (id);
+	
+		if (t.getParentTask () != null)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	public boolean
+	hasSubTasks (String id)
+	{
+		Task task = getTaskElement (id);
+		if (task == null)
+		{
+			return false;
+		}
+		if (task.getSubTasks ().size () > 0)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	public Task
+	createTask (Task task)
+	{
+		Task newTask = task.deepCopy ();
+		newTask.setID (Util.generateId ());
+		rootTaskList.add (newTask);
+		taskList.put (newTask.getID (), newTask);
+		return newTask;
+	}
+
+	public Task
+	createTask (CalendarDate startDate, CalendarDate endDate, String text, int priority, long effort, long effortActual, String description, String parentTaskId, boolean updateFromChildren)
 	{
 		Task newTask = new TaskImpl (new ArrayList<Task> ());
 		if (parentTaskId == null)
@@ -91,7 +190,7 @@ public class TaskListImpl implements TaskList
 		newTask.setUpdateSubTasks (updateFromChildren);
 		newTask.setText (text);
 		newTask.setDescription (description);
-
+	
 		if (parentTaskId == null)
 		{
 			rootTaskList.add (newTask);
@@ -101,28 +200,28 @@ public class TaskListImpl implements TaskList
 			Task parent = getTaskElement (parentTaskId);
 			parent.addSubTask (newTask);
 		}
-
+	
 		taskList.put (newTask.getID (), newTask);
-
+	
 		Util.debug ("Created task with parent " + parentTaskId);
-
+	
 		return (TaskImpl) newTask;
 	}
 
-	public Task createTask (Task task)
+	public Task
+	getTask (String id)
 	{
-		Task newTask = task.deepCopy ();
-		newTask.setID (Util.generateId ());
-		rootTaskList.add (newTask);
-		taskList.put (newTask.getID (), newTask);
-		return newTask;
+		Util.debug ("Getting task " + id);
+		return getTaskElement (id);
 	}
+
 	/**
 	 * @see net.sf.memoranda.TaskList#removeTask(import
 	 *      net.sf.memoranda.Task)
 	 */
 
-	public void removeTask (Task task)
+	public void
+	removeTask (Task task)
 	{
 		String parentTaskId = task.getParentID ();
 		if (parentTaskId != null)
@@ -134,95 +233,11 @@ public class TaskListImpl implements TaskList
 		rootTaskList.remove (task);
 	}
 
-	public boolean hasSubTasks (String id)
-	{
-		Task task = getTaskElement (id);
-		if (task == null)
-		{
-			return false;
-		}
-		if (task.getSubTasks ().size () > 0)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-
-	public Task getTask (String id)
-	{
-		Util.debug ("Getting task " + id);
-		return getTaskElement (id);
-	}
-
-	public boolean hasParentTask (String id)
-	{
-		Task t = getTaskElement (id);
-
-		if (t.getParentTask () != null)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-
-	/**
-	 * Recursively calculate total effort based on subtasks for every node
-	 * in the task tree The values are saved as they are calculated as well
-	 * 
-	 * @param t
-	 * @return
-	 */
-	public long calculateTotalEffortFromSubTasks (Task t)
-	{
-		return t.recursivelyModifyEffortFromSubTasks ();
-	}
-
-	/**
-	 * Looks through the entire sub task tree and corrects any
-	 * inconsistencies in start dates
-	 * 
-	 * @param t
-	 * @return
-	 */
-	public CalendarDate getEarliestStartDateFromSubTasks (Task t)
-	{
-		return t.recursivelyModifyStartDateFromSubTasks ();
-	}
-
-	/**
-	 * Looks through the entire sub task tree and corrects any
-	 * inconsistencies in start dates
-	 * 
-	 * @param t
-	 * @return
-	 */
-	public CalendarDate getLatestEndDateFromSubTasks (Task t)
-	{
-		return t.recursivelyModifyEndDateFromSubTasks ();
-	}
-
-	/**
-	 * Looks through the entire sub task tree and calculates progress on all
-	 * parent task nodes
-	 * 
-	 * @param t
-	 * @return long[] of size 2. First long is expended effort in
-	 *         milliseconds, 2nd long is total effort in milliseconds
-	 */
-	public long[] calculateCompletionFromSubTasks (Task t)
-	{
-		return t.recursivelyModifyCompletionFromSubTasks ();
-	}
 	/*
 	 * private methods below this line
 	 */
-	private Task getTaskElement (String id)
+	private Task
+	getTaskElement (String id)
 	{
 		Task el = (Task) taskList.get (id);
 		if (el == null)
@@ -232,7 +247,8 @@ public class TaskListImpl implements TaskList
 		return el;
 	}
 
-	private Collection<Task> getAllRootTasks ()
+	private Collection<Task>
+	getAllRootTasks ()
 	{
 		Vector<Task> temp = new Vector<Task> ();
 		for (Task task : rootTaskList)
@@ -242,7 +258,8 @@ public class TaskListImpl implements TaskList
 		return temp;
 	}
 
-	private Collection<Task> filterActiveTasks (Collection<Task> tasks, CalendarDate date)
+	private Collection<Task>
+	filterActiveTasks (Collection<Task> tasks, CalendarDate date)
 	{
 		Vector<Task> v = new Vector<Task> ();
 		for (Iterator<Task> iter = tasks.iterator (); iter.hasNext ();)
@@ -256,7 +273,8 @@ public class TaskListImpl implements TaskList
 		return v;
 	}
 
-	private boolean isActive (Task t, CalendarDate date)
+	private boolean
+	isActive (Task t, CalendarDate date)
 	{
 		if ( (t.getStatus (date) == Task.ACTIVE) || (t.getStatus (date) == Task.DEADLINE) || (t.getStatus (date) == Task.FAILED))
 		{
