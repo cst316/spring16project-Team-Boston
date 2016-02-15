@@ -122,7 +122,7 @@ TaskImplTest
 	public void
 	getRateTest ()
 	{
-		assertTrue (false);
+		fail ();
 	}
 	
 	@Test
@@ -330,7 +330,7 @@ TaskImplTest
 	public void
 	recursivelyModifyCompletionFromSubTasksTest ()
 	{
-		assertTrue (false);
+		fail ();
 	}
 	
 	@Test
