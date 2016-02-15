@@ -35,7 +35,7 @@ public class PredictedEffortTest
 	 * Test null value
 	 */
 	@Test
-	public void test () 
+	public void nullTest () 
 	{
 		assertTrue (0 == task.getPredictedEffort());
 		
@@ -44,7 +44,7 @@ public class PredictedEffortTest
 	 * Test setter and getter
 	 */
 	@Test
-	public void test1 () 
+	public void setTest () 
 	{
 		task.setPredictedEffort ( (long) 4.0);
 		assertTrue( (long) 4.0 == task.getPredictedEffort ());
@@ -53,7 +53,7 @@ public class PredictedEffortTest
 	 * Test data type 
 	 */
 	@Test
-	public void test2 () 
+	public void dataTypeTest () 
 	{
 		task.setPredictedEffort( (long) 5.5);
 		assertFalse (5.5 == task.getPredictedEffort ());
@@ -63,7 +63,7 @@ public class PredictedEffortTest
 	 * Test value in milliseconds for TaskTable
 	 */
 	@Test
-	public void test3 () 
+	public void taskTableValueTest () 
 	{
 		task.setPredictedEffort ( (long) 3600000);
 		assertTrue ((double) 1 == (double) taskTable.getValueAt (task, 7));
@@ -73,7 +73,7 @@ public class PredictedEffortTest
 	 * Test correct String for TaskTable
 	 */
 	@Test
-	public void test4 () 
+	public void taskTableStringTest () 
 	{
 		assertTrue(taskTable.getColumnName(7).equals("Predicted Effort(hrs)"));
 	}
