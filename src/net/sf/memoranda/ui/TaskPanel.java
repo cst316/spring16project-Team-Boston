@@ -590,15 +590,31 @@ public class TaskPanel extends JPanel {
 		// taskTable.updateUI();
 	}
 
-	void copyTaskB_actionPerformed(ActionEvent e) {
-		String originalTaskId = taskTable.getModel().getValueAt(taskTable.getSelectedRow(), TaskTable.TASK_ID).toString();
-		if (taskTable.getSelectedRow() == -1)
+	void 
+	copyTaskB_actionPerformed(ActionEvent e) 
+	{
+		String originalTaskId = taskTable.getModel ().getValueAt (taskTable.getSelectedRow (), TaskTable.TASK_ID).toString ();
+		if (taskTable.getSelectedRow () == -1)
+		{
 			return;
-		duplicateTaskAndSubtasks (CurrentProject.getTaskList().getTask(originalTaskId), null);
-
-		CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
-		taskTable.tableChanged();
-		parentPanel.updateIndicators();
+		}
+		Vector<Task> toCopy = new Vector<Task> ();
+		for (int i = 0; i < taskTable.getSelectedRows().length; i++) 
+		{
+			Task t = CurrentProject.getTaskList ().getTask (taskTable.getModel ().getValueAt (taskTable.getSelectedRows ()[i], TaskTable.TASK_ID).toString ());
+			if (t != null)
+			{
+				toCopy.add(t);
+			}
+		}
+		for (int i = 0; i < toCopy.size(); i++) 
+		{
+			duplicateTaskAndSubtasks (toCopy.get(i), null);
+		}
+		
+		CurrentStorage.get ().storeTaskList (CurrentProject.getTaskList (), CurrentProject.get ());
+		taskTable.tableChanged ();
+		parentPanel.updateIndicators ();
 	}
 
 	void addSubTask_actionPerformed(ActionEvent e) {
@@ -858,14 +874,17 @@ public class TaskPanel extends JPanel {
 		calcTask_actionPerformed(e);
 	}
 	
-	private void duplicateTaskAndSubtasks (Task originalTask, String parentId)
+	private void 
+	duplicateTaskAndSubtasks (Task originalTask, String parentId)
 	{
 		try {
-			Task newTask = CurrentProject.getTaskList().createTask(originalTask, parentId);
-			newTask.setText(newTask.getText() + " <Copy>");
+			Task newTask = CurrentProject.getTaskList ().createTask(originalTask, parentId);
+			newTask.setText (newTask.getText () + " <Copy>");
 			CurrentProject.getTaskList ().getAllSubTasks (originalTask.getID ()).forEach (i -> duplicateTaskAndSubtasks ((Task)i, newTask.getID ()));
-		} catch (Exception ex) {
-			ex.printStackTrace();
+		} 
+		catch (Exception ex) 
+		{
+			ex.printStackTrace ();
 		}
 	}
 }
