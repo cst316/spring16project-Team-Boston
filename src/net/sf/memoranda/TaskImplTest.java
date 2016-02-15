@@ -93,7 +93,9 @@ TaskImplTest
 	{
 		Task parent;
 		parent = new TaskImpl (null);
+		parent.setID ("sameID");
 		Task child = new TaskImpl (parent);
+		child.setID ("sameID");
 		assertEquals (child.getParentTask (), parent);
 	}
 	
@@ -319,6 +321,7 @@ TaskImplTest
 	public void
 	deepCopyTest ()
 	{
+		task.setID ("sameID");
 		Task param;
 		param = task.deepCopy ();
 		assertEquals (task, param);
