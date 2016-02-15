@@ -91,10 +91,6 @@ public class TaskListImpl implements TaskList
 		else
 		{
 			Task task = getTaskElement (taskId);
-			if (task == null)
-			{
-				return new Vector<Task> ();
-			}
 			return task.getSubTasks ();
 		}
 	}
