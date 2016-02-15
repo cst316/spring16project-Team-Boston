@@ -235,57 +235,63 @@ public class FileStorage implements Storage {
 		f.delete();
 	}
 
-	public TaskList openTaskList(Project prj) {
+	public TaskList 
+	openTaskList(Project prj) 
+	{
 		String fn = JN_DOCPATH + prj.getID() + File.separator + ".tasklist";
 
 		File taskListFile = new File(fn);
-		if (taskListFile.exists()) {
+		if (taskListFile.exists()) 
+		{
 			/* DEBUG */
 			System.out.println("[DEBUG] Open task list: " + JN_DOCPATH + prj.getID() + File.separator + ".tasklist");
 
 			ObjectInputStream ois;
 			TaskListImpl taskListImpl = null;
-			try {
+			try 
+			{
 				ois = new ObjectInputStream(new FileInputStream(taskListFile));
 				taskListImpl = (TaskListImpl) ois.readObject();
 				ois.close();
-			} catch (IOException e) {
+			} 
+			catch (IOException e) 
+			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} catch (ClassNotFoundException e) {
+			} 
+			catch (ClassNotFoundException e) 
+			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			/*
-			 * DocType tasklistDoctype = tasklistDoc.getDocType(); String
-			 * publicId = null; if (tasklistDoctype != null) { publicId =
-			 * tasklistDoctype.getPublicID(); } boolean upgradeOccurred =
-			 * TaskListVersioning.upgradeTaskList(publicId); if
-			 * (upgradeOccurred) { // reload from new file tasklistDoc =
-			 * openDocument(fn); }
-			 */
 			return taskListImpl;
-		} else {
-			/* DEBUG */
+		} 
+		else 
+		{
 			System.out.println("[DEBUG] New task list created");
 			return new TaskListImpl(prj);
 		}
 	}
 
-	public void storeTaskList(TaskList tasklist, Project prj) {
-		/* DEBUG */
-		if (tasklist.getTopLevelTasks().size() > 0) {
+	public void 
+	storeTaskList(TaskList tasklist, Project prj)
+	{
+		if (tasklist.getTopLevelTasks().size() > 0) 
+		{
 			String fn = JN_DOCPATH + prj.getID() + File.separator + ".tasklist";
 			File taskListFile = new File(fn);
 			System.out.println("[DEBUG] Save task list: " + JN_DOCPATH + prj.getID() + File.separator + ".tasklist");
 
 			ObjectOutputStream oos;
-			try {
+			try 
+			{
 				oos = new ObjectOutputStream(new FileOutputStream(fn));
 				oos.writeObject(tasklist);
 				oos.flush();
 				oos.close();
-			} catch (IOException e) {
+			} 
+			catch (IOException e) 
+			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
