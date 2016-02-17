@@ -596,7 +596,19 @@ public class TaskPanel extends JPanel {
 		{
 			return;
 		}
-		CurrentProject.getTaskList().createTask(CurrentProject.getTaskList().getTask(originalTaskId));
+		
+		Vector<Task> toCopy = new Vector<Task>();
+		for (int i = 0; i < taskTable.getSelectedRows().length; i++) {
+			Task t = CurrentProject.getTaskList().getTask(
+					taskTable.getModel().getValueAt(taskTable.getSelectedRows()[i], TaskTable.TASK_ID).toString());
+			if (t != null)
+				toCopy.add(t);
+		}
+		for (int i = 0; i < toCopy.size(); i++) {
+			CurrentProject.getTaskList().createTask(toCopy.get(i));
+		}
+		
+		
 
 		CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
 		taskTable.tableChanged();

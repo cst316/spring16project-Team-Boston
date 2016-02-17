@@ -247,7 +247,7 @@ TaskImpl implements Task, Comparable
 		}
 		if (parent != null)
 		{
-			parent.recursivelyModifyCompletionFromSubTasks();
+			//parent.recursivelyModifyCompletionFromSubTasks();
 		}
 	}
 
@@ -298,10 +298,10 @@ TaskImpl implements Task, Comparable
 		SubTasks.addAll (tasks);
 	}
 	
-	public Task
+	public TaskImpl
 	deepCopy()
 	{
-		Task newTask = null;
+		TaskImpl newTask = null;
 		try {
 			// Serialize the object out to a byte array
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -312,7 +312,7 @@ TaskImpl implements Task, Comparable
 
 			// Deserialize object back in
 			ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(bos.toByteArray()));
-			newTask = (Task) in.readObject();
+			newTask = (TaskImpl) in.readObject();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {

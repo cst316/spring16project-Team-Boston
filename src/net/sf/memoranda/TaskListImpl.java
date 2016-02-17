@@ -117,9 +117,24 @@ TaskListImpl implements TaskList
 	{
 		Task newTask = task.deepCopy();
 		newTask.setID(Util.generateId());
+		recursivleyUpdateID(newTask.getSubTasks());
 		rootTaskList.add(newTask);
 		taskList.put(newTask.getID(), newTask);
 		return newTask;
+	}
+	
+	private void recursivleyUpdateID(Collection<Task> subTasks){
+		for(Task task : subTasks){
+			if(task.getSubTasks().size() > 0)
+			{
+				recursivleyUpdateID(task.getSubTasks());
+			}
+			else
+			{
+				task.setID(Util.generateId());
+				taskList.put(task.getID(), task);
+			}
+		}
 	}
 	/**
      * @see net.sf.memoranda.TaskList#removeTask(import net.sf.memoranda.Task)
