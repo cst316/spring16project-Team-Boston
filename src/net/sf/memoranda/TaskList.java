@@ -13,42 +13,39 @@ import java.util.Collection;
 
 import net.sf.memoranda.date.CalendarDate;
 
-/**
- * 
- */
-/* $Id: TaskList.java,v 1.8 2005/12/01 08:12:26 alexeya Exp $ */
+
 public interface
 TaskList extends Serializable
 {
+	/**
+	 * Returns tasks that fulfill two criteria:
+	 * child to the task with the given taskId and active with respect to the given date.
+	 * 
+	 * @param taskId the parent's identifier
+	 * @param date used to determine whether a task is considered active or expired
+	 * @return returns a collection of tasks that meet the criteria
+	 */
 	Collection<Task>
 	getActiveSubTasks (String taskId, CalendarDate date);
 	
+	/**
+	 * Returns subtasks with respect to the task with the given taskId.
+	 * 
+	 * @param taskId the parent's identifier
+	 * @return returns a collection that contains subtasks of the task with the given id
+	 */
 	Collection<Task>
 	getAllSubTasks (String taskId);
-
-	CalendarDate
-	getEarliestStartDateFromSubTasks (Task t);
 	
-	CalendarDate
-	getLatestEndDateFromSubTasks (Task t);
-	
-	// Project getProject();
 	Task
 	getTask(String id);
 	
 	Collection<Task>
 	getTopLevelTasks ();
 	
-	long[]
-	calculateCompletionFromSubTasks (Task t);
-	
-	long
-	calculateTotalEffortFromSubTasks (Task t);
-	
 	Task
 	createTask (Task task);
 	
-	// Add effortActual
 	Task
 	createTask
 	(	CalendarDate startDate,

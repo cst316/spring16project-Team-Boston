@@ -1,10 +1,5 @@
 package net.sf.memoranda;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Collection;
 
@@ -122,6 +117,14 @@ Task extends Serializable
 	Task
 	deepCopy ();
 	
+	/**
+	 * Looks through the entire sub task tree and calculates progress on all
+	 * parent task nodes
+	 * 
+	 * @param t
+	 * @return long[] of size 2. First long is expended effort in
+	 *         milliseconds, 2nd long is total effort in milliseconds
+	 */
 	long[]
 	recursivelyModifyCompletionFromSubTasks ();
 	

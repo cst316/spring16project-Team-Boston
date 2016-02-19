@@ -21,54 +21,18 @@ public class TaskListImpl implements TaskList
 {
 	private static final long serialVersionUID = 7504630657790091439L;
 	
-	/**
-	 * Constructor for TaskListImpl.
-	 */
-
 	public
 	TaskListImpl (Project prj)
 	{
-		// _project = prj;
 		taskList = new Hashtable<String, Task> ();
 		rootTaskList = new ArrayList<Task> ();
 	}
 	
-	/**
-	 * Looks through the entire sub task tree and calculates progress on all
-	 * parent task nodes
-	 * 
-	 * @param t
-	 * @return long[] of size 2. First long is expended effort in
-	 *         milliseconds, 2nd long is total effort in milliseconds
-	 */
-	public long[]
-	calculateCompletionFromSubTasks (Task t)
-	{
-		return t.recursivelyModifyCompletionFromSubTasks ();
-	}
-
-	/**
-	 * Recursively calculate total effort based on subtasks for every node
-	 * in the task tree The values are saved as they are calculated as well
-	 * 
-	 * @param t
-	 * @return
-	 */
-	public long calculateTotalEffortFromSubTasks (Task t)
-	{
-		return t.recursivelyModifyEffortFromSubTasks ();
-	}
-
 	public Collection<Task> getTopLevelTasks ()
 	{
 		return getAllRootTasks ();
 	}
 
-	/**
-	 * All methods to obtain list of tasks are consolidated under
-	 * getAllSubTasks and getActiveSubTasks. If a root task is required,
-	 * just send a null taskId
-	 */
 	public Collection<Task>
 	getActiveSubTasks (String taskId, CalendarDate date)
 	{
@@ -76,11 +40,6 @@ public class TaskListImpl implements TaskList
 		return filterActiveTasks (allTasks, date);
 	}
 
-	/**
-	 * All methods to obtain list of tasks are consolidated under
-	 * getAllSubTasks and getActiveSubTasks. If a root task is required,
-	 * just send a null taskId
-	 */
 	public Collection<Task>
 	getAllSubTasks (String taskId)
 	{
@@ -95,65 +54,13 @@ public class TaskListImpl implements TaskList
 		}
 	}
 
-	/**
-	 * Looks through the entire sub task tree and corrects any
-	 * inconsistencies in start dates
-	 * 
-	 * @param t
-	 * @return
-	 */
-	public CalendarDate
-	getEarliestStartDateFromSubTasks (Task t)
+	public Task
+	getTask (String id)
 	{
-		return t.recursivelyModifyStartDateFromSubTasks ();
+		Util.debug ("Getting task " + id);
+		return getTaskElement (id);
 	}
 
-	/**
-	 * Looks through the entire sub task tree and corrects any
-	 * inconsistencies in start dates
-	 * 
-	 * @param t
-	 * @return
-	 */
-	public CalendarDate
-	getLatestEndDateFromSubTasks (Task t)
-	{
-		return t.recursivelyModifyEndDateFromSubTasks ();
-	}
-
-	public boolean
-	hasParentTask (String id)
-	{
-		Task t = getTaskElement (id);
-	
-		if (t.getParentTask () != null)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-
-	public boolean
-	hasSubTasks (String id)
-	{
-		Task task = getTaskElement (id);
-		if (task == null)
-		{
-			return false;
-		}
-		if (task.getSubTasks ().size () > 0)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-	
 	public Task
 	createTask (Task task)
 	{
@@ -205,18 +112,40 @@ public class TaskListImpl implements TaskList
 		return (TaskImpl) newTask;
 	}
 
-	public Task
-	getTask (String id)
+
+	public boolean
+	hasParentTask (String id)
 	{
-		Util.debug ("Getting task " + id);
-		return getTaskElement (id);
+		Task t = getTaskElement (id);
+	
+		if (t.getParentTask () != null)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 
-	/**
-	 * @see net.sf.memoranda.TaskList#removeTask(import
-	 *      net.sf.memoranda.Task)
-	 */
-
+	public boolean
+	hasSubTasks (String id)
+	{
+		Task task = getTaskElement (id);
+		if (task == null)
+		{
+			return false;
+		}
+		if (task.getSubTasks ().size () > 0)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
 	public void
 	removeTask (Task task)
 	{
@@ -230,9 +159,6 @@ public class TaskListImpl implements TaskList
 		rootTaskList.remove (task);
 	}
 
-	/*
-	 * private methods below this line
-	 */
 	private Task
 	getTaskElement (String id)
 	{
@@ -300,6 +226,6 @@ public class TaskListImpl implements TaskList
 		}
 	}
 
-	private Hashtable<String, Task> taskList;
 	private ArrayList<Task> rootTaskList;
+	private Hashtable<String, Task> taskList;
 }
