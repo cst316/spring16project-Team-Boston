@@ -8,6 +8,8 @@
  */
 package net.sf.memoranda;
 
+import java.util.ArrayList;
+
 import net.sf.memoranda.date.CalendarDate;
 import nu.xom.Attribute;
 import nu.xom.Element;
@@ -62,6 +64,19 @@ public class NoteImpl implements Note, Comparable {
     public void setTitle(String s) {
         Attribute ta = _el.getAttribute("title");
         if (ta == null) _el.addAttribute(new Attribute("title", s));
+        else 
+            ta.setValue(s);
+    }
+    
+    public void addTag(String s) 
+    {
+        Attribute ta = _el.getAttribute("tag");
+        if (ta == null)
+        {
+        	ArrayList<String> tag = new ArrayList<String>();
+        	tag.add(s);
+        	_el.addAttribute(new Attribute("tag", s));
+        }
         else 
             ta.setValue(s);
     }

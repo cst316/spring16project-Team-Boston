@@ -85,6 +85,10 @@ public class EditorPanel extends JPanel {
 	JButton previewB = new JButton();
 
 	DailyItemsPanel parentPanel = null;
+	// tag added
+	JLabel tag = new JLabel();
+	
+	public JTextField tagField = new JTextField();
 
 	public EditorPanel(DailyItemsPanel parent) {
 		try {
@@ -337,6 +341,11 @@ public class EditorPanel extends JPanel {
 		this.add(titleBar, BorderLayout.NORTH);
 		titleBar.add(titleLabel, null);
 		titleBar.add(titleField, null);
+		// tags
+		editorToolBar.add(tag, null);
+		tag.setText("Tags");
+		editorToolBar.add(tagField, null);
+		
 		initCSS();
 		editor.editor.setAntiAlias(Configuration.get("ANTIALIAS_TEXT").toString().equalsIgnoreCase("yes"));
 		// editor.editor.enableInputMethods(false);
