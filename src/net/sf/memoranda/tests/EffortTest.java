@@ -24,7 +24,9 @@ public class EffortTest
 	 * @throws Exception
 	 */
 	@Before
-	public void setUp () throws Exception
+	public void 
+	setUp () 
+	throws Exception
 	{
 		element = new Element ("task");
 		task = new TaskImpl (element, null);
@@ -34,7 +36,8 @@ public class EffortTest
 	 * Test null value
 	 */
 	@Test
-	public void nullTest () 
+	public void 
+	nullTest () 
 	{
 		assertTrue (0 == task.getEffort());
 		
@@ -43,7 +46,8 @@ public class EffortTest
 	 * Test setter and getter
 	 */
 	@Test
-	public void setTest () 
+	public void 
+	setTest () 
 	{
 		task.setEffort ( (long) 4.0);
 		assertTrue( (long) 4.0 == task.getEffort ());
@@ -52,7 +56,8 @@ public class EffortTest
 	 * Test data type 
 	 */
 	@Test
-	public void dataTypeTest () 
+	public void 
+	dataTypeTest () 
 	{
 		task.setEffort( (long) 5.5);
 		assertFalse (5.5 == task.getEffort ());
@@ -62,7 +67,8 @@ public class EffortTest
 	 * Test value in milliseconds for TaskTable
 	 */
 	@Test
-	public void taskTableValueTest () 
+	public void 
+	taskTableValueTest () 
 	{
 		task.setEffort ( (long) 3600000);
 		assertTrue ((double) 1 == (double) taskTable.getValueAt (task, 8));
@@ -71,8 +77,9 @@ public class EffortTest
 	 * Test correct String for TaskTable
 	 */
 	@Test
-	public void taskTableStringTest () 
+	public void 
+	taskTableStringTest () 
 	{
-		assertTrue(taskTable.getColumnName(8).equals("Actual Effort(hrs)"));
+		assertTrue(taskTable.getColumnName (8).equals ("Actual Effort(hrs)"));
 	}
 }

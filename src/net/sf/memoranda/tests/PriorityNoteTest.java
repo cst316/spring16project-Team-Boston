@@ -16,74 +16,83 @@ public class PriorityNoteTest
 {
 	Note n;
 	Element element;
+	
 	/**
 	 * Set up new note to be tested
 	 * @throws Exception
 	 */
 	@Before
-	public void setUp() throws Exception 
+	public void 
+	setUp () 
+	throws Exception 
 	{
-		element = new Element("note");
-		n = new NoteImpl(element, null);
+		element = new Element ("note");
+		n = new NoteImpl (element, null);
 	}
 
 	/**
 	 * Tests the default priority
 	 */
 	@Test
-	public void testDefault() 
+	public void
+	testDefault () 
 	{
-		assertTrue(n.getPriority() == 2);
-		assertTrue(n.getPriorityString().equals("Normal"));
+		assertTrue (n.getPriority () == 2);
+		assertTrue (n.getPriorityString ().equals ("Normal"));
 	}
 	/**
 	 * Test the lowest priority
 	 */
-	@Test
-	public void testLowest() 
+	@Test 
+	public void 
+	testLowest () 
 	{
-		n.setPriority(0);
-		assertTrue(n.getPriority() == 0);
-		assertTrue(n.getPriorityString().equals("Lowest"));
+		n.setPriority (0);
+		assertTrue (n.getPriority () == 0);
+		assertTrue (n.getPriorityString ().equals ("Lowest"));
 	}
 	/**
 	 * Test the low priority
 	 */
-	@Test
-	public void testLow() 
+	@Test 
+	public void 
+	testLow () 
 	{
-		n.setPriority(1);
-		assertTrue(n.getPriority() == 1);
-		assertTrue(n.getPriorityString().equals("Low"));
+		n.setPriority (1);
+		assertTrue (n.getPriority () == 1);
+		assertTrue (n.getPriorityString ().equals ("Low"));
 	}
 	/**
 	 * Test the normal priority
 	 */
 	@Test
-	public void testNormal() 
+	public void 
+	testNormal () 
 	{
-		n.setPriority(2);
-		assertTrue(n.getPriority() == 2);
-		assertTrue(n.getPriorityString().equals("Normal"));
+		n.setPriority (2);
+		assertTrue (n.getPriority () == 2);
+		assertTrue (n.getPriorityString ().equals ("Normal"));
 	}
 	/**
 	 * Test the high priority
 	 */
 	@Test
-	public void testHigh() 
+	public void 
+	testHigh () 
 	{
-		n.setPriority(3);
-		assertTrue(n.getPriority() == 3);
-		assertTrue(n.getPriorityString().equals("High"));
+		n.setPriority (3);
+		assertTrue (n.getPriority () == 3);
+		assertTrue (n.getPriorityString ().equals ("High"));
 	}
 	/**
 	 * Test the highest priority
 	 */
 	@Test
-	public void testHighest() 
+	public void 
+	testHighest () 
 	{
-		n.setPriority(4);
-		assertTrue(n.getPriority() == 4);
-		assertTrue(n.getPriorityString().equals("Highest"));
+		n.setPriority (4);
+		assertTrue (n.getPriority () == 4);
+		assertTrue (n.getPriorityString ().equals ("Highest"));
 	}
 }
