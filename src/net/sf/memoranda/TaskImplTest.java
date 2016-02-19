@@ -391,31 +391,32 @@ TaskImplTest
 	public void
 	recursivelyModifyEffortFromSubTasksTest ()
 	{
-		ArrayList<Task> taskContainer;
-		taskContainer = new ArrayList<Task> ();
-		task.setSubTasks (taskContainer);
-		taskContainer.add (new TaskImpl (new ArrayList<Task>()));
-		taskContainer.add (new TaskImpl (new ArrayList<Task>()));
-		taskContainer.add (new TaskImpl (new ArrayList<Task>()));
-		taskContainer.get (0).setEffort (1);
-		taskContainer.get (1).setEffort (2);
-		taskContainer.get (2).setEffort (3);
 		ArrayList<Task> childContainer;
 		childContainer = new ArrayList<Task> ();
+		task.setSubTasks (childContainer);
 		childContainer.add (new TaskImpl (new ArrayList<Task>()));
 		childContainer.add (new TaskImpl (new ArrayList<Task>()));
 		childContainer.add (new TaskImpl (new ArrayList<Task>()));
-		childContainer.get (0).setEffort (3);
-		childContainer.get (1).setEffort (4);
-		childContainer.get (2).setEffort (5);
+		childContainer.get (0).setEffort (1);
+		childContainer.get (1).setEffort (2);
+		childContainer.get (2).setEffort (3);
+		ArrayList<Task> grandChildContainer;
+		grandChildContainer = new ArrayList<Task> ();
+		childContainer.get (0).setSubTasks (grandChildContainer);
+		grandChildContainer.add (new TaskImpl (new ArrayList<Task>()));
+		grandChildContainer.add (new TaskImpl (new ArrayList<Task>()));
+		grandChildContainer.add (new TaskImpl (new ArrayList<Task>()));
+		grandChildContainer.get (0).setEffort (3);
+		grandChildContainer.get (1).setEffort (4);
+		grandChildContainer.get (2).setEffort (5);
 		task.recursivelyModifyEffortFromSubTasks ();
-		assertEquals (17,task.getEffort ());
-		assertEquals (12, taskContainer.get (0).getEffort ());
-		assertEquals (2, taskContainer.get (1).getEffort ());
-		assertEquals (3, taskContainer.get (2).getEffort ());
-		assertEquals (3, childContainer.get (0).getEffort ());
-		assertEquals (4, childContainer.get (1).getEffort ());
-		assertEquals (5, childContainer.get (2).getEffort ());
+		assertEquals (17, task.getEffort ());
+		assertEquals (12, childContainer.get (0).getEffort ());
+		assertEquals (2, childContainer.get (1).getEffort ());
+		assertEquals (3, childContainer.get (2).getEffort ());
+		assertEquals (3, grandChildContainer.get (0).getEffort ());
+		assertEquals (4, grandChildContainer.get (1).getEffort ());
+		assertEquals (5, grandChildContainer.get (2).getEffort ());
 	}
 	
 	@Test

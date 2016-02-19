@@ -213,11 +213,7 @@ public class TaskImpl implements Task, Comparable<Object>
 		}
 		if (parent != null)
 		{
-<<<<<<< HEAD
-			//parent.recursivelyModifyCompletionFromSubTasks();
-=======
 			parent.recursivelyModifyCompletionFromSubTasks ();
->>>>>>> fa749ce095fec0e2f835bb299e8047f69099c89b
 		}
 	}
 
@@ -264,21 +260,12 @@ public class TaskImpl implements Task, Comparable<Object>
 			iter.next ().setParentTask (this);
 		subTasks.addAll (tasks);
 	}
-<<<<<<< HEAD
-	
-	public TaskImpl
-	deepCopy()
-	{
-		TaskImpl newTask = null;
-		try {
-=======
 
 	public Task deepCopy ()
 	{
 		Task newTask = null;
 		try
 		{
->>>>>>> fa749ce095fec0e2f835bb299e8047f69099c89b
 			// Serialize the object out to a byte array
 			ByteArrayOutputStream bos = new ByteArrayOutputStream ();
 			ObjectOutputStream out = new ObjectOutputStream (bos);
@@ -287,14 +274,6 @@ public class TaskImpl implements Task, Comparable<Object>
 			out.close ();
 
 			// Deserialize object back in
-<<<<<<< HEAD
-			ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(bos.toByteArray()));
-			newTask = (TaskImpl) in.readObject();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-=======
 			ObjectInputStream in = new ObjectInputStream (new ByteArrayInputStream (bos.toByteArray ()));
 			newTask = (Task) in.readObject ();
 		}
@@ -305,7 +284,6 @@ public class TaskImpl implements Task, Comparable<Object>
 		catch (ClassNotFoundException e)
 		{
 			e.printStackTrace ();
->>>>>>> fa749ce095fec0e2f835bb299e8047f69099c89b
 		}
 		return newTask;
 	}
@@ -378,7 +356,7 @@ public class TaskImpl implements Task, Comparable<Object>
 	{
 		long totalEffort = 0;
 		Collection<Task> subTasks = getSubTasks ();
-		if (subTasks == null) return effort;
+		if (subTasks.size () == 0) return effort;
 		for (Iterator<Task> iter = subTasks.iterator (); iter.hasNext ();)
 		{
 			Task element = iter.next ();

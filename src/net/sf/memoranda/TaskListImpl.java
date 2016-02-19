@@ -139,32 +139,6 @@ public class TaskListImpl implements TaskList
 	public boolean
 	hasSubTasks (String id)
 	{
-<<<<<<< HEAD
-		Task newTask = task.deepCopy();
-		newTask.setID(Util.generateId());
-		recursivleyUpdateID(newTask.getSubTasks());
-		rootTaskList.add(newTask);
-		taskList.put(newTask.getID(), newTask);
-		return newTask;
-	}
-	
-	private void recursivleyUpdateID(Collection<Task> subTasks){
-		for(Task task : subTasks){
-			if(task.getSubTasks().size() > 0)
-			{
-				recursivleyUpdateID(task.getSubTasks());
-			}
-			else
-			{
-				task.setID(Util.generateId());
-				taskList.put(task.getID(), task);
-			}
-		}
-	}
-	/**
-     * @see net.sf.memoranda.TaskList#removeTask(import net.sf.memoranda.Task)
-     */
-=======
 		Task task = getTaskElement (id);
 		if (task == null)
 		{
@@ -179,17 +153,17 @@ public class TaskListImpl implements TaskList
 			return false;
 		}
 	}
-
+	
 	public Task
 	createTask (Task task)
 	{
-		Task newTask = task.deepCopy ();
-		newTask.setID (Util.generateId ());
-		rootTaskList.add (newTask);
-		taskList.put (newTask.getID (), newTask);
+		Task newTask = task.deepCopy();
+		newTask.setID(Util.generateId());
+		recursivleyUpdateID(newTask.getSubTasks());
+		rootTaskList.add(newTask);
+		taskList.put(newTask.getID(), newTask);
 		return newTask;
 	}
->>>>>>> fa749ce095fec0e2f835bb299e8047f69099c89b
 
 	public Task
 	createTask (CalendarDate startDate, CalendarDate endDate, String text, int priority, long effort, long effortActual, String description, String parentTaskId, boolean updateFromChildren)
@@ -306,6 +280,23 @@ public class TaskListImpl implements TaskList
 		else
 		{
 			return false;
+		}
+	}
+	
+	private void
+	recursivleyUpdateID(Collection<Task> subTasks)
+	{
+		for(Task task : subTasks)
+		{
+			if(task.getSubTasks().size() > 0)
+			{
+				recursivleyUpdateID(task.getSubTasks());
+			}
+			else
+			{
+				task.setID(Util.generateId());
+				taskList.put(task.getID(), task);
+			}
 		}
 	}
 
