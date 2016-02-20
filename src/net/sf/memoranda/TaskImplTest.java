@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import java.util.ArrayList;
+
 import net.sf.memoranda.date.CalendarDate;
 import net.sf.memoranda.Task;
 import net.sf.memoranda.TaskImpl;
@@ -330,6 +331,26 @@ TaskImplTest
 	public void
 	recursivelyModifyCompletionFromSubTasksTest ()
 	{
+		TaskImpl rootTask = new TaskImpl(new ArrayList<Task>());
+		rootTask.setUpdateSubTasks(true);
+		TaskImpl rootSubTask1 = new TaskImpl(new ArrayList<Task>());
+		rootSubTask1.setUpdateSubTasks(true);
+		TaskImpl rootSubTask2 = new TaskImpl(new ArrayList<Task>());
+		TaskImpl subTask1Child1 = new TaskImpl(new ArrayList<Task>());
+		TaskImpl subTask1Child2 = new TaskImpl(new ArrayList<Task>());
+		rootTask.addSubTask(rootSubTask1);
+		rootTask.addSubTask(rootSubTask2);
+		rootSubTask1.addSubTask(subTask1Child1);
+		rootSubTask1.addSubTask(subTask1Child2);
+		
+		subTask1Child1.setProgress(25);
+		subTask1Child2.setProgress(100);
+		rootSubTask2.setProgress(50);
+		
+		rootTask.recursivelyModifyCompletionFromSubTasks();
+
+		assertTrue(rootTask.getProgress() == 56.25);
+
 		
 	}
 	
