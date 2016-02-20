@@ -348,8 +348,7 @@ TaskImplTest
 		rootSubTask2.setProgress(50);
 		
 		rootTask.recursivelyModifyCompletionFromSubTasks();
-
-		assertTrue(rootTask.getProgress() == 56.25);
+		assertTrue(rootTask.getProgress() == 56);
 
 		
 	}
