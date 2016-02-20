@@ -213,7 +213,10 @@ public class TaskImpl implements Task, Comparable<Object>
 		}
 		if (parent != null)
 		{
-			parent.recursivelyModifyCompletionFromSubTasks ();
+			if(parent.getUpdateSubTasks())
+			{
+				parent.recursivelyModifyCompletionFromSubTasks ();	
+			}
 		}
 	}
 
@@ -290,6 +293,17 @@ public class TaskImpl implements Task, Comparable<Object>
 
 	public long[] recursivelyModifyCompletionFromSubTasks ()
 	{
+		int totalProgress = 0;
+		if (subTasks.size () > 0) 
+		{
+			for (Iterator<Task> iter = subTasks.iterator (); iter.hasNext ();) 
+			{
+				Task childTask = iter.next();
+				totalProgress += childTask.getProgress();
+			}
+			this.setProgress(totalProgress / subTasks.size ());
+		}
+		/*
 		long[] res = new long[2];
 		long expendedEffort = 0;
 		long totalEffort = 0;
@@ -297,7 +311,10 @@ public class TaskImpl implements Task, Comparable<Object>
 		if (subTasks == null || subTasks.size () == 0)
 		{
 			long eff = getEffort ();
-			if (eff == 0) eff = 1;
+			if (eff == 0)
+			{
+				eff = 1;
+			}
 			res[0] = Math.round ((double) (getProgress () * eff) / 100d);
 			res[1] = eff;
 			return res;
@@ -313,7 +330,8 @@ public class TaskImpl implements Task, Comparable<Object>
 		setProgress (thisProgress);
 		res[0] = expendedEffort;
 		res[1] = totalEffort;
-		return res;
+		return res;*/
+		return null;
 	}
 
 	public CalendarDate recursivelyModifyEndDateFromSubTasks ()
@@ -403,7 +421,7 @@ public class TaskImpl implements Task, Comparable<Object>
 
 	private Collection<Task> subTasks;
 	private String description;
-	private long effort, effortActual;
+	private long effort = 0, effortActual;
 	private CalendarDate endDate;
 	private String id;
 	private Task parent = null;
