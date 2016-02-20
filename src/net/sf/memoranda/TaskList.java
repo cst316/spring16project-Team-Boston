@@ -36,16 +36,39 @@ TaskList extends Serializable
 	 */
 	Collection<Task>
 	getAllSubTasks (String taskId);
-	
+
+	/**
+	 * Returns the task with the given id.
+	 * 
+	 * @param taskId the task's identifier
+	 * @return the first task found with that id.
+	 */
 	Task
 	getTask(String id);
 	
+	/**
+	 * Returns all tasks which do not have parent tasks.
+	 * 
+	 * @return the collection of all tasks with null parents.
+	 */
 	Collection<Task>
 	getTopLevelTasks ();
 	
-	Task
-	createTask (Task task);
-	
+	/**
+	 * Constructs a new task with the given values.
+	 * The new task is stored internally and a reference to it is returned.
+	 * 
+	 * @param startDate the start date of the task
+	 * @param endDate the endDate of the task
+	 * @param text the text value for the task
+	 * @param priority the priority level of the task
+	 * @param effort the effort for the task
+	 * @param effortActual the actual effort of the task
+	 * @param description the description of the task
+	 * @param parentTaskID set to the id of the parent of the task if it exists, null otherwise
+	 * @param updateFromChildren true if this task should automatically update  from children
+	 * @return returns a reference to the newly created and stored task
+	 */
 	Task
 	createTask
 	(	CalendarDate startDate,
@@ -55,16 +78,43 @@ TaskList extends Serializable
 		long effort,
 		long effortActual,
 		String description,
-		String parentTaskId,
+		String parentTaskID,
 		boolean updateFromChildren
 	);
+	
+	/**
+	 * Returns a deep copy of the given task and its children, but each with a different id.
+	 * The duplicated task is stored internally and a reference to it is returned.
+	 * 
+	 * @param task the task to duplicate
+	 * @return a reference to the exact copy (different identifications) of the task hierarchy
+	 */
+	Task
+	duplicateTask (Task task);
 
+	/**
+	 * Returns true if the task that has the given id has a parent.
+	 * 
+	 * @param id the identifier for the task in question
+	 * @return true if the task in question has a parent, false otherwise
+	 */
 	boolean
 	hasParentTask (String id);
 	
+	/**
+	 * Returns true if the task that has the given id has sub tasks.
+	 * 
+	 * @param id the identifier for the task in question
+	 * @return true if the task in question has at least one child, false otherwise
+	 */
 	boolean
 	hasSubTasks (String id);
 	
+	/**
+	 * Inspects the given task for its id, and removes the first task found with that id.
+	 * 
+	 * @param task a task which contains the id shared by a task that will be removed
+	 */
 	void
 	removeTask (Task task);
 }

@@ -62,7 +62,7 @@ public class TaskListImpl implements TaskList
 	}
 
 	public Task
-	createTask (Task task)
+	duplicateTask (Task task)
 	{
 		Task newTask = task.deepCopy();
 		newTask.setID(Util.generateId());
