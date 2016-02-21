@@ -9,11 +9,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 import net.sf.memoranda.date.CalendarDate;
+import net.sf.memoranda.util.Util;
 
 public class TaskListImplTest {
 
 	TaskListImpl testList;
 	String[] taskIDs;
+	Task testSubTask;
 	@Before
 	public void setUp() throws Exception {
 		testList = new TaskListImpl();
@@ -53,32 +55,35 @@ public class TaskListImplTest {
 
 	@Test
 	public void testGetTask() {
-		fail("Not yet implemented"); // TODO
+		assertTrue(testList.getTask(taskIDs[1]) != null);
 	}
 
 	@Test
 	public void testDuplicateTask() {
-		fail("Not yet implemented"); // TODO
+		testList.duplicateTask(testList.getTask(taskIDs[1]));
 	}
 
 	@Test
 	public void testCreateTask() {
-		fail("Not yet implemented"); // TODO
+
+		testList.createTask(new CalendarDate(), new CalendarDate(), "rootTask5", 0, 0, 0, "", null, true);
+		assertTrue(testList.getTopLevelTasks().size() == 5);
 	}
 
 	@Test
 	public void testHasParentTask() {
-		fail("Not yet implemented"); // TODO
+		assertTrue(!testList.hasParentTask(taskIDs[1]));
 	}
 
 	@Test
 	public void testHasSubTasks() {
-		fail("Not yet implemented"); // TODO
+		assertTrue(testList.hasSubTasks(taskIDs[0]));
 	}
 
 	@Test
 	public void testRemoveTask() {
-		fail("Not yet implemented"); // TODO
+		testList.removeTask(testList.getTask(taskIDs[3]));
+		assertTrue(testList.getTopLevelTasks().size() == 3);
 	}
 
 }
