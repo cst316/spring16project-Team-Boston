@@ -13,11 +13,46 @@ import nu.xom.Element;
  * Test actual effort hours
  *
  */
-public class EffortTest 
+public class 
+EffortTest 
 {
 	Element element;
 	Task task;
 	TaskTableModel taskTable;
+	
+	/**
+	 * Test data type 
+	 */
+	@Test
+	public void 
+	dataTypeTest () 
+	{
+		task.setEffort( (long) 5.5);
+		assertFalse (5.5 == task.getEffort ());
+		assertTrue ( (long) 5.5 == task.getEffort ());
+	}
+	
+	/**
+	 * Test null value
+	 */
+	@Test
+	public void 
+	nullTest () 
+	{
+		assertTrue (0 == task.getEffort());
+		
+	}
+	
+	/**
+	 * Test setter and getter
+	 */
+	@Test
+	public void 
+	setTest () 
+	{
+		task.setEffort ( (long) 4.0);
+		assertTrue( (long) 4.0 == task.getEffort ());
+	}
 	
 	/**
 	 * Set up test cases by creating an new element and task
@@ -32,37 +67,17 @@ public class EffortTest
 		task = new TaskImpl (element, null);
 		taskTable = new TaskTableModel ();
 	}
+
 	/**
-	 * Test null value
+	 * Test correct String for TaskTable
 	 */
 	@Test
 	public void 
-	nullTest () 
+	taskTableStringTest () 
 	{
-		assertTrue (0 == task.getEffort());
-		
+		assertTrue(taskTable.getColumnName (8).equals ("Actual Effort(hrs)"));
 	}
-	/**
-	 * Test setter and getter
-	 */
-	@Test
-	public void 
-	setTest () 
-	{
-		task.setEffort ( (long) 4.0);
-		assertTrue( (long) 4.0 == task.getEffort ());
-	}
-	/**
-	 * Test data type 
-	 */
-	@Test
-	public void 
-	dataTypeTest () 
-	{
-		task.setEffort( (long) 5.5);
-		assertFalse (5.5 == task.getEffort ());
-		assertTrue ( (long) 5.5 == task.getEffort ());
-	}
+	
 	/**
 	 * Test value in milliseconds for TaskTable
 	 */
@@ -72,14 +87,5 @@ public class EffortTest
 	{
 		task.setEffort ( (long) 3600000);
 		assertTrue ((double) 1 == (double) taskTable.getValueAt (task, 8));
-	}
-	/**
-	 * Test correct String for TaskTable
-	 */
-	@Test
-	public void 
-	taskTableStringTest () 
-	{
-		assertTrue(taskTable.getColumnName (8).equals ("Actual Effort(hrs)"));
 	}
 }

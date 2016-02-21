@@ -12,10 +12,11 @@ import nu.xom.Element;
  * Tests for priority settings on notes
  *
  */
-public class PriorityNoteTest 
+public class 
+PriorityNoteTest 
 {
-	Note n;
 	Element element;
+	Note n;
 	
 	/**
 	 * Set up new note to be tested
@@ -29,7 +30,7 @@ public class PriorityNoteTest
 		element = new Element ("note");
 		n = new NoteImpl (element, null);
 	}
-
+	
 	/**
 	 * Tests the default priority
 	 */
@@ -40,39 +41,7 @@ public class PriorityNoteTest
 		assertTrue (n.getPriority () == 2);
 		assertTrue (n.getPriorityString ().equals ("Normal"));
 	}
-	/**
-	 * Test the lowest priority
-	 */
-	@Test 
-	public void 
-	testLowest () 
-	{
-		n.setPriority (0);
-		assertTrue (n.getPriority () == 0);
-		assertTrue (n.getPriorityString ().equals ("Lowest"));
-	}
-	/**
-	 * Test the low priority
-	 */
-	@Test 
-	public void 
-	testLow () 
-	{
-		n.setPriority (1);
-		assertTrue (n.getPriority () == 1);
-		assertTrue (n.getPriorityString ().equals ("Low"));
-	}
-	/**
-	 * Test the normal priority
-	 */
-	@Test
-	public void 
-	testNormal () 
-	{
-		n.setPriority (2);
-		assertTrue (n.getPriority () == 2);
-		assertTrue (n.getPriorityString ().equals ("Normal"));
-	}
+	
 	/**
 	 * Test the high priority
 	 */
@@ -94,5 +63,41 @@ public class PriorityNoteTest
 		n.setPriority (4);
 		assertTrue (n.getPriority () == 4);
 		assertTrue (n.getPriorityString ().equals ("Highest"));
+	}
+
+	/**
+	 * Test the low priority
+	 */
+	@Test 
+	public void 
+	testLow () 
+	{
+		n.setPriority (1);
+		assertTrue (n.getPriority () == 1);
+		assertTrue (n.getPriorityString ().equals ("Low"));
+	}
+	
+	/**
+	 * Test the lowest priority
+	 */
+	@Test 
+	public void 
+	testLowest () 
+	{
+		n.setPriority (0);
+		assertTrue (n.getPriority () == 0);
+		assertTrue (n.getPriorityString ().equals ("Lowest"));
+	}
+	
+	/**
+	 * Test the normal priority
+	 */
+	@Test
+	public void 
+	testNormal () 
+	{
+		n.setPriority (2);
+		assertTrue (n.getPriority () == 2);
+		assertTrue (n.getPriorityString ().equals ("Normal"));
 	}
 }
