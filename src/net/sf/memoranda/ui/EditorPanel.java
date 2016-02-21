@@ -345,6 +345,7 @@ public class EditorPanel extends JPanel {
 		editorToolBar.add(tag, null);
 		tag.setText("Tags");
 		editorToolBar.add(tagField, null);
+		tagField.setText("");
 		
 		initCSS();
 		editor.editor.setAntiAlias(Configuration.get("ANTIALIAS_TEXT").toString().equalsIgnoreCase("yes"));
@@ -503,18 +504,27 @@ public class EditorPanel extends JPanel {
 	}
 
 	String initialTitle = "";
+	String initialTags = "";
 
-	public void setDocument(Note note) {
+	public void setDocument(Note note) 
+	{
 		// Note note = CurrentProject.getNoteList().getActiveNote();
 		// try {
 		// this.editor.editor.setPage(CurrentStorage.get().getNoteURL(note));
 		editor.document = (HTMLDocument) CurrentStorage.get().openNote(note);
 		editor.initEditor();
 		if (note != null)
+		{
 			titleField.setText(note.getTitle());
+			tagField.setText(note.getTags());
+		}
 		else
+		{
 			titleField.setText("");
+			tagField.setText("");
+		}
 		initialTitle = titleField.getText();
+		initialTags = tagField.getText();
 		/*
 		 * } catch (Exception ex) { new ExceptionDialog(ex); }
 		 */
@@ -532,7 +542,7 @@ public class EditorPanel extends JPanel {
 
 	public boolean isDocumentChanged() {
 		return editor.isDocumentChanged()
-				|| !titleField.getText().equals(initialTitle);
+				|| !titleField.getText().equals(initialTitle) || !tagField.getText().equals(initialTags);
 	}
 
 	void importB_actionPerformed(ActionEvent e) {

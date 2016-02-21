@@ -49,7 +49,8 @@ import net.sf.memoranda.util.Util;
  */
 
 /*$Id: DailyItemsPanel.java,v 1.22 2005/02/13 03:06:10 rawsushi Exp $*/
-public class DailyItemsPanel extends JPanel {
+public class DailyItemsPanel extends JPanel 
+{
     BorderLayout borderLayout1 = new BorderLayout();
     JSplitPane splitPane = new JSplitPane();
     JPanel controlPanel = new JPanel(); /* Contains the calendar */
@@ -102,16 +103,20 @@ public class DailyItemsPanel extends JPanel {
 	
     Cursor waitCursor = new Cursor(Cursor.WAIT_CURSOR);
 
-    public DailyItemsPanel(WorkPanel _parentPanel) {
-        try {
+    public DailyItemsPanel(WorkPanel _parentPanel) 
+    {
+        try
+        {
             parentPanel = _parentPanel;
             jbInit();
         }
-        catch (Exception ex) {
+        catch (Exception ex) 
+        {
             new ExceptionDialog(ex);
         }
     }
-    void jbInit() throws Exception {
+    void jbInit() throws Exception 
+    {
         border1 = BorderFactory.createEtchedBorder(Color.white, Color.gray);
         border2 = BorderFactory.createEtchedBorder(Color.white, new Color(161, 161, 161));
         this.setLayout(borderLayout1);
@@ -154,8 +159,10 @@ public class DailyItemsPanel extends JPanel {
         toggleButton.setContentAreaFilled(false);
         toggleButton.setFocusPainted(false);
         toggleButton.setMargin(new Insets(0, 0, 0, 0));
-        toggleButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+        toggleButton.addActionListener(new java.awt.event.ActionListener() 
+        {
+            public void actionPerformed(ActionEvent e)
+            {
                 toggleButton_actionPerformed(e);
             }
         });
@@ -168,7 +175,8 @@ public class DailyItemsPanel extends JPanel {
         alarmB.setToolTipText(Local.getString("Active events"));
         alarmB.setBorderPainted(false);
         alarmB.setMargin(new Insets(0, 0, 0, 0));
-        alarmB.addActionListener(new java.awt.event.ActionListener() {
+        alarmB.addActionListener(new java.awt.event.ActionListener() 
+        {
             public void actionPerformed(ActionEvent e) {
                 alarmB_actionPerformed(e);
             }
@@ -177,8 +185,10 @@ public class DailyItemsPanel extends JPanel {
         flowLayout1.setAlignment(FlowLayout.RIGHT);
         flowLayout1.setVgap(0);
         taskB.setMargin(new Insets(0, 0, 0, 0));
-        taskB.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+        taskB.addActionListener(new java.awt.event.ActionListener() 
+        {
+            public void actionPerformed(ActionEvent e) 
+            {
                 taskB_actionPerformed(e);
             }
         });
@@ -215,20 +225,25 @@ public class DailyItemsPanel extends JPanel {
         splitPane.setDividerLocation((int) controlPanel.getPreferredSize().getWidth());
         //splitPane.setResizeWeight(0.0);
 
-        CurrentDate.addDateListener(new DateListener() {
-            public void dateChange(CalendarDate d) {
+        CurrentDate.addDateListener(new DateListener() 
+        {
+            public void dateChange(CalendarDate d) 
+            {
                 currentDateChanged(d);
             }
         });
 
-        CurrentProject.addProjectListener(new ProjectListener() {
-            public void projectChange(Project p, NoteList nl, TaskList tl, ResourcesList rl) {
+        CurrentProject.addProjectListener(new ProjectListener() 
+        {
+            public void projectChange(Project p, NoteList nl, TaskList tl, ResourcesList rl) 
+            {
 //            	Util.debug("DailyItemsPanel Project Listener: Project is going to be changed!");				
 //            	Util.debug("current project is " + CurrentProject.get().getTitle());
 
             	currentProjectChanged(p, nl, tl, rl);
             }
-            public void projectWasChanged() {
+            public void projectWasChanged() 
+            {
 //            	Util.debug("DailyItemsPanel Project Listener: Project has been changed!");            	
 //            	Util.debug("current project is " + CurrentProject.get().getTitle());
             	
@@ -248,14 +263,18 @@ public class DailyItemsPanel extends JPanel {
             }
         });
 
-        CurrentNote.addNoteListener(new NoteListener() {
-            public void noteChange(Note note, boolean toSaveCurrentNote) {
+        CurrentNote.addNoteListener(new NoteListener()
+        {
+            public void noteChange(Note note, boolean toSaveCurrentNote)
+            {
                 currentNoteChanged(note, toSaveCurrentNote);
             }
         });
 		
-        calendar.addSelectionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+        calendar.addSelectionListener(new ActionListener() 
+        {
+            public void actionPerformed(ActionEvent e) 
+            {
                 if (calendarIgnoreChange)
                     return;
                 dateChangedByCalendar = true;
@@ -264,29 +283,37 @@ public class DailyItemsPanel extends JPanel {
             }
         });
 
-        AppFrame.addExitListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (editorPanel.isDocumentChanged()) {
+        AppFrame.addExitListener(new ActionListener() 
+        {
+            public void actionPerformed(ActionEvent e) 
+            {
+                if (editorPanel.isDocumentChanged()) 
+                {
                     saveNote();
                     CurrentStorage.get().storeNoteList(CurrentProject.getNoteList(), CurrentProject.get());
                 }
             }
         });
 
-        History.addHistoryListener(new HistoryListener() {
-            public void historyWasRolledTo(HistoryItem hi) {
+        History.addHistoryListener(new HistoryListener()
+        {
+            public void historyWasRolledTo(HistoryItem hi) 
+            {
                 historyChanged(hi);
             }
         });
 
-        EventsScheduler.addListener(new EventNotificationListener() {
-            public void eventIsOccured(net.sf.memoranda.Event ev) {
+        EventsScheduler.addListener(new EventNotificationListener() 
+        {
+            public void eventIsOccured(net.sf.memoranda.Event ev) 
+            {
                 /*DEBUG*/
                 System.out.println(ev.getTimeString() + " " + ev.getText());
                 updateIndicators();
             }
 
-            public void eventsChanged() {
+            public void eventsChanged()
+            {
                 updateIndicators();
             }
         });
@@ -307,13 +334,15 @@ public class DailyItemsPanel extends JPanel {
 
    
 
-    void currentDateChanged(CalendarDate newdate) {
+    void currentDateChanged(CalendarDate newdate) 
+    {
         Cursor cur = App.getFrame().getCursor();
         App.getFrame().setCursor(waitCursor);
         if (!changedByHistory) {
            History.add(new HistoryItem(newdate, CurrentProject.get()));
 		}
-        if (!dateChangedByCalendar) {
+        if (!dateChangedByCalendar) 
+        {
             calendarIgnoreChange = true;
             calendar.set(newdate);
             calendarIgnoreChange = false;
@@ -335,11 +364,13 @@ public class DailyItemsPanel extends JPanel {
         }*/
 
 		currentDateLabel.setText(newdate.getFullDateString());
-        if ((currentNote != null) && (currentNote.isMarked())) {
+        if ((currentNote != null) && (currentNote.isMarked())) 
+        {
             currentDateLabel.setIcon(bookmarkIcon);
             currentDateLabel.setHorizontalTextPosition(SwingConstants.LEFT);
         }
-        else {
+        else 
+        {
             currentDateLabel.setIcon(null);
         }		
 
@@ -347,7 +378,8 @@ public class DailyItemsPanel extends JPanel {
         App.getFrame().setCursor(cur);
     }
 
-	void currentNoteChanged(Note note, boolean toSaveCurrentNote) {
+	void currentNoteChanged(Note note, boolean toSaveCurrentNote) 
+	{
 //		Util.debug("currentNoteChanged");
 		
 		if (editorPanel.isDocumentChanged()) {
@@ -362,7 +394,8 @@ public class DailyItemsPanel extends JPanel {
 		editorPanel.editor.requestFocus();		
 	}
 	
-    void currentProjectChanged(Project newprj, NoteList nl, TaskList tl, ResourcesList rl) {
+    void currentProjectChanged(Project newprj, NoteList nl, TaskList tl, ResourcesList rl) 
+    {
 //		Util.debug("currentProjectChanged");
 
         Cursor cur = App.getFrame().getCursor();
@@ -387,24 +420,31 @@ public class DailyItemsPanel extends JPanel {
         App.getFrame().setCursor(cur);
     }
 
-    void historyChanged(HistoryItem hi) {
+    void historyChanged(HistoryItem hi) 
+    {
         changedByHistory = true;
         CurrentProject.set(hi.getProject());
         CurrentDate.set(hi.getDate());
         changedByHistory = false;
     }
 
-    public void saveNote() {
+    public void saveNote() 
+    {
         if (currentNote == null)
+        {
             currentNote = CurrentProject.getNoteList().createNoteForDate(currentDate);
-        currentNote.setTitle(editorPanel.titleField.getText());
-		currentNote.setId(Util.generateId());
-        CurrentStorage.get().storeNote(currentNote, editorPanel.getDocument());
-        /*DEBUG* System.out.println("Save");*/
+        	currentNote.setTitle(editorPanel.titleField.getText());
+        	currentNote.setId(Util.generateId());
+        	currentNote.setTags(editorPanel.tagField.getText());
+        	CurrentStorage.get().storeNote(currentNote, editorPanel.getDocument());
+        	/*DEBUG* System.out.println("Save");*/
+        }
     }
 
-    void toggleButton_actionPerformed(ActionEvent e) {
-        if (expanded) {
+    void toggleButton_actionPerformed(ActionEvent e) 
+    {
+        if (expanded) 
+        {
             expanded = false;
             toggleButton.setIcon(expIcon);
             controlPanel.remove(toggleToolBar);
@@ -412,7 +452,8 @@ public class DailyItemsPanel extends JPanel {
             splitPane.setDividerLocation((int) controlPanel.getMinimumSize().getWidth());
 
         }
-        else {
+        else 
+        {
             expanded = true;
             toggleButton.setIcon(collIcon);
             controlPanel.remove(toggleToolBar);
@@ -421,12 +462,15 @@ public class DailyItemsPanel extends JPanel {
         }
     }
 
-    public void updateIndicators(CalendarDate date, TaskList tl) {
+    public void updateIndicators(CalendarDate date, TaskList tl) 
+    {
         indicatorsPanel.removeAll();
-        if (date.equals(CalendarDate.today())) {
+        if (date.equals(CalendarDate.today()))
+        {
             if (tl.getActiveSubTasks(null,date).size() > 0)
                 indicatorsPanel.add(taskB, null);
-            if (EventsScheduler.isEventScheduled()) {
+            if (EventsScheduler.isEventScheduled()) 
+            {
                 /*String evlist = "";
                 for (Iterator it = EventsScheduler.getScheduledEvents().iterator(); it.hasNext();) {
                     net.sf.memoranda.Event ev = (net.sf.memoranda.Event)it.next();   
@@ -440,16 +484,20 @@ public class DailyItemsPanel extends JPanel {
         indicatorsPanel.updateUI();
     }
 
-    public void updateIndicators() {
+    public void updateIndicators() 
+    {
         updateIndicators(CurrentDate.get(), CurrentProject.getTaskList());
     }
 
-    public void selectPanel(String pan) {
-        if (calendar.jnCalendar.renderer.getTask() != null) {
+    public void selectPanel(String pan)
+    {
+        if (calendar.jnCalendar.renderer.getTask() != null) 
+        {
             calendar.jnCalendar.renderer.setTask(null);
          //   calendar.jnCalendar.updateUI();
         }
-        if (pan.equals("TASKS") && (tasksPanel.taskTable.getSelectedRow() > -1)) {
+        if (pan.equals("TASKS") && (tasksPanel.taskTable.getSelectedRow() > -1)) 
+        {
             Task t =
                 CurrentProject.getTaskList().getTask(
                     tasksPanel
@@ -470,14 +518,17 @@ public class DailyItemsPanel extends JPanel {
 		CurrentPanel=pan;
     }
 
-	public String getCurrentPanel() {
+	public String getCurrentPanel() 
+	{
 		return CurrentPanel;
 	}
-    void taskB_actionPerformed(ActionEvent e) {
+    void taskB_actionPerformed(ActionEvent e) 
+    {
         parentPanel.tasksB_actionPerformed(null);
     }
 
-    void alarmB_actionPerformed(ActionEvent e) {
+    void alarmB_actionPerformed(ActionEvent e) 
+    {
         parentPanel.eventsB_actionPerformed(null);
     }
 }

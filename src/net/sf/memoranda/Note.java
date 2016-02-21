@@ -25,6 +25,11 @@ public interface Note {
 	
     boolean isMarked();
     void setMark(boolean mark);
+    
+    // add tags
+    void addTag(String s);
+    String getTags();
+    void setTags(String s);
         
     Project getProject();
 }

@@ -9,6 +9,7 @@
 package net.sf.memoranda;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import net.sf.memoranda.date.CalendarDate;
 import nu.xom.Attribute;
@@ -67,20 +68,61 @@ public class NoteImpl implements Note, Comparable {
         else 
             ta.setValue(s);
     }
-    
-    public void addTag(String s) 
+    /**
+     * Add tags to notes
+     */
+    public void addTag (String s) 
     {
-        Attribute ta = _el.getAttribute("tag");
-        if (ta == null)
+        Attribute tag = _el.getAttribute ("tag");
+        if (tag == null)
         {
-        	ArrayList<String> tag = new ArrayList<String>();
-        	tag.add(s);
-        	_el.addAttribute(new Attribute("tag", s));
+        	_el.addAttribute (new Attribute ("tag", s));
         }
         else 
-            ta.setValue(s);
+        {
+            ArrayList<String> tags = new ArrayList<String> (Arrays.asList (tag.getValue ().split (",")));
+            tags.add(s);
+            StringBuilder sb = new StringBuilder ();
+            for (String c : tags)
+            {
+            	sb.append(c);
+            	sb.append(",");
+            }
+            tag.setValue(sb.toString ());
+        }
     }
-	
+    
+    /**
+     * String for tags
+     */
+    public String getTags ()
+    {
+    	Attribute tag = _el.getAttribute ("tag");
+    	if (tag == null)
+    	{
+    		return "";
+    	}
+    	else
+    	{
+    		return tag.getValue();
+    	}
+    }
+    
+    /**
+     * Set tags
+     */
+	public void setTags(String s)
+	{
+		Attribute tag = _el.getAttribute("tag") ;
+	    if (tag == null)
+	    {
+	        _el.addAttribute (new Attribute ("tag", s));
+	    }
+	    else
+	    {
+	        tag.setValue(s);
+	    }
+	}
 	/**
      * @see net.sf.memoranda.Note#getId
      */
