@@ -6,7 +6,7 @@ import java.util.Collection;
 import net.sf.memoranda.date.CalendarDate;
 
 public interface
-Task extends Serializable
+Task extends Serializable, Comparable<Task>
 {
 	public static final int SCHEDULED = 0;
 	public static final int ACTIVE = 1;
@@ -276,6 +276,14 @@ Task extends Serializable
 	 */
 	void
 	addSubTasks (Collection<Task> tasks);
+	
+	/**
+	 * Compares the priority of this task and another task.
+	 * 
+	 * @param tasks the task against which to compare priority
+	 */
+	public int
+	compareTo (Task task);
 	
 	/**
 	 * Returns a copy of this task hierarchy, but each with different ID.

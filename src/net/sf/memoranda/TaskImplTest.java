@@ -13,8 +13,6 @@ import net.sf.memoranda.TaskImpl;
 public class
 TaskImplTest
 {
-	private Task task = null;
-	
 	@Before
 	public void
 	setUp ()
@@ -28,6 +26,8 @@ TaskImplTest
 	public void
 	getDescriptionTest ()
 	{
+		task.setDescription (null);
+		assertEquals ("", task.getDescription ());
 		String param;
 		param = "";
 		task.setDescription (param);
@@ -62,6 +62,10 @@ TaskImplTest
 		param = new CalendarDate ();
 		task.setEndDate (param);
 		assertEquals (param, task.getEndDate ());
+		Task child = new TaskImpl (new ArrayList<Task> ());
+		task.addSubTask (child);
+		child.setEndDate (null);
+		assertEquals (param, child.getEndDate ());
 	}
 	
 	@Test
@@ -134,12 +138,29 @@ TaskImplTest
 		param = new CalendarDate ();
 		task.setStartDate (param);
 		assertEquals (param, task.getStartDate ());
+		Task child = new TaskImpl (new ArrayList<Task> ());
+		task.addSubTask (child);
+		child.setStartDate (null);
+		assertEquals (param, child.getStartDate ());
 	}
 	
 	@Test
 	public void
 	getStatusTest ()
 	{
+		CalendarDate date = new CalendarDate (1, 1, 1);
+		task.setStartDate (new CalendarDate (2, 2, 2));
+		task.setEndDate (new CalendarDate (4, 4, 4));
+		assertEquals (Task.FAILED, task.getStatus (date));
+		date = new CalendarDate (5, 5, 5);
+		assertEquals (Task.SCHEDULED, task.getStatus (date));
+		date = new CalendarDate (3, 3, 3);
+		assertEquals (Task.ACTIVE, task.getStatus (date));
+		date = new CalendarDate (4, 4, 4);
+		assertEquals (Task.DEADLINE, task.getStatus (date));
+		date = new CalendarDate (1, 1, 1);
+		task.setProgress (100);
+		assertEquals (Task.COMPLETED, task.getStatus (date));
 		setFrozenTest ();
 	}
 	
@@ -193,6 +214,8 @@ TaskImplTest
 	public void
 	setDescriptionTest ()
 	{
+		task.setText (null);
+		assertEquals ("", task.getText ());
 		getDescriptionTest ();
 	}
 	
@@ -271,6 +294,8 @@ TaskImplTest
 	public void
 	setTextTest ()
 	{
+		task.setText (null);
+		assertEquals ("", task.getText ());
 		getTextTest ();
 	}
 	
@@ -319,6 +344,20 @@ TaskImplTest
 	
 	@Test
 	public void
+	compareToTest ()
+	{
+		Task other = new TaskImpl (new ArrayList<Task> ());
+		other.setPriority (2);
+		task.setPriority (1);
+		assertTrue (task.compareTo (other) > 0);
+		other.setPriority (1);
+		assertTrue (task.compareTo (other) == 0);
+		other.setPriority (0);
+		assertTrue (task.compareTo (other) < 0);
+	}
+	
+	@Test
+	public void
 	deepCopyTest ()
 	{
 		task.setID ("sameID");
@@ -331,24 +370,24 @@ TaskImplTest
 	public void
 	recursivelyModifyCompletionFromSubTasksTest ()
 	{
-		TaskImpl rootTask = new TaskImpl(new ArrayList<Task>());
-		rootTask.setUpdateSubTasks(true);
-		TaskImpl rootSubTask1 = new TaskImpl(new ArrayList<Task>());
-		rootSubTask1.setUpdateSubTasks(true);
-		TaskImpl rootSubTask2 = new TaskImpl(new ArrayList<Task>());
-		TaskImpl subTask1Child1 = new TaskImpl(new ArrayList<Task>());
-		TaskImpl subTask1Child2 = new TaskImpl(new ArrayList<Task>());
-		rootTask.addSubTask(rootSubTask1);
-		rootTask.addSubTask(rootSubTask2);
-		rootSubTask1.addSubTask(subTask1Child1);
-		rootSubTask1.addSubTask(subTask1Child2);
+		TaskImpl rootTask = new TaskImpl (new ArrayList<Task> ());
+		rootTask.setUpdateSubTasks (true);
+		TaskImpl rootSubTask1 = new TaskImpl (new ArrayList<Task> ());
+		rootSubTask1.setUpdateSubTasks (true);
+		TaskImpl rootSubTask2 = new TaskImpl (new ArrayList<Task> ());
+		TaskImpl subTask1Child1 = new TaskImpl (new ArrayList<Task> ());
+		TaskImpl subTask1Child2 = new TaskImpl (new ArrayList<Task> ());
+		rootTask.addSubTask (rootSubTask1);
+		rootTask.addSubTask (rootSubTask2);
+		rootSubTask1.addSubTask (subTask1Child1);
+		rootSubTask1.addSubTask (subTask1Child2);
 		
-		subTask1Child1.setProgress(25);
-		subTask1Child2.setProgress(100);
-		rootSubTask2.setProgress(50);
+		subTask1Child1.setProgress (25);
+		subTask1Child2.setProgress (100);
+		rootSubTask2.setProgress (50);
 		
-		rootTask.recursivelyModifyCompletionFromSubTasks();
-		assertTrue(rootTask.getProgress() == 56);
+		rootTask.recursivelyModifyCompletionFromSubTasks ();
+		assertTrue (rootTask.getProgress() == 56);
 
 		
 	}
@@ -524,4 +563,6 @@ TaskImplTest
 		assertEquals (child1, task.getSubTask ("child1"));
 		assertNull (task.getSubTask ("child2"));
 	}
+	
+	private Task task = null;
 }
