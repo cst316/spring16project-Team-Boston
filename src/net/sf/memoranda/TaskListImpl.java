@@ -28,6 +28,13 @@ public class TaskListImpl implements TaskList
 		rootTaskList = new ArrayList<Task> ();
 	}
 	
+	public
+	TaskListImpl()
+	{
+		taskList = new Hashtable<String, Task> ();
+		rootTaskList = new ArrayList<Task> ();
+	}
+	
 	public Collection<Task> getTopLevelTasks ()
 	{
 		return getAllRootTasks ();
