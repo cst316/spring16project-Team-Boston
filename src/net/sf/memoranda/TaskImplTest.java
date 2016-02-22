@@ -127,7 +127,13 @@ TaskImplTest
 	public void
 	getRateTest ()
 	{
-		fail ();
+		CalendarDate start = new CalendarDate();
+		CalendarDate end = new CalendarDate();
+		task.setStartDate(start);
+		task.setEndDate(end);
+		assertTrue(task.getRate() == -100);
+		task.setEndDate(end.yesterday());
+		assertTrue(task.getRate() == -1);
 	}
 	
 	@Test

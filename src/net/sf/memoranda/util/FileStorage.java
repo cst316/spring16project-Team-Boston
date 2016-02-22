@@ -269,7 +269,7 @@ public class FileStorage implements Storage {
 		else 
 		{
 			System.out.println("[DEBUG] New task list created");
-			return new TaskListImpl(prj);
+			return new TaskListImpl();
 		}
 	}
 
