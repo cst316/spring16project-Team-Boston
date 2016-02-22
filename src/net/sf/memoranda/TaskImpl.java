@@ -12,7 +12,7 @@ import java.util.Calendar;
 import net.sf.memoranda.date.CalendarDate;
 import net.sf.memoranda.date.CurrentDate;
 
-public class TaskImpl implements Task, Comparable<Object>
+public class TaskImpl implements Task
 {
 	private static final long serialVersionUID = 1295565190499990928L;
 
@@ -120,14 +120,10 @@ public class TaskImpl implements Task, Comparable<Object>
 				return Task.ACTIVE;
 		}
 		else
-			if (date.before (startDate))
+			if (startDate.before (date))
 			{
 				return Task.SCHEDULED;
 			}
-		if (startDate.after (endDate))
-		{
-			return Task.ACTIVE;
-		}
 		return Task.FAILED;
 	}
 
@@ -264,6 +260,17 @@ public class TaskImpl implements Task, Comparable<Object>
 		subTasks.addAll (tasks);
 	}
 
+	public int compareTo (Task task)
+	{
+		if (getRate () > task.getRate ())
+			return 1;
+		else
+			if (getRate () < task.getRate ())
+				return -1;
+			else
+				return 0;
+	}
+
 	public Task deepCopy ()
 	{
 		Task newTask = null;
@@ -289,6 +296,14 @@ public class TaskImpl implements Task, Comparable<Object>
 			e.printStackTrace ();
 		}
 		return newTask;
+	}
+
+	public boolean equals (Object o)
+	{
+		boolean a = o instanceof Task;
+		Task t = (Task) o;
+		boolean b = t.getID ().equals (this.getID ());
+		return a && b;
 	}
 
 	public long[] recursivelyModifyCompletionFromSubTasks ()
@@ -399,36 +414,17 @@ public class TaskImpl implements Task, Comparable<Object>
 		subTasks.removeAll (tasks);
 	}
 
-	public int compareTo (Object o)
-	{
-		Task task = (Task) o;
-		if (getRate () > task.getRate ())
-			return 1;
-		else
-			if (getRate () < task.getRate ())
-				return -1;
-			else
-				return 0;
-	}
-
-	public boolean equals (Object o)
-	{
-		boolean a = o instanceof Task;
-		Task t = (Task) o;
-		boolean b = t.getID ().equals (this.getID ());
-		return a && b;
-	}
-
 	private Collection<Task> subTasks;
 	private String description;
-	private long effort = 0, effortActual;
+	private long effort = 0;
+	private long effortActual;
 	private CalendarDate endDate;
+	private boolean frozen = false;
 	private String id;
 	private Task parent = null;
 	private int priority;
 	private int progress;
 	private CalendarDate startDate;
 	private String text;
-	private boolean updateSubTasks, frozen;
-
+	private boolean updateSubTasks;
 }
