@@ -22,14 +22,7 @@ public class TaskListImpl implements TaskList
 	private static final long serialVersionUID = 7504630657790091439L;
 	
 	public
-	TaskListImpl (Project prj)
-	{
-		taskList = new Hashtable<String, Task> ();
-		rootTaskList = new ArrayList<Task> ();
-	}
-	
-	public
-	TaskListImpl()
+	TaskListImpl ()
 	{
 		taskList = new Hashtable<String, Task> ();
 		rootTaskList = new ArrayList<Task> ();
@@ -76,7 +69,7 @@ public class TaskListImpl implements TaskList
 		recursivleyUpdateID(newTask.getSubTasks());
 		rootTaskList.add(newTask);
 		taskList.put(newTask.getID(), newTask);
-		return newTask;
+		return newTask; 
 	}
 
 	public Task
@@ -124,7 +117,7 @@ public class TaskListImpl implements TaskList
 	hasParentTask (String id)
 	{
 		Task t = getTaskElement (id);
-	
+	 
 		if (t.getParentTask () != null)
 		{
 			return true;
@@ -168,8 +161,8 @@ public class TaskListImpl implements TaskList
 
 	private Task
 	getTaskElement (String id)
-	{
-		Task el = (Task) taskList.get (id);
+	{ 
+		Task el = taskList.get (id);
 		if (el == null)
 		{
 			Util.debug ("Task " + id + " cannot be found in project ");
