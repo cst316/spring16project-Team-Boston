@@ -18,6 +18,7 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -40,7 +41,8 @@ import net.sf.memoranda.util.Local;
 import net.sf.memoranda.util.Configuration;
 
 /*$Id: EditorPanel.java,v 1.21 2006/06/28 22:58:31 alexeya Exp $*/
-public class EditorPanel extends JPanel {
+public class EditorPanel extends JPanel 
+{
 	BorderLayout borderLayout1 = new BorderLayout();
 
 	JPanel jPanel1 = new JPanel();
@@ -89,12 +91,26 @@ public class EditorPanel extends JPanel {
 	JLabel tag = new JLabel();
 	
 	public JTextField tagField = new JTextField();
+	
+	// priority for notes
+		String[] priority =
+			{
+					Local.getString ("Lowest"),
+					Local.getString ("Low"),
+					Local.getString ("Normal"),
+					Local.getString ("High"),
+					Local.getString ("Highest")
+			};
+		JLabel priorityLabel = new JLabel ();
+		// drop down for priority notes
+		JComboBox priorityCB = new JComboBox (priority);
 
 	public EditorPanel(DailyItemsPanel parent) {
 		try {
 			parentPanel = parent;
 			jbInit();
-		} catch (Exception ex) {
+		} catch (Exception ex) 
+		{
 			new ExceptionDialog(ex);
 		}
 	}
@@ -102,8 +118,10 @@ public class EditorPanel extends JPanel {
 	public Action insertTimeAction = new AbstractAction(Local
 			.getString("Insert current time"), new ImageIcon(
 			net.sf.memoranda.ui.AppFrame.class
-					.getResource("resources/icons/time.png"))) {
-		public void actionPerformed(ActionEvent e) {
+					.getResource("resources/icons/time.png"))) 
+	{
+		public void actionPerformed(ActionEvent e) 
+		{
 			insTimeB_actionPerformed(e);
 		}
 	};
@@ -335,6 +353,14 @@ public class EditorPanel extends JPanel {
 		editorToolBar.add(exportB, null);
 		editorToolBar.addSeparator(new Dimension(8, 24));
 		editorToolBar.add(previewB, null);
+		// priority for notes
+		editorToolBar.add(priorityLabel, null);
+		editorToolBar.add (priorityCB, null);
+		priorityLabel.setText (Local.getString ("Priority"));
+		priorityCB.setFont (new java.awt.Font ("Dialog", 0, 11));
+		priorityLabel.setText (Local.getString ("Priority"));
+		priorityCB.setFont (new java.awt.Font ("Dialog", 0, 11));
+		priorityCB.setSelectedItem (Local.getString ("Normal"));
 		// editorToolBar.add(printB, null);
 		jPanel1.add(editorToolBar, BorderLayout.NORTH);
 		jPanel1.add(editor, BorderLayout.CENTER);
@@ -505,8 +531,9 @@ public class EditorPanel extends JPanel {
 
 	String initialTitle = "";
 	String initialTags = "";
-
+	int initialPriority = 2;
 	public void setDocument(Note note) 
+
 	{
 		// Note note = CurrentProject.getNoteList().getActiveNote();
 		// try {
@@ -517,14 +544,17 @@ public class EditorPanel extends JPanel {
 		{
 			titleField.setText(note.getTitle());
 			tagField.setText(note.getTags());
+			priorityCB.setSelectedIndex(note.getPriority());
 		}
 		else
 		{
 			titleField.setText("");
 			tagField.setText("");
+			priorityCB.setSelectedIndex(2);
 		}
 		initialTitle = titleField.getText();
 		initialTags = tagField.getText();
+		initialPriority = priorityCB.getSelectedIndex();
 		/*
 		 * } catch (Exception ex) { new ExceptionDialog(ex); }
 		 */
@@ -536,16 +566,20 @@ public class EditorPanel extends JPanel {
 		// .setDocument(CurrentStorage.get().openNote(note));
 	}
 
-	public javax.swing.text.Document getDocument() {
+	public javax.swing.text.Document getDocument() 
+	{
 		return this.editor.document;
 	}
 
-	public boolean isDocumentChanged() {
+	public boolean isDocumentChanged()
+	{
 		return editor.isDocumentChanged()
-				|| !titleField.getText().equals(initialTitle) || !tagField.getText().equals(initialTags);
+				|| !titleField.getText().equals(initialTitle) || !tagField.getText().equals(initialTags)|| 
+				(priorityCB.getSelectedIndex() != initialPriority);
 	}
 
-	void importB_actionPerformed(ActionEvent e) {
+	void importB_actionPerformed(ActionEvent e) 
+	{
 		// Fix until Sun's JVM supports more locales...
 		UIManager.put("FileChooser.lookInLabelText", Local
 				.getString("Look in:"));

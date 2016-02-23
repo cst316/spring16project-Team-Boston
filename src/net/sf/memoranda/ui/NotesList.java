@@ -126,7 +126,8 @@ public class NotesListModel extends AbstractListModel {
 
         public Object getElementAt(int i) {
             Note note = (Note)notes.get(i);
-            return note.getDate().getShortDateString() + " " + note.getTitle() + " " + "[" + note.getTags() + "]";
+            return note.getDate().getShortDateString() + " " + note.getTitle() + " " + "(" +note.getPriorityString() + ")" 
+            + " " + "[" + note.getTags() + "]";
         }
 
         public int getSize() {
