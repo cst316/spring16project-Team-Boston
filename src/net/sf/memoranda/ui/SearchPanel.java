@@ -32,7 +32,8 @@ import net.sf.memoranda.util.CurrentStorage;
 import net.sf.memoranda.util.Local;
 
 /*$Id: SearchPanel.java,v 1.5 2004/04/05 10:05:44 alexeya Exp $*/
-public class SearchPanel extends JPanel {
+public class SearchPanel extends JPanel 
+{
     BorderLayout borderLayout1 = new BorderLayout();
     NotesList notesList = new NotesList(NotesList.EMPTY);
     JScrollPane scrollPane = new JScrollPane();
@@ -53,15 +54,18 @@ public class SearchPanel extends JPanel {
     BorderLayout borderLayout5 = new BorderLayout();
     JProgressBar progressBar = new JProgressBar();
 
-    public SearchPanel() {
+    public SearchPanel() 
+    {
         try {
             jbInit();
         }
-        catch (Exception ex) {
+        catch (Exception ex) 
+        {
             new ExceptionDialog(ex);
         }
     }
-    void jbInit() throws Exception {
+    void jbInit() throws Exception 
+    {
         border1 = BorderFactory.createEmptyBorder(2, 2, 2, 2);
 
         titledBorder1 = new TitledBorder(BorderFactory.createEmptyBorder(), Local.getString("Search") + ":");
@@ -73,8 +77,10 @@ public class SearchPanel extends JPanel {
         jPanel2.setBorder(titledBorder1);
         titledBorder1.setTitleFont(new java.awt.Font("Dialog", 1, 11));
         searchField.setFont(new java.awt.Font("Dialog", 1, 10));
-        searchField.addCaretListener(new javax.swing.event.CaretListener() {
-            public void caretUpdate(CaretEvent e) {
+        searchField.addCaretListener(new javax.swing.event.CaretListener() 
+        {
+            public void caretUpdate(CaretEvent e)
+            {
                 searchField_caretUpdate(e);
             }
         });
@@ -96,8 +102,10 @@ public class SearchPanel extends JPanel {
         searchB.setPreferredSize(new Dimension(70, 25));
         searchB.setMargin(new Insets(0, 0, 0, 0));
         searchB.setText(Local.getString("Search"));
-        searchB.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+        searchB.addActionListener(new java.awt.event.ActionListener() 
+        {
+            public void actionPerformed(ActionEvent e) 
+            {
                 searchB_actionPerformed(e);
             }
         });
@@ -113,8 +121,10 @@ public class SearchPanel extends JPanel {
         jPanel4.add(wholeWCB, BorderLayout.NORTH);
         jPanel4.add(regexpCB, BorderLayout.CENTER);
         jPanel3.add(searchB, BorderLayout.SOUTH);
-        CurrentProject.addProjectListener(new ProjectListener() {
-            public void projectChange(Project p, NoteList nl, TaskList tl, ResourcesList rl) {
+        CurrentProject.addProjectListener(new ProjectListener() 
+        {
+            public void projectChange(Project p, NoteList nl, TaskList tl, ResourcesList rl) 
+            {
                 notesList.update(new Vector());
             }
             public void projectWasChanged() {}
@@ -125,33 +135,44 @@ public class SearchPanel extends JPanel {
 
     Cursor waitCursor = new Cursor(Cursor.WAIT_CURSOR);
 
-    void searchB_actionPerformed(ActionEvent e) {
+    void searchB_actionPerformed(ActionEvent e) 
+    {
         Cursor cur = App.getFrame().getCursor();
         App.getFrame().setCursor(waitCursor);
         doSearch();
         App.getFrame().setCursor(cur);
     }
 
-    void searchField_caretUpdate(CaretEvent e) {
+    void searchField_caretUpdate(CaretEvent e) 
+    {
         searchB.setEnabled(searchField.getText().length() > 0);
     }
     
     
-    void doSearch() {
+    void doSearch() 
+    {
         Pattern pattern;
         //this.add(progressBar, BorderLayout.SOUTH);
         int flags = Pattern.DOTALL;
         if (!caseSensCB.isSelected())
+        {
             flags = flags + Pattern.CASE_INSENSITIVE + Pattern.UNICODE_CASE;
+        }
         String _find = searchField.getText();
         if (!regexpCB.isSelected())
+        {
             _find = "\\Q" + _find + "\\E";
+        }
         if (wholeWCB.isSelected())
+        {
             _find = "[\\s\\p{Punct}]" + _find + "[\\s\\p{Punct}]";
-        try {
+        }
+        try 
+        {
             pattern = Pattern.compile(_find, flags);
         }
-        catch (Exception ex) {
+        catch (Exception ex) 
+        {
             new ExceptionDialog(ex, "Error in regular expression", "Check the regular expression syntax");
             return;
         }
@@ -162,17 +183,23 @@ public class SearchPanel extends JPanel {
         /*progressBar.setMaximum(notes.size()-1);
         progressBar.setIndeterminate(false);
         this.add(progressBar, BorderLayout.SOUTH);*/
-        for (int i = 0; i < notes.size(); i++) {
+        for (int i = 0; i < notes.size(); i++) 
+        {
             //progressBar.setValue(i);
             Note note = (Note) notes.get(i);
             Document doc = CurrentStorage.get().openNote(note);
-            try {
+            try 
+            {
                 String txt = doc.getText(0, doc.getLength());
                 Matcher matcher = pattern.matcher(txt);
-                if (matcher.find())
+                Matcher matcher2 = pattern.matcher(note.getTags());
+                if (matcher.find() || matcher2.find())
+                {
                     found.add(note);
+                }
             }
-            catch (Exception ex) {
+            catch (Exception ex) 
+            {
                 ex.printStackTrace();
             }
         }
