@@ -433,13 +433,14 @@ public class DailyItemsPanel extends JPanel
         if (currentNote == null)
         {
             currentNote = CurrentProject.getNoteList().createNoteForDate(currentDate);
-        	currentNote.setTitle(editorPanel.titleField.getText());
-        	currentNote.setId(Util.generateId());
-        	currentNote.setTags(editorPanel.tagField.getText());
-        	currentNote.setPriority((editorPanel.priorityCB.getSelectedIndex()));
-        	CurrentStorage.get().storeNote(currentNote, editorPanel.getDocument());
-        	/*DEBUG* System.out.println("Save");*/
+        	
         }
+        currentNote.setTitle(editorPanel.titleField.getText());
+        currentNote.setId(Util.generateId());
+        currentNote.setTags(editorPanel.tagField.getText());
+        currentNote.setPriority((editorPanel.priorityCB.getSelectedIndex()));
+        CurrentStorage.get().storeNote(currentNote, editorPanel.getDocument());
+        /*DEBUG* System.out.println("Save");*/
     }
 
     void toggleButton_actionPerformed(ActionEvent e) 
