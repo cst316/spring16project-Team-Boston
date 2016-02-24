@@ -55,42 +55,15 @@ TaskList extends Serializable
 	getTopLevelTasks ();
 	
 	/**
-	 * Constructs a new task with the given values.
-	 * The new task is stored internally and a reference to it is returned.
-	 * 
-	 * @param startDate the start date of the task
-	 * @param endDate the endDate of the task
-	 * @param text the text value for the task
-	 * @param priority the priority level of the task
-	 * @param effort the effort for the task
-	 * @param effortActual the actual effort of the task
-	 * @param description the description of the task
-	 * @param parentTaskID set to the id of the parent of the task if it exists, null otherwise
-	 * @param updateFromChildren true if this task should automatically update  from children
-	 * @return returns a reference to the newly created and stored task
-	 */
-	Task
-	createTask
-	(	CalendarDate startDate,
-		CalendarDate endDate,
-		String text,
-		int priority,
-		long effort,
-		long effortActual,
-		String description,
-		String parentTaskID,
-		boolean updateFromChildren
-	);
-	
-	/**
 	 * Returns a deep copy of the given task and its children, but each with a different id.
-	 * The duplicated task is stored internally and a reference to it is returned.
+	 * The duplicated task is stored internally as a child of a specific parent and a reference to it is returned.
 	 * 
 	 * @param task the task to duplicate
+	 * @param parentTaskID the id of the internal parent task that will contain the new task reference
 	 * @return a reference to the exact copy (different identifications) of the task hierarchy
 	 */
 	Task
-	duplicateTask (Task task);
+	cloneTask (Task task, String parentTaskID);
 
 	/**
 	 * Returns true if the task that has the given id has a parent.

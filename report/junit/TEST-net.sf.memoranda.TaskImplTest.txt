@@ -1,86 +1,43 @@
 Testsuite: net.sf.memoranda.TaskImplTest
-Tests run: 39, Failures: 5, Errors: 3, Skipped: 0, Time elapsed: 0.495 sec
+Tests run: 40, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.11 sec
 
-Testcase: recursivelyModifyCompletionFromSubTasksTest took 0.003 sec
-	FAILED
-null
-junit.framework.AssertionFailedError
-	at net.sf.memoranda.TaskImplTest.recursivelyModifyCompletionFromSubTasksTest(Unknown Source)
-
-Testcase: recursivelyModifyStartDateFromSubTasksTest took 0.341 sec
-	FAILED
-expected:<14/1/2016> but was:<1/1/2014>
-junit.framework.AssertionFailedError: expected:<14/1/2016> but was:<1/1/2014>
-	at net.sf.memoranda.TaskImplTest.recursivelyModifyStartDateFromSubTasksTest(Unknown Source)
-
-Testcase: getPriorityTest took 0 sec
-Testcase: getEffortTest took 0.001 sec
-Testcase: getEndDateTest took 0 sec
-Testcase: getIDTest took 0 sec
-Testcase: getParentIDTest took 0 sec
-Testcase: getProgressTest took 0 sec
+Testcase: recursivelyModifyCompletionFromSubTasksTest took 0.002 sec
+Testcase: recursivelyModifyStartDateFromSubTasksTest took 0.01 sec
+Testcase: getDescriptionTest took 0 sec
+Testcase: getRateTest took 0.001 sec
+Testcase: getStartDateTest took 0.001 sec
+Testcase: setEndDateTest took 0 sec
 Testcase: setIDTest took 0 sec
-Testcase: setFrozenTest took 0 sec
+Testcase: getPriorityTest took 0 sec
+Testcase: getParentIDTest took 0 sec
+Testcase: getIDTest took 0 sec
+Testcase: getEndDateTest took 0 sec
+Testcase: getEffortTest took 0.001 sec
+Testcase: setEffortTest took 0 sec
+Testcase: getSubTasksTest took 0 sec
+Testcase: getSubTaskTest took 0 sec
+Testcase: getStatusTest took 0.002 sec
+Testcase: getProgressTest took 0 sec
+Testcase: getTextTest took 0 sec
+Testcase: setFrozenTest took 0.001 sec
 Testcase: setPriorityTest took 0 sec
 Testcase: setProgressTest took 0 sec
 Testcase: setStartDateTest took 0 sec
 Testcase: setSubTasksTest took 0 sec
 Testcase: setTextTest took 0 sec
-Testcase: addSubTaskTest took 0.001 sec
-Testcase: addSubTasksTest took 0.001 sec
-Testcase: deepCopyTest took 0.011 sec
-	Caused an ERROR
-null
-java.lang.NullPointerException
-	at net.sf.memoranda.TaskImpl.equals(Unknown Source)
-	at net.sf.memoranda.TaskImplTest.deepCopyTest(Unknown Source)
-
-Testcase: recursivelyModifyEndDateFromSubTasksTest took 0.001 sec
-	FAILED
-expected:<14/1/2016> but was:<12/0/2017>
-junit.framework.AssertionFailedError: expected:<14/1/2016> but was:<12/0/2017>
-	at net.sf.memoranda.TaskImplTest.recursivelyModifyEndDateFromSubTasksTest(Unknown Source)
-
-Testcase: recursivelyModifyEffortFromSubTasksTest took 0.001 sec
-	FAILED
-expected:<0> but was:<17>
-junit.framework.AssertionFailedError: expected:<0> but was:<17>
-	at net.sf.memoranda.TaskImplTest.recursivelyModifyEffortFromSubTasksTest(Unknown Source)
-
-Testcase: setDescriptionTest took 0 sec
-Testcase: getDescriptionTest took 0 sec
-Testcase: setEffortActualTest took 0 sec
+Testcase: addSubTaskTest took 0 sec
+Testcase: addSubTasksTest took 0 sec
+Testcase: compareToTest took 0.001 sec
+Testcase: deepCopyTest took 0.007 sec
 Testcase: setParentTaskTest took 0 sec
-	Caused an ERROR
-null
-java.lang.NullPointerException
-	at net.sf.memoranda.TaskImpl.equals(Unknown Source)
-	at net.sf.memoranda.TaskImplTest.getParentTaskTest(Unknown Source)
-	at net.sf.memoranda.TaskImplTest.setParentTaskTest(Unknown Source)
-
+Testcase: getUpdateSubTasksTest took 0 sec
+Testcase: setEffortActualTest took 0 sec
+Testcase: setDescriptionTest took 0 sec
+Testcase: getEffortActualTest took 0 sec
 Testcase: setUpdateSubTasksTest took 0 sec
 Testcase: removeAllSubTasksTest took 0 sec
 Testcase: removeSubTaskTest took 0 sec
 Testcase: removeSubTasksTest took 0 sec
-Testcase: getEffortActualTest took 0 sec
-Testcase: getUpdateSubTasksTest took 0 sec
 Testcase: getParentTaskTest took 0 sec
-	Caused an ERROR
-null
-java.lang.NullPointerException
-	at net.sf.memoranda.TaskImpl.equals(Unknown Source)
-	at net.sf.memoranda.TaskImplTest.getParentTaskTest(Unknown Source)
-
-Testcase: getTextTest took 0 sec
-Testcase: getSubTasksTest took 0 sec
-Testcase: setEffortTest took 0 sec
-Testcase: setEndDateTest took 0 sec
-Testcase: getSubTaskTest took 0 sec
-Testcase: getStatusTest took 0 sec
-Testcase: getStartDateTest took 0 sec
-Testcase: getRateTest took 0 sec
-	FAILED
-null
-junit.framework.AssertionFailedError
-	at net.sf.memoranda.TaskImplTest.getRateTest(Unknown Source)
-
+Testcase: recursivelyModifyEffortFromSubTasksTest took 0 sec
+Testcase: recursivelyModifyEndDateFromSubTasksTest took 0 sec

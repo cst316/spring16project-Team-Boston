@@ -17,7 +17,8 @@ import java.util.Vector;
 import net.sf.memoranda.date.CalendarDate;
 import net.sf.memoranda.util.Util;
 
-public class TaskListImpl implements TaskList
+public class
+TaskListImpl implements TaskList
 {
 	private static final long serialVersionUID = 7504630657790091439L;
 	
@@ -62,57 +63,24 @@ public class TaskListImpl implements TaskList
 	}
 
 	public Task
-	duplicateTask (Task task)
+	cloneTask (Task task, String parentTaskID)
 	{
-		Task newTask = task.deepCopy();
-		newTask.setID(Util.generateId());
-		recursivleyUpdateID(newTask.getSubTasks());
-		rootTaskList.add(newTask);
-		taskList.put(newTask.getID(), newTask);
-		return newTask; 
-	}
-
-	public Task
-	createTask (CalendarDate startDate, CalendarDate endDate, String text, int priority, long effort, long effortActual, String description, String parentTaskId, boolean updateFromChildren)
-	{
-		Task newTask = new TaskImpl (new ArrayList<Task> ());
-		if (parentTaskId == null)
-		{
-			newTask.setParentTask (null);
-		}
-		else
-		{
-			newTask.setParentTask (taskList.get (parentTaskId));
-		}
-		newTask.setStartDate (startDate);
-		newTask.setEndDate (endDate);
+		Task newTask = task.deepCopy ();
 		newTask.setID (Util.generateId ());
-		newTask.setProgress (0);
-		newTask.setEffort (effort);
-		newTask.setEffortActual (effortActual);
-		newTask.setPriority (priority);
-		newTask.setUpdateSubTasks (updateFromChildren);
-		newTask.setText (text);
-		newTask.setDescription (description);
-	
-		if (parentTaskId == null)
+		recursivleyUpdateID (newTask.getSubTasks ());
+		if (parentTaskID == null)
 		{
 			rootTaskList.add (newTask);
 		}
 		else
 		{
-			Task parent = getTaskElement (parentTaskId);
-			parent.addSubTask (newTask);
+			newTask.setParentTask (taskList.get (parentTaskID));
+			getTaskElement (parentTaskID).addSubTask (newTask);
 		}
-	
 		taskList.put (newTask.getID (), newTask);
-	
-		Util.debug ("Created task with parent " + parentTaskId);
-	
-		return (TaskImpl) newTask;
+		return newTask; 
 	}
-
-
+	
 	public boolean
 	hasParentTask (String id)
 	{
@@ -199,7 +167,7 @@ public class TaskListImpl implements TaskList
 	private boolean
 	isActive (Task t, CalendarDate date)
 	{
-		if ( (t.getStatus (date) == Task.ACTIVE) || (t.getStatus (date) == Task.DEADLINE) || (t.getStatus (date) == Task.FAILED))
+		if ((t.getStatus (date) == Task.ACTIVE) || (t.getStatus (date) == Task.DEADLINE) || (t.getStatus (date) == Task.FAILED))
 		{
 			return true;
 		}
@@ -210,18 +178,18 @@ public class TaskListImpl implements TaskList
 	}
 	
 	private void
-	recursivleyUpdateID(Collection<Task> subTasks)
+	recursivleyUpdateID (Collection<Task> subTasks)
 	{
 		for(Task task : subTasks)
 		{
-			if(task.getSubTasks().size() > 0)
+			if (task.getSubTasks ().size () > 0)
 			{
-				recursivleyUpdateID(task.getSubTasks());
+				recursivleyUpdateID (task.getSubTasks ());
 			}
 			else
 			{
-				task.setID(Util.generateId());
-				taskList.put(task.getID(), task);
+				task.setID (Util.generateId ());
+				taskList.put (task.getID (), task);
 			}
 		}
 	}

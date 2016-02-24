@@ -9,6 +9,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Vector;
 
@@ -32,6 +33,7 @@ import net.sf.memoranda.Project;
 import net.sf.memoranda.ProjectListener;
 import net.sf.memoranda.ResourcesList;
 import net.sf.memoranda.Task;
+import net.sf.memoranda.TaskImpl;
 import net.sf.memoranda.TaskList;
 import net.sf.memoranda.date.CalendarDate;
 import net.sf.memoranda.date.CurrentDate;
@@ -131,7 +133,17 @@ TaskPanel extends JPanel
 		long effort = Util.getMillisFromHours (dlg.effortField.getText ());
 		// add actual effort
 		long effortActual = Util.getMillisFromHours (dlg.effortActualField.getText ());
-		Task newTask = CurrentProject.getTaskList ().createTask (sd, ed, dlg.todoField.getText (), dlg.priorityCB.getSelectedIndex (), effort, effortActual, dlg.descriptionField.getText (), parentTaskId, dlg.updateChildren);
+		Task taskParameterObject = new TaskImpl (new ArrayList<Task> ());
+		taskParameterObject.setStartDate (sd);
+		taskParameterObject.setEndDate (ed);
+		taskParameterObject.setText(dlg.todoField.getText ());
+		taskParameterObject.setPriority (dlg.priorityCB.getSelectedIndex ());
+		taskParameterObject.setEffort (effort);
+		taskParameterObject.setEffortActual (effortActual);
+		taskParameterObject.setDescription (dlg.descriptionField.getText ());
+		taskParameterObject.setParentTask (parent);
+		taskParameterObject.setUpdateSubTasks (dlg.updateChildren);
+		Task newTask = CurrentProject.getTaskList ().cloneTask (taskParameterObject, null);
 	
 		if (!dlg.updateChildren)
 		{
@@ -227,7 +239,7 @@ TaskPanel extends JPanel
 		}
 		for (int i = 0; i < toCopy.size (); i++)
 		{
-			CurrentProject.getTaskList ().duplicateTask (toCopy.get (i));
+			CurrentProject.getTaskList ().cloneTask (toCopy.get (i), null);
 		}
 	
 		CurrentStorage.get ().storeTaskList (CurrentProject.getTaskList (), CurrentProject.get ());
@@ -787,7 +799,17 @@ TaskPanel extends JPanel
 		// dlg.todoField.getText(),
 		// dlg.priorityCB.getSelectedIndex(),effort,
 		// dlg.descriptionField.getText(),parentTaskId);
-		Task newTask = CurrentProject.getTaskList ().createTask (sd, ed, dlg.todoField.getText (), dlg.priorityCB.getSelectedIndex (), effort, effortActual, dlg.descriptionField.getText (), null, dlg.updateChildren);
+		Task taskParameterObject = new TaskImpl (new ArrayList<Task> ());
+		taskParameterObject.setStartDate (sd);
+		taskParameterObject.setEndDate (ed);
+		taskParameterObject.setText(dlg.todoField.getText ());
+		taskParameterObject.setPriority (dlg.priorityCB.getSelectedIndex ());
+		taskParameterObject.setEffort (effort);
+		taskParameterObject.setEffortActual (effortActual);
+		taskParameterObject.setDescription (dlg.descriptionField.getText ());
+		taskParameterObject.setParentTask (null);
+		taskParameterObject.setUpdateSubTasks (dlg.updateChildren);
+		Task newTask = CurrentProject.getTaskList ().cloneTask (taskParameterObject, "");
 		// CurrentProject.getTaskList().adjustParentTasks(newTask);
 		if (!dlg.updateChildren)
 		{

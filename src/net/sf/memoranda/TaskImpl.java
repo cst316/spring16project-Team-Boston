@@ -12,31 +12,37 @@ import java.util.Calendar;
 import net.sf.memoranda.date.CalendarDate;
 import net.sf.memoranda.date.CurrentDate;
 
-public class TaskImpl implements Task
+public class
+TaskImpl implements Task
 {
 	private static final long serialVersionUID = 1295565190499990928L;
 
-	public TaskImpl (Collection<Task> taskStorage)
+	public
+	TaskImpl (Collection<Task> taskStorage)
 	{
 		subTasks = taskStorage;
 	}
 
-	public String getDescription ()
+	public String
+	getDescription ()
 	{
 		return description;
 	}
 
-	public long getEffort ()
+	public long
+	getEffort ()
 	{
 		return effort;
 	}
 
-	public long getEffortActual ()
+	public long
+	getEffortActual ()
 	{
 		return effortActual;
 	}
 
-	public CalendarDate getEndDate ()
+	public CalendarDate
+	getEndDate ()
 	{
 		if (endDate != null)
 		{
@@ -49,12 +55,14 @@ public class TaskImpl implements Task
 		return getStartDate ();
 	}
 
-	public String getID ()
+	public String
+	getID ()
 	{
 		return id;
 	}
 
-	public String getParentID ()
+	public String
+	getParentID ()
 	{
 		if (parent != null)
 		{
@@ -63,22 +71,26 @@ public class TaskImpl implements Task
 		return null;
 	}
 
-	public Task getParentTask ()
+	public Task
+	getParentTask ()
 	{
 		return parent;
 	}
 
-	public int getPriority ()
+	public int
+	getPriority ()
 	{
 		return priority;
 	}
 
-	public int getProgress ()
+	public int
+	getProgress ()
 	{
 		return progress;
 	}
 
-	public long getRate ()
+	public long
+	getRate ()
 	{
 		CalendarDate d = CurrentDate.get ();
 		Calendar endDateCal = getEndDate ().getCalendar ();
@@ -88,7 +100,8 @@ public class TaskImpl implements Task
 		return -1 * (100 - getProgress ()) / (numOfDays + 1) * (getPriority () + 1);
 	}
 
-	public CalendarDate getStartDate ()
+	public CalendarDate
+	getStartDate ()
 	{
 		if (startDate != null)
 		{
@@ -101,7 +114,8 @@ public class TaskImpl implements Task
 		return new CalendarDate ();
 	}
 
-	public int getStatus (CalendarDate date)
+	public int
+	getStatus (CalendarDate date)
 	{
 		if (frozen)
 		{
@@ -127,7 +141,8 @@ public class TaskImpl implements Task
 		return Task.FAILED;
 	}
 
-	public Task getSubTask (String id)
+	public Task
+	getSubTask (String id)
 	{
 		Iterator<Task> iter = subTasks.iterator ();
 		while (iter.hasNext ())
@@ -138,22 +153,26 @@ public class TaskImpl implements Task
 		return null;
 	}
 
-	public Collection<Task> getSubTasks ()
+	public Collection<Task>
+	getSubTasks ()
 	{
 		return subTasks;
 	}
 
-	public boolean getUpdateSubTasks ()
+	public boolean
+	getUpdateSubTasks ()
 	{
 		return updateSubTasks;
 	}
 
-	public String getText ()
+	public String
+	getText ()
 	{
 		return text;
 	}
 
-	public void setDescription (String description)
+	public void
+	setDescription (String description)
 	{
 		if (description == null)
 			this.description = "";
@@ -161,22 +180,26 @@ public class TaskImpl implements Task
 			this.description = description;
 	}
 
-	public void setID (String id)
+	public void
+	setID (String id)
 	{
 		this.id = id;
 	}
 
-	public void setEffort (long effort)
+	public void
+	setEffort (long effort)
 	{
 		this.effort = effort;
 	}
 
-	public void setEffortActual (long effortActual)
+	public void
+	setEffortActual (long effortActual)
 	{
 		this.effortActual = effortActual;
 	}
 
-	public void setEndDate (CalendarDate date)
+	public void
+	setEndDate (CalendarDate date)
 	{
 		if (date == null)
 		{
@@ -186,22 +209,26 @@ public class TaskImpl implements Task
 			endDate = date;
 	}
 
-	public void setFrozen (boolean frozen)
+	public void
+	setFrozen (boolean frozen)
 	{
 		this.frozen = frozen;
 	}
 
-	public void setParentTask (Task task)
+	public void
+	setParentTask (Task task)
 	{
 		parent = task;
 	}
 
-	public void setPriority (int p)
+	public void
+	setPriority (int p)
 	{
 		priority = p;
 	}
 
-	public void setProgress (int p)
+	public void
+	setProgress (int p)
 	{
 		if ( (p >= 0) && (p <= 100))
 		{
@@ -209,14 +236,15 @@ public class TaskImpl implements Task
 		}
 		if (parent != null)
 		{
-			if(parent.getUpdateSubTasks())
+			if(parent.getUpdateSubTasks ())
 			{
 				parent.recursivelyModifyCompletionFromSubTasks ();	
 			}
 		}
 	}
 
-	public void setStartDate (CalendarDate date)
+	public void
+	setStartDate (CalendarDate date)
 	{
 		if (date == null)
 		{
@@ -228,7 +256,8 @@ public class TaskImpl implements Task
 		}
 	}
 
-	public void setSubTasks (Collection<Task> SubTasks)
+	public void
+	setSubTasks (Collection<Task> SubTasks)
 	{
 		this.subTasks = SubTasks;
 	}
@@ -241,18 +270,21 @@ public class TaskImpl implements Task
 			this.text = text;
 	}
 
-	public void setUpdateSubTasks (boolean updateSubTasks)
+	public void
+	setUpdateSubTasks (boolean updateSubTasks)
 	{
 		this.updateSubTasks = updateSubTasks;
 	}
 
-	public void addSubTask (Task task)
+	public void
+	addSubTask (Task task)
 	{
 		task.setParentTask (this);
 		subTasks.add (task);
 	}
 
-	public void addSubTasks (Collection<Task> tasks)
+	public void
+	addSubTasks (Collection<Task> tasks)
 	{
 		Iterator<Task> iter = tasks.iterator ();
 		while (iter.hasNext ())
@@ -260,7 +292,8 @@ public class TaskImpl implements Task
 		subTasks.addAll (tasks);
 	}
 
-	public int compareTo (Task task)
+	public int
+	compareTo (Task task)
 	{
 		if (getRate () > task.getRate ())
 			return 1;
@@ -271,7 +304,8 @@ public class TaskImpl implements Task
 				return 0;
 	}
 
-	public Task deepCopy ()
+	public Task
+	deepCopy ()
 	{
 		Task newTask = null;
 		try
@@ -298,7 +332,8 @@ public class TaskImpl implements Task
 		return newTask;
 	}
 
-	public boolean equals (Object o)
+	public boolean
+	equals (Object o)
 	{
 		boolean a = o instanceof Task;
 		Task t = (Task) o;
@@ -306,17 +341,18 @@ public class TaskImpl implements Task
 		return a && b;
 	}
 
-	public long[] recursivelyModifyCompletionFromSubTasks ()
+	public long[]
+	recursivelyModifyCompletionFromSubTasks ()
 	{
 		int totalProgress = 0;
 		if (subTasks.size () > 0) 
 		{
 			for (Iterator<Task> iter = subTasks.iterator (); iter.hasNext ();) 
 			{
-				Task childTask = iter.next();
-				totalProgress += childTask.getProgress();
+				Task childTask = iter.next ();
+				totalProgress += childTask.getProgress ();
 			}
-			this.setProgress(totalProgress / subTasks.size ());
+			this.setProgress (totalProgress / subTasks.size ());
 		}
 		/*
 		long[] res = new long[2];
@@ -349,7 +385,23 @@ public class TaskImpl implements Task
 		return null;
 	}
 
-	public CalendarDate recursivelyModifyEndDateFromSubTasks ()
+	public long
+	recursivelyModifyEffortFromSubTasks ()
+	{
+		long totalEffort = 0;
+		Collection<Task> subTasks = getSubTasks ();
+		if (subTasks.size () == 0) return effort;
+		for (Iterator<Task> iter = subTasks.iterator (); iter.hasNext ();)
+		{
+			Task element = iter.next ();
+			totalEffort = totalEffort + element.recursivelyModifyEffortFromSubTasks ();
+		}
+		setEffort (totalEffort);
+		return totalEffort;
+	}
+
+	public CalendarDate
+	recursivelyModifyEndDateFromSubTasks ()
 	{
 		CalendarDate d = getEndDate ();
 		Collection<Task> subTasks = getSubTasks ();
@@ -367,7 +419,8 @@ public class TaskImpl implements Task
 		return d;
 	}
 
-	public CalendarDate recursivelyModifyStartDateFromSubTasks ()
+	public CalendarDate
+	recursivelyModifyStartDateFromSubTasks ()
 	{
 		CalendarDate d = getStartDate ();
 		Collection<Task> subTasks = getSubTasks ();
@@ -385,31 +438,20 @@ public class TaskImpl implements Task
 		return d;
 	}
 
-	public long recursivelyModifyEffortFromSubTasks ()
-	{
-		long totalEffort = 0;
-		Collection<Task> subTasks = getSubTasks ();
-		if (subTasks.size () == 0) return effort;
-		for (Iterator<Task> iter = subTasks.iterator (); iter.hasNext ();)
-		{
-			Task element = iter.next ();
-			totalEffort = totalEffort + element.recursivelyModifyEffortFromSubTasks ();
-		}
-		setEffort (totalEffort);
-		return totalEffort;
-	}
-
-	public void removeAllSubTasks ()
+	public void
+	removeAllSubTasks ()
 	{
 		subTasks.clear ();
 	}
 
-	public void removeSubTask (Task task)
+	public void
+	removeSubTask (Task task)
 	{
 		subTasks.remove (task);
 	}
 
-	public void removeSubTasks (Collection<Task> tasks)
+	public void
+	removeSubTasks (Collection<Task> tasks)
 	{
 		subTasks.removeAll (tasks);
 	}
