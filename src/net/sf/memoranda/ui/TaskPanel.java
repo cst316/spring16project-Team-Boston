@@ -130,7 +130,7 @@ TaskPanel extends JPanel
 			ed = new CalendarDate ((Date) dlg.endDate.getModel ().getValue ());
 		else
 			ed = null;
-		long effort = Util.getMillisFromHours (dlg.effortField.getText ());
+		long effort = Util.getMillisFromHours (dlg.effortPredictedField.getText ());
 		// add actual effort
 		long effortActual = Util.getMillisFromHours (dlg.effortActualField.getText ());
 		Task taskParameterObject = new TaskImpl (new ArrayList<Task> ());
@@ -209,7 +209,7 @@ TaskPanel extends JPanel
 		// else
 		// ed = new CalendarDate(0,0,0);
 		// long effort =
-		// Util.getMillisFromHours(dlg.effortField.getText());
+		// Util.getMillisFromHours(dlg.effortPredictedField.getText());
 		// Task newTask = CurrentProject.getTaskList().createTask(sd,
 		// ed, dlg.todoField.getText(),
 		// dlg.priorityCB.getSelectedIndex(),effort,
@@ -260,7 +260,7 @@ TaskPanel extends JPanel
 		dlg.startDate.getModel ().setValue (t.getStartDate ().getDate ());
 		dlg.endDate.getModel ().setValue (t.getEndDate ().getDate ());
 		dlg.priorityCB.setSelectedIndex (t.getPriority ());
-		dlg.effortField.setText (Util.getHoursFromMillis (t.getEffort ()));
+		dlg.effortPredictedField.setText (Util.getHoursFromMillis (t.getEffort ()));
 		// Add actual effort
 		dlg.effortActualField.setText (Util.getHoursFromMillis (t.getEffortActual ()));
 		if ( (t.getStartDate ().getDate ()).after (t.getEndDate ().getDate ()))
@@ -295,7 +295,7 @@ TaskPanel extends JPanel
 		t.setText (dlg.todoField.getText ());
 		t.setDescription (dlg.descriptionField.getText ());
 		t.setPriority (dlg.priorityCB.getSelectedIndex ());
-		t.setEffort (Util.getMillisFromHours (dlg.effortField.getText ()));
+		t.setEffort (Util.getMillisFromHours (dlg.effortPredictedField.getText ()));
 		// add actual effort
 		t.setEffortActual (Util.getMillisFromHours (dlg.effortActualField.getText ()));
 		if (!dlg.updateChildren)
@@ -791,7 +791,7 @@ TaskPanel extends JPanel
 			ed = new CalendarDate ((Date) dlg.endDate.getModel ().getValue ());
 		else
 			ed = null;
-		long effort = Util.getMillisFromHours (dlg.effortField.getText ());
+		long effort = Util.getMillisFromHours (dlg.effortPredictedField.getText ());
 		// add actual effort
 		long effortActual = Util.getMillisFromHours (dlg.effortActualField.getText ());
 		// XXX Task newTask =
