@@ -8,8 +8,12 @@ import org.junit.Test;
 import net.sf.memoranda.Note;
 import net.sf.memoranda.NoteImpl;
 import nu.xom.Element;
-
-public class TagsNoteTest {
+/**
+ * Tests tag functionality 
+ */
+public class 
+TagsNoteTest 
+{
 
 	Element element;
 	Note n;

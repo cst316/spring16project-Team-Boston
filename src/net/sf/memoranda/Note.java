@@ -13,7 +13,8 @@ import net.sf.memoranda.date.CalendarDate;
  * 
  */
 /*$Id: Note.java,v 1.4 2004/09/30 17:19:52 ivanrise Exp $*/
-public interface Note 
+public interface 
+Note 
 {
     // priority for notes
     public static final int PRIORITY_LOWEST = 0;
@@ -26,26 +27,26 @@ public interface Note
     
     public static final int PRIORITY_HIGHEST = 4;
     
-    CalendarDate getDate();
+    CalendarDate getDate ();
     
     // priority for notes
     int getPriority ();
     void setPriority (int p);
-    String getPriorityString();
+    String getPriorityString ();
     
-    String getTitle();
-    void setTitle(String s);
+    String getTitle ();
+    void setTitle (String s);
     
-	String getId();
-	void setId(String s);
+	String getId ();
+	void setId (String s);
 	
-    boolean isMarked();
-    void setMark(boolean mark);
+    boolean isMarked ();
+    void setMark (boolean mark);
     
     // add tags
-    void addTag(String s);
-    String getTags();
-    void setTags(String s);
+    void addTag (String s);
+    String getTags ();
+    void setTags (String s);
         
-    Project getProject();
+    Project getProject ();
 }
