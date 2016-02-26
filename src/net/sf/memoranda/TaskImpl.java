@@ -148,7 +148,7 @@ TaskImpl implements Task
 		while (iter.hasNext ())
 		{
 			Task t = iter.next ();
-			if (t.getID () == id) return t;
+			if (t.getID ().equals (id)) return t;
 		}
 		return null;
 	}
