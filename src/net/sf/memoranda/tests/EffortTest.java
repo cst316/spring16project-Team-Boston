@@ -8,7 +8,6 @@ import org.junit.Test;
 import net.sf.memoranda.Task;
 import net.sf.memoranda.TaskImpl;
 import net.sf.memoranda.ui.TaskTableModel;
-import nu.xom.Element;
 /**
  * Test actual effort hours
  *
@@ -16,7 +15,6 @@ import nu.xom.Element;
 public class 
 EffortTest 
 {
-	Element element;
 	Task task;
 	TaskTableModel taskTable;
 	
@@ -63,8 +61,7 @@ EffortTest
 	setUp () 
 	throws Exception
 	{
-		element = new Element ("task");
-		task = new TaskImpl (element, null);
+		task = new TaskImpl (null);
 		taskTable = new TaskTableModel ();
 	}
 

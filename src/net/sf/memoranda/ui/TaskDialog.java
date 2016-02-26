@@ -65,7 +65,7 @@ public class TaskDialog extends JDialog
 	JTextField todoField = new JTextField ();
 
 	// added by rawsushi
-	JTextField effortField = new JTextField ();
+	JTextField effortActualField = new JTextField ();
 	// effect predicted field
 	JTextField effortPredictedField = new JTextField ();
 	JTextArea descriptionField = new JTextArea ();
@@ -244,8 +244,8 @@ public class TaskDialog extends JDialog
 		jLabelEffort.setMaximumSize (new Dimension (100, 16));
 		jLabelEffort.setMinimumSize (new Dimension (60, 16));
 		jLabelEffort.setText (Local.getString ("Actual Effort(hrs)"));
-		effortField.setBorder (border8);
-		effortField.setPreferredSize (new Dimension (30, 24));
+		effortActualField.setBorder (border8);
+		effortActualField.setPreferredSize (new Dimension (30, 24));
 
 		// new entry for predicted effort hours
 		jLabelEffortPredicted.setMaximumSize (new Dimension (100, 16));
@@ -261,7 +261,7 @@ public class TaskDialog extends JDialog
 		// //Added by (jcscoobyrs) on 14-Nov-2003 at 10:45:16 PM
 		startDate.setEditor (new JSpinner.DateEditor (startDate, sdf.toPattern ()));
 
-		startDate.addChangeListener (new ChangeListener ()
+		/*startDate.addChangeListener (new ChangeListener ()
 		{
 			public void stateChanged (ChangeEvent e)
 			{
@@ -294,7 +294,7 @@ public class TaskDialog extends JDialog
 				startCalFrame.cal.set (new CalendarDate (sd));
 				ignoreStartChanged = false;
 			}
-		});
+		});*/
 
 		startDateLabel.setText (Local.getString ("Start date"));
 		// startDateLabel.setPreferredSize(new Dimension(60, 16));
@@ -409,7 +409,7 @@ public class TaskDialog extends JDialog
 		// added by rawsushi
 		jPanel2.add (jPanelEffort, null);
 		jPanelEffort.add (jLabelEffort, null);
-		jPanelEffort.add (effortField, null);
+		jPanelEffort.add (effortActualField, null);
 
 		jPanel2.add (jPanel4, null);
 		jPanel4.add (priorityCB, null);
