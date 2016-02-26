@@ -340,6 +340,12 @@ TaskImpl implements Task
 		boolean b = t.getID ().equals (this.getID ());
 		return a && b;
 	}
+	
+	public int
+	hashCode ()
+	{
+		return this.id.hashCode ();
+	}
 
 	public long[]
 	recursivelyModifyCompletionFromSubTasks ()
