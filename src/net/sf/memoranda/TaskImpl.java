@@ -148,7 +148,7 @@ TaskImpl implements Task
 		while (iter.hasNext ())
 		{
 			Task t = iter.next ();
-			if (t.getID () == id) return t;
+			if (t.getID ().equals (id)) return t;
 		}
 		return null;
 	}
@@ -339,6 +339,12 @@ TaskImpl implements Task
 		Task t = (Task) o;
 		boolean b = t.getID ().equals (this.getID ());
 		return a && b;
+	}
+	
+	public int
+	hashCode ()
+	{
+		return this.id.hashCode ();
 	}
 
 	public long[]
