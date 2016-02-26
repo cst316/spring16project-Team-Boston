@@ -143,7 +143,7 @@ TaskPanel extends JPanel
 		taskParameterObject.setDescription (dlg.descriptionField.getText ());
 		taskParameterObject.setParentTask (parent);
 		taskParameterObject.setUpdateSubTasks (dlg.updateChildren);
-		Task newTask = CurrentProject.getTaskList ().cloneTask (taskParameterObject, null);
+		Task newTask = CurrentProject.getTaskList ().cloneTask (taskParameterObject, parentTaskId);
 	
 		if (!dlg.updateChildren)
 		{
@@ -814,7 +814,7 @@ TaskPanel extends JPanel
 		taskParameterObject.setDescription (dlg.descriptionField.getText ());
 		taskParameterObject.setParentTask (null);
 		taskParameterObject.setUpdateSubTasks (dlg.updateChildren);
-		Task newTask = CurrentProject.getTaskList ().cloneTask (taskParameterObject, "");
+		Task newTask = CurrentProject.getTaskList ().cloneTask (taskParameterObject, null);
 		// CurrentProject.getTaskList().adjustParentTasks(newTask);
 		if (!dlg.updateChildren)
 		{
