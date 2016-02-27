@@ -117,11 +117,16 @@ TaskListImpl implements TaskList
 	public void
 	removeTask (Task task)
 	{
+		if (task == null)
+		{
+			return;
+		}
 		String parentTaskId = task.getParentID ();
 		if (parentTaskId != null)
 		{
 			Task parentNode = getTaskElement (parentTaskId);
-			parentNode.removeSubTask (task);
+			if (parentNode != null)
+				parentNode.removeSubTask (task);
 		}
 		taskList.remove (task.getID ());
 		rootTaskList.remove (task);
