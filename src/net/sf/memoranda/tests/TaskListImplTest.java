@@ -1,4 +1,4 @@
-package net.sf.memoranda;
+package net.sf.memoranda.tests;
 
 import static org.junit.Assert.assertTrue;
 
@@ -8,6 +8,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import net.sf.memoranda.date.CalendarDate;
+import net.sf.memoranda.Task;
+import net.sf.memoranda.TaskImpl;
+import net.sf.memoranda.TaskList;
+import net.sf.memoranda.TaskListImpl;
 
 public class 
 TaskListImplTest 
@@ -25,7 +29,7 @@ TaskListImplTest
 		taskParameterObject.setText ("rootTask1");
 		taskParameterObject.setPriority (0);
 		taskParameterObject.setEffort (0);
-		taskParameterObject.setEffortActual (0);
+		taskParameterObject.setPredictedEffort (0);
 		taskParameterObject.setDescription ("");
 		taskParameterObject.setParentTask (null);
 		taskParameterObject.setUpdateSubTasks (true);

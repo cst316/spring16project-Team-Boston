@@ -10,10 +10,10 @@ import net.sf.memoranda.TaskImpl;
 import net.sf.memoranda.ui.TaskTableModel;
 import nu.xom.Element;
 /**
- * Test actual effort hours
+ * Test predicted effort hours
  *
  */
-public class EffortActualTest 
+public class PredictedEffortTest 
 {
 	Element element;
 	Task task;
@@ -36,7 +36,7 @@ public class EffortActualTest
 	@Test
 	public void nullTest () 
 	{
-		assertTrue (0 == task.getEffortActual());
+		assertTrue (0 == task.getPredictedEffort());
 		
 	}
 	/**
@@ -45,8 +45,8 @@ public class EffortActualTest
 	@Test
 	public void setTest () 
 	{
-		task.setEffortActual ( (long) 4.0);
-		assertTrue( (long) 4.0 == task.getEffortActual ());
+		task.setPredictedEffort ( (long) 4.0);
+		assertTrue( (long) 4.0 == task.getPredictedEffort ());
 	}
 	/**
 	 * Test data type 
@@ -54,9 +54,9 @@ public class EffortActualTest
 	@Test
 	public void dataTypeTest () 
 	{
-		task.setEffortActual( (long) 5.5);
-		assertFalse (5.5 == task.getEffortActual ());
-		assertTrue ( (long) 5.5 == task.getEffortActual ());
+		task.setPredictedEffort( (long) 5.5);
+		assertFalse (5.5 == task.getPredictedEffort ());
+		assertTrue ( (long) 5.5 == task.getPredictedEffort ());
 	}
 	/**
 	 * Test value in milliseconds for TaskTable
@@ -64,8 +64,8 @@ public class EffortActualTest
 	@Test
 	public void taskTableValueTest () 
 	{
-		task.setEffortActual ( (long) 3600000);
-		assertTrue ((double) 1 == (double) taskTable.getValueAt (task, 8));
+		task.setPredictedEffort ( (long) 3600000);
+		assertTrue ((double) 1 == (double) taskTable.getValueAt (task, 7));
 	}
 	/**
 	 * Test correct String for TaskTable
@@ -73,6 +73,6 @@ public class EffortActualTest
 	@Test
 	public void taskTableStringTest () 
 	{
-		assertTrue(taskTable.getColumnName(8).equals("Actual EffortActual(hrs)"));
+		assertTrue(taskTable.getColumnName(7).equals("Predicted Effort(hrs)"));
 	}
 }

@@ -8,7 +8,7 @@ import org.junit.runners.Suite.SuiteClasses;
  *
  */
 @RunWith(Suite.class)
-@SuiteClasses({ EffortTest.class, EffortActualTest.class })
+@SuiteClasses({ EffortTest.class, PredictedEffortTest.class })
 public class AllTestsForUS23 
 {
 

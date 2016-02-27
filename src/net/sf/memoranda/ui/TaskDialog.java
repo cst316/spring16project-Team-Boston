@@ -65,7 +65,7 @@ public class TaskDialog extends JDialog
 	JTextField todoField = new JTextField ();
 
 	// added by rawsushi
-	JTextField effortActualField = new JTextField ();
+	JTextField effortField = new JTextField ();
 	// effect predicted field
 	JTextField effortPredictedField = new JTextField ();
 	JTextArea descriptionField = new JTextArea ();
@@ -244,8 +244,8 @@ public class TaskDialog extends JDialog
 		jLabelEffort.setMaximumSize (new Dimension (100, 16));
 		jLabelEffort.setMinimumSize (new Dimension (60, 16));
 		jLabelEffort.setText (Local.getString ("Actual Effort(hrs)"));
-		effortActualField.setBorder (border8);
-		effortActualField.setPreferredSize (new Dimension (30, 24));
+		effortField.setBorder (border8);
+		effortField.setPreferredSize (new Dimension (30, 24));
 
 		// new entry for predicted effort hours
 		jLabelEffortPredicted.setMaximumSize (new Dimension (100, 16));
@@ -409,7 +409,7 @@ public class TaskDialog extends JDialog
 		// added by rawsushi
 		jPanel2.add (jPanelEffort, null);
 		jPanelEffort.add (jLabelEffort, null);
-		jPanelEffort.add (effortActualField, null);
+		jPanelEffort.add (effortField, null);
 
 		jPanel2.add (jPanel4, null);
 		jPanel4.add (priorityCB, null);
