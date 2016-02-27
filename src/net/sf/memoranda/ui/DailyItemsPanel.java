@@ -399,6 +399,8 @@ public class DailyItemsPanel extends JPanel {
             currentNote = CurrentProject.getNoteList().createNoteForDate(currentDate);
         currentNote.setTitle(editorPanel.titleField.getText());
 		currentNote.setId(Util.generateId());
+		// priority for notes
+		currentNote.setPriority((editorPanel.priorityCB.getSelectedIndex()));
         CurrentStorage.get().storeNote(currentNote, editorPanel.getDocument());
         /*DEBUG* System.out.println("Save");*/
     }
