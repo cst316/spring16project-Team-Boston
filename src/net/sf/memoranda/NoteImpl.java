@@ -59,7 +59,9 @@ NoteImpl implements Note, Comparable
 	{
 		Attribute pa = _el.getAttribute ("priority");
 		if (pa == null)
+		{
 			return Task.PRIORITY_NORMAL;
+		}
 		return new Integer (pa.getValue ()).intValue ();
 	}
 	
@@ -82,9 +84,13 @@ NoteImpl implements Note, Comparable
 	{
 		Attribute attr = _el.getAttribute(a);
 		if (attr == null)
+		{
 			_el.addAttribute (new Attribute (a, value));
+		}
 		else
+		{
 			attr.setValue (value);
+		}
 	}
 	
 	/**
@@ -123,7 +129,10 @@ NoteImpl implements Note, Comparable
     String getTitle() 
     {
         Attribute ta = _el.getAttribute("title");
-        if (ta == null) return "";
+        if (ta == null)
+        {
+        	return "";
+        }
         return _el.getAttribute("title").getValue();
     }
     
@@ -134,9 +143,14 @@ NoteImpl implements Note, Comparable
     setTitle(String s) 
     {
         Attribute ta = _el.getAttribute("title");
-        if (ta == null) _el.addAttribute(new Attribute("title", s));
+        if (ta == null) 
+        {
+        	_el.addAttribute(new Attribute("title", s));
+        }
         else 
+        {
             ta.setValue(s);
+        }
     }
     
     /**
@@ -152,7 +166,8 @@ NoteImpl implements Note, Comparable
         }
         else 
         {
-            ArrayList<String> tags = new ArrayList<String> (Arrays.asList (tag.getValue ().split (",")));
+            ArrayList<String> tags = new ArrayList<String> 
+            	(Arrays.asList (tag.getValue ().split (",")));
             tags.add(s);
             StringBuilder sb = new StringBuilder ();
             for (String c : tags)
@@ -205,7 +220,10 @@ NoteImpl implements Note, Comparable
 	String getId() 
 	{
 		Attribute id = _el.getAttribute("refid");
-		if (id==null) return "";
+		if (id==null)
+		{
+			return "";
+		}
 		return _el.getAttribute("refid").getValue();
 	}
 	
@@ -217,7 +235,10 @@ NoteImpl implements Note, Comparable
 	setId(String s) 
 	{
 		Attribute id = _el.getAttribute("refid");
-		if(id==null) _el.addAttribute(new Attribute("refid", s));
+		if(id==null)
+		{
+			_el.addAttribute(new Attribute("refid", s));
+		}
 	}
 	
     /**
@@ -239,11 +260,15 @@ NoteImpl implements Note, Comparable
         if (ma == null) 
         {
             if (mark)
+            {
                 _el.addAttribute(new Attribute("bookmark", "yes"));
+            }
             return;
         }
         else if (!mark)
+        {
             _el.removeAttribute(ma);
+        }
     }
 	
 	/*
@@ -254,11 +279,17 @@ NoteImpl implements Note, Comparable
 	{
 		Note note = (Note) o;
 		if(getDate().getDate().getTime() > note.getDate().getDate().getTime())
+		{
 			return 1;
+		}
 		else if(getDate().getDate().getTime() < note.getDate().getDate().getTime())
+		{
 			return -1;
-		else 
+		}
+		else
+		{
 			return 0;
+		}
 	}
     
 }

@@ -75,7 +75,10 @@ public class EventImpl implements Event, Comparable {
      */
     public CalendarDate getStartDate() {
         Attribute a = _elem.getAttribute("startDate");
-        if (a != null) return new CalendarDate(a.getValue());
+        if (a != null) 
+        {
+        	return new CalendarDate(a.getValue());
+        }
         return null;
     }
     /**
@@ -83,7 +86,10 @@ public class EventImpl implements Event, Comparable {
      */
     public CalendarDate getEndDate() {
         Attribute a = _elem.getAttribute("endDate");
-        if (a != null) return new CalendarDate(a.getValue());
+        if (a != null)
+        {
+        	return new CalendarDate(a.getValue());
+        }
         return null;
     }
     /**
@@ -91,7 +97,10 @@ public class EventImpl implements Event, Comparable {
      */
     public int getPeriod() {
         Attribute a = _elem.getAttribute("period");
-        if (a != null) return new Integer(a.getValue()).intValue();
+        if (a != null) 
+        {
+        	return new Integer(a.getValue()).intValue();
+        }
         return 0;
     }
     /**
@@ -99,7 +108,10 @@ public class EventImpl implements Event, Comparable {
      */
     public String getId() {
         Attribute a = _elem.getAttribute("id");
-        if (a != null) return a.getValue();
+        if (a != null)
+        {
+        	return a.getValue();
+        }
         return null;
     }
     /**
@@ -107,7 +119,10 @@ public class EventImpl implements Event, Comparable {
      */
     public int getRepeat() {
         Attribute a = _elem.getAttribute("repeat-type");
-        if (a != null) return new Integer(a.getValue()).intValue();
+        if (a != null)
+        {
+        	return new Integer(a.getValue()).intValue();
+        }
         return 0;
     }
     /**
@@ -136,7 +151,10 @@ public class EventImpl implements Event, Comparable {
      */
 	public boolean getWorkingDays() {
         Attribute a = _elem.getAttribute("workingDays");
-        if (a != null && a.getValue().equals("true")) return true;
+        if (a != null && a.getValue().equals("true"))
+        {
+        	return true;
+        }
         return false;
 	}
 	
