@@ -924,8 +924,13 @@ public class AppFrame extends JFrame {
                 boolean xhtml =
                         chooser.getFileFilter().getDescription().indexOf("XHTML") > -1;
                  CurrentProject.save();
-                 ProjectExporter.export(CurrentProject.get(), chooser.getSelectedFile(), enc, xhtml, 
-                                 dlg.splitChB.isSelected(), true, nument, dlg.titlesAsHeadersChB.isSelected(), false); 
+                 ProjectExporter._xhtml = xhtml;
+                 ProjectExporter._chunked = dlg.splitChB.isSelected ();
+                 ProjectExporter._navigation = true;
+                 ProjectExporter._num = nument;
+                 ProjectExporter._titlesAsHeaders = dlg.titlesAsHeadersChB.isSelected ();
+                 ProjectExporter._copyImages = false;
+                 ProjectExporter.export(CurrentProject.get(), chooser.getSelectedFile(), enc); 
                 }
             
             protected void ppImport_actionPerformed(ActionEvent e) {

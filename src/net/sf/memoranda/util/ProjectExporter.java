@@ -22,28 +22,19 @@ import javax.swing.text.html.HTMLDocument;
 /* $Id: ProjectExporter.java,v 1.7 2005/07/05 08:17:28 alexeya Exp $ */
 public class ProjectExporter {
 
-    static boolean _chunked = false;
-    static boolean _num = false;
-    static boolean _xhtml = false;
-    static boolean _copyImages = false;
+    public static boolean _chunked = false;
+    public static boolean _num = false;
+    public static boolean _xhtml = false;
+    public static boolean _copyImages = false;
+    public static boolean _navigation = false;
+    public static boolean _titlesAsHeaders = false;
     static File output = null;
     static String _charset = null;
-    static boolean _titlesAsHeaders = false;
-    static boolean _navigation = false;
     
     static String charsetString = "\n";
 
-    public static void export(Project prj, File f, String charset,
-            boolean xhtml, boolean chunked, boolean navigation, boolean num,
-            boolean titlesAsHeaders, boolean copyImages) {
-
-        _num = num;
-        _chunked = chunked;
+    public static void export(Project prj, File f, String charset) {
         _charset = charset;
-        _xhtml = xhtml;
-        _titlesAsHeaders = titlesAsHeaders;
-        _copyImages = copyImages;
-        _navigation = navigation;
         if (f.isDirectory())
             output = new File(f.getPath() + "/index.html");
         else
