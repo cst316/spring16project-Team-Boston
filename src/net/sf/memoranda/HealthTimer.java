@@ -6,14 +6,15 @@ import javax.swing.JOptionPane;
 
 public class HealthTimer extends Thread {
 
-	HealthTimer(int minutes) {
+	public HealthTimer(int minutes) {
 		this.waitTime = minutes * 60 * 1000;
 	}
 
 	@Override
 	public void run() {
 		try {
-			Thread.sleep(waitTime);
+			Thread.sleep(1);
+			createPopUp();
 			// show pop up panel with reminder
 			// wait for 10 seconds or until 'OK' is clicked
 
@@ -25,21 +26,8 @@ public class HealthTimer extends Thread {
 	
 	private void createPopUp()
 	{
-		final JFrame parent = new JFrame();
-        JButton button = new JButton();
-
-        button.setText("Click me to show dialog!");
-        parent.add(button);
-        parent.pack();
-        parent.setVisible(true);
-
-        button.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                String name = JOptionPane.showInputDialog(parent,
-                        "What is your name?", null);
-            }
-        });
+		JFrame frame = new JFrame();
+		JOptionPane.showMessageDialog(frame, "Time to take your eyes of the screen and stand up for 2 minutes.");
 	}
 
 	private long waitTime;
