@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.UIManager;
 
 import net.sf.memoranda.EventsScheduler;
+import net.sf.memoranda.HealthTimer;
 import net.sf.memoranda.util.Configuration;
 
 /**
@@ -89,6 +90,11 @@ public class App {
 			/* DEBUG */
 			System.out.println("[DEBUG] first day of week is set to " + fdow);
 		}
+		if (Configuration.get("START_HEALTH_TIMER").equals("yes"))
+		{
+			healthTimer = new HealthTimer(Integer.parseInt(Configuration.get("HEALTH_TIMER_INTERVAL").toString()));
+			healthTimer.start();
+		}
 
 		EventsScheduler.init();
 		frame = new AppFrame();
@@ -99,6 +105,7 @@ public class App {
 			splash.dispose();
 	}
 
+	public static HealthTimer healthTimer;
 	void init() {
 		/*
 		 * if (packFrame) { frame.pack(); } else { frame.validate(); }

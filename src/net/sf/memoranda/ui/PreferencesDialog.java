@@ -3,6 +3,7 @@ package net.sf.memoranda.ui;
 import java.io.File;
 import java.util.Vector;
 
+import net.sf.memoranda.HealthTimer;
 import net.sf.memoranda.util.Configuration;
 import net.sf.memoranda.util.CurrentStorage;
 import net.sf.memoranda.util.Local;
@@ -138,7 +139,8 @@ public class PreferencesDialog extends JDialog {
 	JLabel monoFontLabel = new JLabel();
 	JLabel baseFontSizeLabel = new JLabel();
 	JPanel healthConfigPanel = new JPanel();
-	private JTextField healthMinutesEditTExt;
+	private JTextField healthMinutesEditText;
+	private JCheckBox startHealthTimer;
 
 	public PreferencesDialog(Frame frame) {
 		super(frame, Local.getString("Preferences"), true);
@@ -494,14 +496,14 @@ public class PreferencesDialog extends JDialog {
 		tabbedPanel.add(healthConfigPanel, "Health");
 		healthConfigPanel.setLayout(null);
 		
-		JCheckBox chckbxNewCheckBox = new JCheckBox("Start Health Reminders");
-		chckbxNewCheckBox.setBounds(130, 7, 137, 23);
-		healthConfigPanel.add(chckbxNewCheckBox);
+		startHealthTimer = new JCheckBox("Start Health Reminders");
+		startHealthTimer.setBounds(130, 7, 137, 23);
+		healthConfigPanel.add(startHealthTimer);
 		
-		healthMinutesEditTExt = new JTextField();
-		healthMinutesEditTExt.setBounds(200, 35, 86, 20);
-		healthConfigPanel.add(healthMinutesEditTExt);
-		healthMinutesEditTExt.setColumns(10);
+		healthMinutesEditText = new JTextField();
+		healthMinutesEditText.setBounds(200, 35, 86, 20);
+		healthConfigPanel.add(healthMinutesEditText);
+		healthMinutesEditText.setColumns(10);
 		
 		JLabel lblRemindMeTo = new JLabel("Remind me to take a break every");
 		lblRemindMeTo.setBounds(29, 35, 175, 20);
@@ -630,6 +632,18 @@ public class PreferencesDialog extends JDialog {
 			baseFontSize.setValue(Integer.decode(Configuration.get("BASE_FONT_SIZE").toString()));
 		else
 			baseFontSize.setValue(new Integer(16));
+		if (Configuration.get("START_HEALTH_TIMER").equals("yes"))
+		{
+			startHealthTimer.setSelected(true);
+		}
+		else
+		{
+			startHealthTimer.setSelected(false);
+		}
+		
+		healthMinutesEditText.setText(Configuration.get("HEALTH_TIMER_INTERVAL").toString());
+		
+		
 	}
 
 	void apply() {
@@ -662,6 +676,21 @@ public class PreferencesDialog extends JDialog {
 			Configuration.put("ASK_ON_EXIT", "yes");
 		else
 			Configuration.put("ASK_ON_EXIT", "no");
+		
+		if (startHealthTimer.isSelected ())
+		{
+			App.healthTimer = new HealthTimer (Integer.parseInt (healthMinutesEditText.getText ()));
+			App.healthTimer.start ();
+			Configuration.put ("START_HEALTH_TIMER", "yes");
+			Configuration.put ("HEALTH_TIMER_INTERVAL", healthMinutesEditText.getText());
+		}
+		
+		else
+		{
+			Configuration.put("START_HEALTH_TIMER", "no");
+			Configuration.put("HEALTH_TIMER_INTERVAL", "30");
+		}
+		
 
 		if (this.closeExitRB.isSelected())
 			Configuration.put("ON_CLOSE", "exit");
