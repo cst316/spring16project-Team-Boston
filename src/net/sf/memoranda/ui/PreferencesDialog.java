@@ -501,16 +501,16 @@ public class PreferencesDialog extends JDialog {
 		healthConfigPanel.add(startHealthTimer);
 		
 		healthMinutesEditText = new JTextField();
-		healthMinutesEditText.setBounds(190, 35, 86, 20);
+		healthMinutesEditText.setBounds(234, 35, 86, 20);
 		healthConfigPanel.add(healthMinutesEditText);
 		healthMinutesEditText.setColumns(10);
 		
 		JLabel lblRemindMeTo = new JLabel("Remind me to take a break every");
-		lblRemindMeTo.setBounds(10, 35, 194, 20);
+		lblRemindMeTo.setBounds(10, 35, 214, 20);
 		healthConfigPanel.add(lblRemindMeTo);
 		
 		JLabel lblMinutes = new JLabel("minutes.");
-		lblMinutes.setBounds(296, 38, 70, 14);
+		lblMinutes.setBounds(359, 38, 70, 14);
 		healthConfigPanel.add(lblMinutes);
 		// Build TopPanel
 		topPanel.add(tabbedPanel, BorderLayout.CENTER);
