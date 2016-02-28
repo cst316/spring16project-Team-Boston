@@ -143,7 +143,7 @@ TaskPanel extends JPanel
 		taskParameterObject.setDescription (dlg.descriptionField.getText ());
 		taskParameterObject.setParentTask (parent);
 		taskParameterObject.setUpdateSubTasks (dlg.updateChildren);
-		Task newTask = CurrentProject.getTaskList ().cloneTask (taskParameterObject, null);
+		Task newTask = CurrentProject.getTaskList ().cloneTask (taskParameterObject, parentTaskId);
 	
 		if (!dlg.updateChildren)
 		{
@@ -539,7 +539,7 @@ TaskPanel extends JPanel
 		ppNewTask.setIcon (new ImageIcon (net.sf.memoranda.ui.AppFrame.class.getResource ("resources/icons/todo_new.png")));
 	
 		ppCopyTask.setFont (new java.awt.Font ("Dialog", 1, 11));
-		ppCopyTask.setText (Local.getString ("New task") + "...");
+		ppCopyTask.setText (Local.getString ("Copy Task") + "...");
 		ppCopyTask.addActionListener (new java.awt.event.ActionListener ()
 		{
 			public void actionPerformed (ActionEvent e)
@@ -814,7 +814,7 @@ TaskPanel extends JPanel
 		taskParameterObject.setDescription (dlg.descriptionField.getText ());
 		taskParameterObject.setParentTask (null);
 		taskParameterObject.setUpdateSubTasks (dlg.updateChildren);
-		Task newTask = CurrentProject.getTaskList ().cloneTask (taskParameterObject, "");
+		Task newTask = CurrentProject.getTaskList ().cloneTask (taskParameterObject, null);
 		// CurrentProject.getTaskList().adjustParentTasks(newTask);
 		if (!dlg.updateChildren)
 		{
