@@ -1,10 +1,11 @@
 package net.sf.memoranda;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-public class HealthTimer extends Thread {
+public class
+HealthTimer extends Thread 
+{
 
 	public 
 	HealthTimer (int minutes) 
@@ -14,12 +15,22 @@ public class HealthTimer extends Thread {
 		frame.setAlwaysOnTop(true);
 	}
 	
+	/**
+	 * Returns whether or not the thread is running.
+	 * 
+	 * @return boolean
+	 */
 	public boolean 
 	isRunning ()
 	{
 		return isRunning;
 	}
 
+	/**
+	 * The thread that handles displaying the pop up at the correct interval
+	 * 
+	 * @return void
+	 */
 	@Override
 	public void 
 	run() 
@@ -28,7 +39,8 @@ public class HealthTimer extends Thread {
 		{
 			System.out.println("[DEBUG] HealthTimer started. With an interval of " + waitTime + " milliseconds.");
 			isRunning = true;
-			while (keepRunning) {
+			while (keepRunning) 
+			{
 				Thread.sleep (waitTime);
 				if (keepRunning)
 				{
@@ -36,19 +48,30 @@ public class HealthTimer extends Thread {
 				}
 			}
 			System.out.println("[DEBUG] HeathTimer has stopped.");
-		} catch (InterruptedException e) 
+		}
+		catch (InterruptedException e) 
 		{
-			// TODO Auto-generated catch block
+
 			e.printStackTrace ();
 		}
 	}
 	
+	/**
+	 * Terminates an already running health timer.
+	 * 
+	 * @return void
+	 */
 	public void
 	terminate ()
 	{
 		keepRunning = false;
 	}
 
+	/**
+	 * Creates and shows the pop up reminder for the coder to take a break
+	 * 
+	 * @return void
+	 */
 	private void 
 	createPopUp ()
 	{
