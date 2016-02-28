@@ -19,7 +19,8 @@ import nu.xom.Element;
  * 
  */
 /*$Id: NoteImpl.java,v 1.6 2004/10/06 19:15:44 ivanrise Exp $*/
-public class NoteImpl implements Note, Comparable
+public class 
+NoteImpl implements Note, Comparable
 {
     
     private Element _el = null; 
@@ -28,7 +29,7 @@ public class NoteImpl implements Note, Comparable
     /**
      * Constructor for NoteImpl.
      */
-    public NoteImpl(Element el, Project project) 
+    public NoteImpl (Element el, Project project) 
     {
         _el = el;
         _project = project;
@@ -37,52 +38,67 @@ public class NoteImpl implements Note, Comparable
     /**
      * @see net.sf.memoranda.Note#getDate()
      */
-    public CalendarDate getDate() 
+    public 
+    CalendarDate getDate () 
     {
-		Element day = (Element)_el.getParent();
-		Element month = (Element)day.getParent();
-		Element year = (Element)month.getParent();
+		Element day = (Element)_el.getParent ();
+		Element month = (Element)day.getParent ();
+		Element year = (Element)month.getParent ();
 
      //   return new CalendarDate(day.getAttribute("date").getValue());
 		
-		return new CalendarDate(new Integer(day.getAttribute("day").getValue()).intValue(), 
-								new Integer(month.getAttribute("month").getValue()).intValue(),
-								new Integer(year.getAttribute("year").getValue()).intValue());
+		return new CalendarDate (new Integer (day.getAttribute ("day").getValue ()).intValue (), 
+								new Integer (month.getAttribute ("month").getValue ()).intValue (),
+								new Integer (year.getAttribute ("year").getValue ()).intValue ());
 
     }
+    
     /**
      * get priority for notes
      */
-	public int getPriority () 
+	public int 
+	getPriority () 
 	{
 		Attribute pa = _el.getAttribute ("priority");
 		if (pa == null)
+		{
 			return Task.PRIORITY_NORMAL;
+		}
 		return new Integer (pa.getValue ()).intValue ();
 	}
+	
 	/**
 	 * set priority for notes
 	 */
-	public void setPriority (int p) 
+	public void 
+	setPriority (int p) 
 	{
 		setAttr ("priority", String.valueOf (p));
 	}
+	
 	/**
 	 * set element attribute for notes
 	 * @param a
 	 * @param value
 	 */
-	private void setAttr (String a, String value) 
+	private void 
+	setAttr (String a, String value) 
 	{
 		Attribute attr = _el.getAttribute(a);
 		if (attr == null)
+		{
 			_el.addAttribute (new Attribute (a, value));
+		}
 		else
+		{
 			attr.setValue (value);
+		}
 	}
-	public String getPriorityString()
+	
+	public 
+	String getPriorityString ()
 	{
-		switch(getPriority())
+		switch (getPriority ())
 		{
 			case PRIORITY_LOWEST:
 				return "Lowest";
@@ -99,29 +115,43 @@ public class NoteImpl implements Note, Comparable
 		}
 	}
     
-    public Project getProject() 
+    public 
+    Project getProject () 
     {
         return _project;
     }
+    
     /**
      * @see net.sf.memoranda.Note#getTitle()
      */
-    public String getTitle() 
+    public 
+    String getTitle () 
     {
-        Attribute ta = _el.getAttribute("title");
-        if (ta == null) return "";
-        return _el.getAttribute("title").getValue();
+        Attribute ta = _el.getAttribute ("title");
+        if (ta == null)
+        {
+        	return "";
+        }
+        return _el.getAttribute ("title").getValue ();
     }
+    
     /**
      * @see net.sf.memoranda.Note#setTitle(java.lang.String)
      */
-    public void setTitle(String s) 
+    public void 
+    setTitle (String s) 
     {
-        Attribute ta = _el.getAttribute("title");
-        if (ta == null) _el.addAttribute(new Attribute("title", s));
+        Attribute ta = _el.getAttribute ("title");
+        if (ta == null) 
+        {
+        	_el.addAttribute (new Attribute ("title", s));
+        }
         else 
-            ta.setValue(s);
+        {
+            ta.setValue (s);
+        }
     }
+    
     /**
      * Add tags to notes
      */
@@ -141,10 +171,10 @@ public class NoteImpl implements Note, Comparable
             StringBuilder sb = new StringBuilder ();
             for (String c : tags)
             {
-            	sb.append(c);
-            	sb.append(",");
+            	sb.append (c);
+            	sb.append (",");
             }
-            tag.setValue(sb.toString ());
+            tag.setValue (sb.toString ());
         }
     }
     
@@ -161,7 +191,7 @@ public class NoteImpl implements Note, Comparable
     	}
     	else
     	{
-    		return tag.getValue();
+    		return tag.getValue ();
     	}
     }
     
@@ -169,74 +199,94 @@ public class NoteImpl implements Note, Comparable
      * Set tags
      */
 	public void 
-	setTags(String s)
+	setTags (String s)
 	{
-		Attribute tag = _el.getAttribute("tag") ;
+		Attribute tag = _el.getAttribute ("tag") ;
 	    if (tag == null)
 	    {
 	        _el.addAttribute (new Attribute ("tag", s));
 	    }
 	    else
 	    {
-	        tag.setValue(s);
+	        tag.setValue (s);
 	    }
 	}
 	
 	/**
      * @see net.sf.memoranda.Note#getId
      */
-	
-	public String getId() 
+	public 
+	String getId () 
 	{
-		Attribute id = _el.getAttribute("refid");
-		if (id==null) return "";
-		return _el.getAttribute("refid").getValue();
+		Attribute id = _el.getAttribute ("refid");
+		if (id==null)
+		{
+			return "";
+		}
+		return _el.getAttribute ("refid").getValue();
 	}
 	
 	/**
      * @see net.sf.memoranda.Note#setId(java.lang.String)
-     */
-	 
-	public void setId(String s) 
+     */ 
+	public void 
+	setId (String s) 
 	{
-		Attribute id = _el.getAttribute("refid");
-		if(id==null) _el.addAttribute(new Attribute("refid", s));
+		Attribute id = _el.getAttribute ("refid");
+		if (id==null)
+		{
+			_el.addAttribute (new Attribute ("refid", s));
+		}
 	}
+	
     /**
      * @see net.sf.memoranda.Note#isMarked()
      */
-    public boolean isMarked() 
+    public boolean 
+    isMarked () 
     {
-        return _el.getAttribute("bookmark") != null;        
+        return _el.getAttribute ("bookmark") != null;        
     }
+    
     /**
      * @see net.sf.memoranda.Note#setMark(boolean)
      */
-    public void setMark(boolean mark) 
+    public void 
+    setMark (boolean mark) 
     {
-        Attribute ma = _el.getAttribute("bookmark");        
+        Attribute ma = _el.getAttribute ("bookmark");        
         if (ma == null) 
         {
             if (mark)
-                _el.addAttribute(new Attribute("bookmark", "yes"));
+            {
+                _el.addAttribute (new Attribute ("bookmark", "yes"));
+            }
             return;
         }
         else if (!mark)
-            _el.removeAttribute(ma);
+        {
+            _el.removeAttribute (ma);
+        }
     }
 	
 	/*
 	 * Comparable interface
 	 */
-	public int compareTo(Object o)
+	public int 
+	compareTo (Object o)
 	{
 		Note note = (Note) o;
-		if(getDate().getDate().getTime() > note.getDate().getDate().getTime())
+		if (getDate ().getDate ().getTime () > note.getDate ().getDate ().getTime ())
+		{
 			return 1;
-		else if(getDate().getDate().getTime() < note.getDate().getDate().getTime())
+		}
+		else if (getDate ().getDate ().getTime () < note.getDate ().getDate ().getTime ())
+		{
 			return -1;
+		}
 		else 
+		{
 			return 0;
-	}
-    
+		}
+	}  
 }

@@ -13,10 +13,16 @@ import nu.xom.Element;
  */
 public class 
 TagsNoteTest 
-{
-
-	Element element;
-	Note n;
+{	
+	/**
+	 * Tests the default tag
+	 */
+	@Test
+	public void
+	testDefault () 
+	{
+		assertTrue (n.getTags () == "");
+	}
 	
 	/**
 	 * Set up new note to be tested
@@ -29,16 +35,6 @@ TagsNoteTest
 	{
 		element = new Element ("note");
 		n = new NoteImpl (element, null);
-	}
-	
-	/**
-	 * Tests the default tag
-	 */
-	@Test
-	public void
-	testDefault () 
-	{
-		assertTrue (n.getTags () == "");
 	}
 	
 	/**
@@ -62,5 +58,7 @@ TagsNoteTest
 		n.addTag ("Test 1");
 		assertTrue (n.getTags () == "Test 1");
 	}
-	
+
+	Element element;
+	Note n;
 }
