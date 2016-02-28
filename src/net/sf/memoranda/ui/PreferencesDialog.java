@@ -501,16 +501,16 @@ public class PreferencesDialog extends JDialog {
 		healthConfigPanel.add(startHealthTimer);
 		
 		healthMinutesEditText = new JTextField();
-		healthMinutesEditText.setBounds(200, 35, 86, 20);
+		healthMinutesEditText.setBounds(190, 35, 86, 20);
 		healthConfigPanel.add(healthMinutesEditText);
 		healthMinutesEditText.setColumns(10);
 		
 		JLabel lblRemindMeTo = new JLabel("Remind me to take a break every");
-		lblRemindMeTo.setBounds(29, 35, 175, 20);
+		lblRemindMeTo.setBounds(10, 35, 194, 20);
 		healthConfigPanel.add(lblRemindMeTo);
 		
 		JLabel lblMinutes = new JLabel("minutes.");
-		lblMinutes.setBounds(296, 38, 46, 14);
+		lblMinutes.setBounds(296, 38, 70, 14);
 		healthConfigPanel.add(lblMinutes);
 		// Build TopPanel
 		topPanel.add(tabbedPanel, BorderLayout.CENTER);
@@ -679,14 +679,25 @@ public class PreferencesDialog extends JDialog {
 		
 		if (startHealthTimer.isSelected ())
 		{
-			App.healthTimer = new HealthTimer (Integer.parseInt (healthMinutesEditText.getText ()));
-			App.healthTimer.start ();
+			if(App.healthTimer.isRunning ())
+			{
+				App.healthTimer.terminate ();
+				App.healthTimer = new HealthTimer (Integer.parseInt (healthMinutesEditText.getText ()));
+				App.healthTimer.start ();
+			}
+			
+			else
+			{
+				App.healthTimer = new HealthTimer (Integer.parseInt (healthMinutesEditText.getText ()));
+				App.healthTimer.start ();	
+			}	
 			Configuration.put ("START_HEALTH_TIMER", "yes");
 			Configuration.put ("HEALTH_TIMER_INTERVAL", healthMinutesEditText.getText());
 		}
 		
 		else
 		{
+			App.healthTimer.terminate ();
 			Configuration.put("START_HEALTH_TIMER", "no");
 			Configuration.put("HEALTH_TIMER_INTERVAL", "30");
 		}

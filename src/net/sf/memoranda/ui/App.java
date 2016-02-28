@@ -90,9 +90,9 @@ public class App {
 			/* DEBUG */
 			System.out.println("[DEBUG] first day of week is set to " + fdow);
 		}
+		healthTimer = new HealthTimer(Integer.parseInt(Configuration.get("HEALTH_TIMER_INTERVAL").toString()));
 		if (Configuration.get("START_HEALTH_TIMER").equals("yes"))
 		{
-			healthTimer = new HealthTimer(Integer.parseInt(Configuration.get("HEALTH_TIMER_INTERVAL").toString()));
 			healthTimer.start();
 		}
 
