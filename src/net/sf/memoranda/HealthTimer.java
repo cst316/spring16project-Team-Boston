@@ -79,6 +79,6 @@ HealthTimer extends Thread
 	}
 	
 	private JFrame frame;
-	private long waitTime;
 	private boolean isRunning = false, keepRunning = true;
+	private long waitTime;
 }
