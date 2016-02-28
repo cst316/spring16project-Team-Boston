@@ -108,9 +108,9 @@ public class TaskTableModel extends AbstractTreeTableModel implements TreeTableM
             //return new Integer(t.getProgress());
 			return t;
         case 7:
-        	return (double) (t.getPredictedEffort() / (60.00*60.00*1000.00));
-        case 8: 
         	return (double) (t.getEffort() / (60.00*60.00*1000.00));
+        case 8: 
+        	return (double) (t.getEffortActual() / (60.00*60.00*1000.00));
         case TaskTable.TASK_ID:
             return t.getID();
         case TaskTable.TASK:

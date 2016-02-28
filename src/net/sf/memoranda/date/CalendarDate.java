@@ -8,6 +8,7 @@
  */
 package net.sf.memoranda.date;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -19,7 +20,7 @@ import net.sf.memoranda.util.Util;
  *
  */
 /*$Id: CalendarDate.java,v 1.3 2004/01/30 12:17:41 alexeya Exp $*/
-public class CalendarDate {
+public class CalendarDate implements Serializable{
 
     private int _year;
     private int _month;
@@ -123,7 +124,7 @@ public class CalendarDate {
     public boolean equals(Object object) {
         if (object.getClass().isInstance(CalendarDate.class)) {
             CalendarDate d2 = (CalendarDate) object;
-            return ((d2.getDay() == getDay()) && (d2.getMonth() == getMonth()) && (d2.getYear() == getYear()));
+            return this.equals (d2);
         }
         else if (object.getClass().isInstance(Calendar.class)) {
             Calendar cal = (Calendar) object;
