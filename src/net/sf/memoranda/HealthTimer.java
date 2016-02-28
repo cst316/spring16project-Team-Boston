@@ -11,8 +11,8 @@ HealthTimer extends Thread
 	HealthTimer (int minutes) 
 	{
 		this.waitTime = minutes * 60 * 1000;
-		frame  = new JFrame();
-		frame.setAlwaysOnTop(true);
+		frame  = new JFrame ();
+		frame.setAlwaysOnTop (true);
 	}
 	
 	/**
@@ -33,11 +33,11 @@ HealthTimer extends Thread
 	 */
 	@Override
 	public void 
-	run() 
+	run () 
 	{
 		try 
 		{
-			System.out.println("[DEBUG] HealthTimer started. With an interval of " + waitTime + " milliseconds.");
+			System.out.println ("[DEBUG] HealthTimer started. With an interval of " + waitTime + " milliseconds.");
 			isRunning = true;
 			while (keepRunning) 
 			{
@@ -47,7 +47,7 @@ HealthTimer extends Thread
 					createPopUp ();
 				}
 			}
-			System.out.println("[DEBUG] HeathTimer has stopped.");
+			System.out.println ("[DEBUG] HeathTimer has stopped.");
 		}
 		catch (InterruptedException e) 
 		{
@@ -75,7 +75,7 @@ HealthTimer extends Thread
 	private void 
 	createPopUp ()
 	{
-		JOptionPane.showMessageDialog(frame, "Time to take your eyes of the screen and stand up for 2 minutes.");
+		JOptionPane.showMessageDialog (frame, "Time to take your eyes of the screen and stand up for 2 minutes.");
 	}
 	
 	private JFrame frame;
