@@ -137,6 +137,8 @@ public class PreferencesDialog extends JDialog {
 	JLabel headerFontLabel = new JLabel();
 	JLabel monoFontLabel = new JLabel();
 	JLabel baseFontSizeLabel = new JLabel();
+	JPanel healthConfigPanel = new JPanel();
+	private JTextField healthMinutesEditTExt;
 
 	public PreferencesDialog(Frame frame) {
 		super(frame, Local.getString("Preferences"), true);
@@ -481,12 +483,33 @@ public class PreferencesDialog extends JDialog {
 		((GridLayout)econfPanel.getLayout()).setHgap(10);
 		((GridLayout)econfPanel.getLayout()).setVgap(5);
 		editorConfigPanel.add(econfPanel, BorderLayout.NORTH);
+		
+		//Build Health Panel
+		
 		// Build TabbedPanel
 		tabbedPanel.add(GeneralPanel, Local.getString("General"));
 		tabbedPanel.add(resourcePanel, Local.getString("Resource types"));
 		tabbedPanel.add(soundPanel, Local.getString("Sound"));
 		tabbedPanel.add(editorConfigPanel, Local.getString("Editor"));
-
+		tabbedPanel.add(healthConfigPanel, "Health");
+		healthConfigPanel.setLayout(null);
+		
+		JCheckBox chckbxNewCheckBox = new JCheckBox("Start Health Reminders");
+		chckbxNewCheckBox.setBounds(130, 7, 137, 23);
+		healthConfigPanel.add(chckbxNewCheckBox);
+		
+		healthMinutesEditTExt = new JTextField();
+		healthMinutesEditTExt.setBounds(200, 35, 86, 20);
+		healthConfigPanel.add(healthMinutesEditTExt);
+		healthMinutesEditTExt.setColumns(10);
+		
+		JLabel lblRemindMeTo = new JLabel("Remind me to take a break every");
+		lblRemindMeTo.setBounds(29, 35, 175, 20);
+		healthConfigPanel.add(lblRemindMeTo);
+		
+		JLabel lblMinutes = new JLabel("minutes.");
+		lblMinutes.setBounds(296, 38, 46, 14);
+		healthConfigPanel.add(lblMinutes);
 		// Build TopPanel
 		topPanel.add(tabbedPanel, BorderLayout.CENTER);
 
