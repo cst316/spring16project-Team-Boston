@@ -51,8 +51,11 @@ public class EventsManager {
 			_root.appendChild(
 				new Comment("This is JNotes 2 data file. Do not modify.")); */
 			_doc = new Document(_root);
-		} else
+		} 
+		else
+		{
 			_root = _doc.getRootElement();
+		}
 
 	}
 
@@ -89,9 +92,13 @@ public class EventsManager {
 	public static boolean isNREventsForDate(CalendarDate date) {
 		Day d = getDay(date);
 		if (d == null)
+		{
 			return false;
+		}
 		if (d.getElement().getChildElements("event").size() > 0)
+		{
 			return true;
+		}
 		return false;
 	}
 

@@ -5,7 +5,6 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 /**
  * Test suite for all test for User Story 23
- *
  */
 @RunWith(Suite.class)
 @SuiteClasses({ EffortTest.class, PredictedEffortTest.class })
