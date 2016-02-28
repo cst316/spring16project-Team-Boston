@@ -16,7 +16,6 @@ import net.sf.memoranda.TaskListImpl;
 public class 
 TaskListImplTest 
 { 
-
 	@Before
 	public void 
 	setUp () 
