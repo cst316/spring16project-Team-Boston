@@ -23,7 +23,7 @@ PredictedEffortTest
 	public void 
 	dataTypeTest () 
 	{
-		task.setPredictedEffort( (long) 5.5);
+		task.setPredictedEffort ( (long) 5.5);
 		assertFalse (5.5 == task.getPredictedEffort ());
 		assertTrue ( (long) 5.5 == task.getPredictedEffort ());
 	}
@@ -66,7 +66,7 @@ PredictedEffortTest
 	public void 
 	taskTableStringTest () 
 	{
-		assertTrue(taskTable.getColumnName (7).equals ("Predicted Effort(hrs)"));
+		assertTrue (taskTable.getColumnName (7).equals ("Predicted Effort(hrs)"));
 	}
 	/**
 	 * Test value in milliseconds for TaskTable
