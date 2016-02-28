@@ -53,7 +53,8 @@ PredictedEffortTest
 	 */
 	@Before
 	public void 
-	setUp () throws Exception
+	setUp () 
+	throws Exception
 	{
 		task = new TaskImpl (null);
 		taskTable = new TaskTableModel ();
