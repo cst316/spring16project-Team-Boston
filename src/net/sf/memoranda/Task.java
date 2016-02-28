@@ -38,12 +38,12 @@ Task extends Serializable, Comparable<Task>
 	getEffort ();
 	
 	/**
-	 * Returns the actual effort of the task.
+	 * Returns the predicted effort of the task.
 	 * 
-	 * @return the actual effort
+	 * @return the predicted effort
 	 */
 	long
-	getEffortActual ();
+	getPredictedEffort ();
 	
 	/**
 	 * Returns the end date of the task.
@@ -174,12 +174,12 @@ Task extends Serializable, Comparable<Task>
 	setEffort (long effort);
 	
 	/**
-	 * Sets the actual effort of the task.
+	 * Sets the predicted effort of the task.
 	 * 
-	 * @param millisFromHours the actual effort
+	 * @param millisFromHours the predicted effort
 	 */
 	void
-	setEffortActual (long millisFromHours);
+	setPredictedEffort (long millisFromHours);
 	
 	/**
 	 * Sets the end date of the task.

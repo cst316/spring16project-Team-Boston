@@ -1,4 +1,4 @@
-package net.sf.memoranda;
+package net.sf.memoranda.tests;
 
 import static org.junit.Assert.*;
 
@@ -46,12 +46,12 @@ TaskImplTest
 	
 	@Test
 	public void
-	getEffortActualTest ()
+	getPredictedEffortTest ()
 	{
 		long param;
 		param = 0l;
-		task.setEffortActual (param);
-		assertEquals (param, task.getEffortActual ());
+		task.setPredictedEffort (param);
+		assertEquals (param, task.getPredictedEffort ());
 	}
 	
 	@Test
@@ -234,9 +234,9 @@ TaskImplTest
 	
 	@Test
 	public void
-	setEffortActualTest ()
+	setPredictedEffortTest ()
 	{
-		getEffortActualTest ();
+		getPredictedEffortTest ();
 	}
 	
 	@Test
