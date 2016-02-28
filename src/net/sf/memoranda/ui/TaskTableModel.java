@@ -42,30 +42,30 @@ import java.util.Hashtable;
 public class TaskTableModel extends AbstractTreeTableModel implements TreeTableModel 
 {
 
-    String[] columnNames = {"", Local.getString("To-do"),
-            Local.getString("Start date"), Local.getString("End date"),
-            Local.getString("Priority"), Local.getString("Status"), 
-            "% " + Local.getString("done"),
-            Local.getString("Predicted Effort(hrs)"), Local.getString("Actual Effort(hrs)")};
+    String[] columnNames = {"", Local.getString ("To-do"),
+            Local.getString ("Start date"), Local.getString ("End date"),
+            Local.getString ("Priority"), Local.getString ("Status"), 
+            "% " + Local.getString ("done"),
+            Local.getString ("Predicted Effort(hrs)"), Local.getString ("Actual Effort(hrs)")};
 
-    protected EventListenerList listenerList = new EventListenerList();
+    protected EventListenerList listenerList = new EventListenerList ();
 
-    private boolean activeOnly = check_activeOnly();
+    private boolean activeOnly = check_activeOnly ();
         
     /**
      * JAVADOC: Constructor of <code>TaskTableModel</code>
      * 
      * @param root
      */
-    public TaskTableModel()
+    public TaskTableModel ()
     {
-        super(CurrentProject.get());
+        super (CurrentProject.get ());
     }
 
     /**
      * @see net.sf.memoranda.ui.treetable.TreeTableModel#getColumnCount()
      */
-    public int getColumnCount() 
+    public int getColumnCount () 
     {
         return columnNames.length;
     }
@@ -73,7 +73,7 @@ public class TaskTableModel extends AbstractTreeTableModel implements TreeTableM
     /**
      * @see net.sf.memoranda.ui.treetable.TreeTableModel#getColumnName(int)
      */
-    public String getColumnName(int column) 
+    public String getColumnName (int column) 
     {
         return columnNames[column];
     }
@@ -82,7 +82,7 @@ public class TaskTableModel extends AbstractTreeTableModel implements TreeTableM
      * @see net.sf.memoranda.ui.treetable.TreeTableModel#getValueAt(java.lang.Object,
      *      int)
      */
-    public Object getValueAt(Object node, int column)
+    public Object getValueAt (Object node, int column)
     {
         if (node instanceof Project)
             return null;
@@ -94,23 +94,23 @@ public class TaskTableModel extends AbstractTreeTableModel implements TreeTableM
         case 1:
             return t;
         case 2:
-            return t.getStartDate().getDate();
+            return t.getStartDate ().getDate ();
         case 3:
-            if (t.getEndDate() == null)
+            if (t.getEndDate () == null)
                 return null;
             else
-                return t.getEndDate().getDate();        
+                return t.getEndDate ().getDate ();        
         case 4:
-            return getPriorityString(t.getPriority());
+            return getPriorityString (t.getPriority ());
         case 5:
-            return getStatusString(t.getStatus(CurrentDate.get()));
+            return getStatusString (t.getStatus (CurrentDate.get ()));
         case 6:            
             //return new Integer(t.getProgress());
 			return t;
         case 7:
-        	return (double) (t.getPredictedEffort() / (60.00*60.00*1000.00));
+        	return (double) (t.getPredictedEffort () / (60.00*60.00*1000.00));
         case 8: 
-        	return (double) (t.getEffort() / (60.00*60.00*1000.00));
+        	return (double) (t.getEffort () / (60.00*60.00*1000.00));
         case TaskTable.TASK_ID:
             return t.getID();
         case TaskTable.TASK:
@@ -119,42 +119,42 @@ public class TaskTableModel extends AbstractTreeTableModel implements TreeTableM
         return "";
     }
 
-    String getStatusString(int status) 
+    String getStatusString (int status) 
     {
         switch (status) 
         {
         case Task.ACTIVE:
-            return Local.getString("Active");
+            return Local.getString ("Active");
         case Task.DEADLINE:
-            return Local.getString("Deadline");
+            return Local.getString ("Deadline");
         case Task.COMPLETED:
-            return Local.getString("Completed");
+            return Local.getString ("Completed");
         case Task.FAILED:
-            return Local.getString("Failed");
+            return Local.getString ("Failed");
         case Task.FROZEN:
-            return Local.getString("Frozen");
+            return Local.getString ("Frozen");
         case Task.LOCKED:
-            return Local.getString("Locked");
+            return Local.getString ("Locked");
         case Task.SCHEDULED:
-            return Local.getString("Scheduled");
+            return Local.getString ("Scheduled");
         }
         return "";
     }
 
-    String getPriorityString(int p) 
+    String getPriorityString (int p) 
     {
         switch (p) 
         {
         case Task.PRIORITY_NORMAL:
-            return Local.getString("Normal");
+            return Local.getString ("Normal");
         case Task.PRIORITY_LOW:
-            return Local.getString("Low");
+            return Local.getString ("Low");
         case Task.PRIORITY_LOWEST:
-            return Local.getString("Lowest");
+            return Local.getString ("Lowest");
         case Task.PRIORITY_HIGH:
-            return Local.getString("High");
+            return Local.getString ("High");
         case Task.PRIORITY_HIGHEST:
-            return Local.getString("Highest");
+            return Local.getString ("Highest");
         }
         return "";
     }
@@ -162,37 +162,38 @@ public class TaskTableModel extends AbstractTreeTableModel implements TreeTableM
     /**
      * @see javax.swing.tree.TreeModel#getChildCount(java.lang.Object)
      */
-    public int getChildCount(Object parent) 
+    public int getChildCount (Object parent) 
     {
         if (parent instanceof Project) 
         {
-		if( activeOnly() ){
-			return CurrentProject.getTaskList().getActiveSubTasks(null, CurrentDate.get()).size();
+		if(activeOnly ())
+		{
+			return CurrentProject.getTaskList ().getActiveSubTasks (null, CurrentDate.get ()).size ();
 		}
-		else return CurrentProject.getTaskList().getTopLevelTasks().size();
+		else return CurrentProject.getTaskList ().getTopLevelTasks ().size ();
         }
         Task t = (Task) parent;
-        if(activeOnly()) return CurrentProject.getTaskList().getActiveSubTasks(t.getID(), CurrentDate.get()).size();
-	else return t.getSubTasks().size();
+        if (activeOnly ()) return CurrentProject.getTaskList ().getActiveSubTasks (t.getID (), CurrentDate.get ()).size ();
+	else return t.getSubTasks ().size ();
     }
 
     /**
      * @see javax.swing.tree.TreeModel#getChild(java.lang.Object, int)
      */
-    public Object getChild(Object parent, int index) 
+    public Object getChild (Object parent, int index) 
     {
         if (parent instanceof Project)
-            if( activeOnly() ) return CurrentProject.getTaskList().getActiveSubTasks(null, CurrentDate.get()).toArray()[index];
-	    else return CurrentProject.getTaskList().getTopLevelTasks().toArray()[index];
+            if(activeOnly ()) return CurrentProject.getTaskList ().getActiveSubTasks (null, CurrentDate.get ()).toArray ()[index];
+	    else return CurrentProject.getTaskList ().getTopLevelTasks ().toArray ()[index];
         Task t = (Task) parent;
-        if(activeOnly()) return CurrentProject.getTaskList().getActiveSubTasks(t.getID(), CurrentDate.get()).toArray()[index];
-	else return t.getSubTasks().toArray()[index];
+        if(activeOnly ()) return CurrentProject.getTaskList ().getActiveSubTasks (t.getID (), CurrentDate.get ()).toArray ()[index];
+	else return t.getSubTasks ().toArray ()[index];
     }
 
     /**
      * @see net.sf.memoranda.ui.treetable.TreeTableModel#getColumnClass(int)
      */
-    public Class getColumnClass(int column) 
+    public Class getColumnClass (int column) 
     {
         try 
         {
@@ -204,16 +205,16 @@ public class TaskTableModel extends AbstractTreeTableModel implements TreeTableM
                 return TaskTable.class;
             case 4:
             case 5:
-                return Class.forName("java.lang.String");
+                return Class.forName ("java.lang.String");
             case 2:
             case 3:
-                return Class.forName("java.util.Date");
+                return Class.forName ("java.util.Date");
             case 7:
-                return Class.forName("java.lang.Double");
+                return Class.forName ("java.lang.Double");
             case 8:
-                return Class.forName("java.lang.Double");
+                return Class.forName ("java.lang.Double");
             case 6:
-                return Class.forName("java.lang.Integer");
+                return Class.forName ("java.lang.Integer");
             }
         } 
         catch (Exception ex) 
@@ -225,8 +226,8 @@ public class TaskTableModel extends AbstractTreeTableModel implements TreeTableM
     
     public void fireTreeStructureChanged()
     {	    
-	    fireTreeStructureChanged( this,
-	    			new Object[]{getRoot()},
+	    fireTreeStructureChanged ( this,
+	    			new Object[]{getRoot ()},
 				new int[0],
 				new Object[0]
 				);
@@ -236,27 +237,27 @@ public class TaskTableModel extends AbstractTreeTableModel implements TreeTableM
     /**
      * Update cached data
      */
-    public void fireUpdateCache()
+    public void fireUpdateCache ()
     {
-		activeOnly = check_activeOnly();
+		activeOnly = check_activeOnly ();
     }
 
-    public static boolean check_activeOnly()
+    public static boolean check_activeOnly ()
     {
-		Object o = Context.get("SHOW_ACTIVE_TASKS_ONLY");
-		if(o == null) return false;
-		return o.toString().equals("true");
+		Object o = Context.get ("SHOW_ACTIVE_TASKS_ONLY");
+		if (o == null) return false;
+		return o.toString ().equals ("true");
 	}
 
-    public boolean activeOnly()
+    public boolean activeOnly ()
     {
 		return activeOnly;
     }
     
-    public boolean isCellEditable(Object node, int column) 
+    public boolean isCellEditable (Object node, int column) 
     {
-		if(column == 6) return true; 
-        return super.isCellEditable(node, column); 
+		if (column == 6) return true; 
+        return super.isCellEditable (node, column); 
     }
 
 }

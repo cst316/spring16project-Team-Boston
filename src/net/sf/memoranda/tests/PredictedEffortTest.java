@@ -13,7 +13,8 @@ import nu.xom.Element;
  * Test predicted effort hours
  *
  */
-public class PredictedEffortTest 
+public class 
+PredictedEffortTest 
 {
 	Element element;
 	Task task;
@@ -24,7 +25,8 @@ public class PredictedEffortTest
 	 * @throws Exception
 	 */
 	@Before
-	public void setUp () throws Exception
+	public void 
+	setUp () throws Exception
 	{
 		element = new Element ("task");
 		task = new TaskImpl (null);
@@ -34,16 +36,18 @@ public class PredictedEffortTest
 	 * Test null value
 	 */
 	@Test
-	public void nullTest () 
+	public void 
+	nullTest () 
 	{
-		assertTrue (0 == task.getPredictedEffort());
+		assertTrue (0 == task.getPredictedEffort ());
 		
 	}
 	/**
 	 * Test setter and getter
 	 */
 	@Test
-	public void setTest () 
+	public void 
+	setTest () 
 	{
 		task.setPredictedEffort ( (long) 4.0);
 		assertTrue( (long) 4.0 == task.getPredictedEffort ());
@@ -52,7 +56,8 @@ public class PredictedEffortTest
 	 * Test data type 
 	 */
 	@Test
-	public void dataTypeTest () 
+	public void 
+	dataTypeTest () 
 	{
 		task.setPredictedEffort( (long) 5.5);
 		assertFalse (5.5 == task.getPredictedEffort ());
@@ -62,17 +67,19 @@ public class PredictedEffortTest
 	 * Test value in milliseconds for TaskTable
 	 */
 	@Test
-	public void taskTableValueTest () 
+	public void 
+	taskTableValueTest () 
 	{
 		task.setPredictedEffort ( (long) 3600000);
-		assertTrue ((double) 1 == (double) taskTable.getValueAt (task, 7));
+		assertTrue ( (double) 1 == (double) taskTable.getValueAt (task, 7));
 	}
 	/**
 	 * Test correct String for TaskTable
 	 */
 	@Test
-	public void taskTableStringTest () 
+	public void 
+	taskTableStringTest () 
 	{
-		assertTrue(taskTable.getColumnName(7).equals("Predicted Effort(hrs)"));
+		assertTrue(taskTable.getColumnName (7).equals ("Predicted Effort(hrs)"));
 	}
 }
