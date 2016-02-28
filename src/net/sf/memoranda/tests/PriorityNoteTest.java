@@ -15,9 +15,6 @@ import nu.xom.Element;
 public class 
 PriorityNoteTest 
 {
-	Element element;
-	Note n;
-	
 	/**
 	 * Set up new note to be tested
 	 * @throws Exception
@@ -100,4 +97,7 @@ PriorityNoteTest
 		assertTrue (n.getPriority () == 2);
 		assertTrue (n.getPriorityString ().equals ("Normal"));
 	}
+
+	Element element;
+	Note n;
 }

@@ -36,9 +36,9 @@ TaskImpl implements Task
 	}
 
 	public long
-	getEffortActual ()
+	getPredictedEffort ()
 	{
-		return effortActual;
+		return effortPredicted;
 	}
 
 	public CalendarDate
@@ -193,9 +193,9 @@ TaskImpl implements Task
 	}
 
 	public void
-	setEffortActual (long effortActual)
+	setPredictedEffort (long effortPredicted)
 	{
-		this.effortActual = effortActual;
+		this.effortPredicted = effortPredicted;
 	}
 
 	public void
@@ -465,7 +465,7 @@ TaskImpl implements Task
 	private Collection<Task> subTasks;
 	private String description;
 	private long effort = 0;
-	private long effortActual;
+	private long effortPredicted;
 	private CalendarDate endDate;
 	private boolean frozen = false;
 	private String id;
