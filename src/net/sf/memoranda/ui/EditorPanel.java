@@ -87,6 +87,12 @@ public class EditorPanel extends JPanel
 	JButton previewB = new JButton();
 
 	DailyItemsPanel parentPanel = null;
+	
+	// tag added
+	JLabel tag = new JLabel ();
+	
+	public JTextField tagField = new JTextField ();
+	
 	// priority for notes
 	String[] priority =
 		{
@@ -364,6 +370,11 @@ public class EditorPanel extends JPanel
 		this.add(titleBar, BorderLayout.NORTH);
 		titleBar.add(titleLabel, null);
 		titleBar.add(titleField, null);
+		// tags
+		editorToolBar.add (tag, null);
+		tag.setText ("Tags");
+		editorToolBar.add (tagField, null);
+		tagField.setText ("");
 		initCSS();
 		editor.editor.setAntiAlias(Configuration.get("ANTIALIAS_TEXT").toString().equalsIgnoreCase("yes"));
 		// editor.editor.enableInputMethods(false);
@@ -521,6 +532,7 @@ public class EditorPanel extends JPanel
 	}
 
 	String initialTitle = "";
+	String initialTags = "";
 	int initialPriority = 2;
 	public void setDocument(Note note)
 	{
@@ -532,14 +544,17 @@ public class EditorPanel extends JPanel
 		if (note != null)
 		{
 			titleField.setText(note.getTitle());
+			tagField.setText (note.getTags ());
 			priorityCB.setSelectedIndex(note.getPriority());
 		}
 		else
 		{
 			titleField.setText("");
+			tagField.setText ("");
 			priorityCB.setSelectedIndex(2);
 		}
 		initialTitle = titleField.getText();
+		initialTags = tagField.getText ();
 		initialPriority = priorityCB.getSelectedIndex();
 		/*
 		 * } catch (Exception ex) { new ExceptionDialog(ex); }
@@ -560,8 +575,8 @@ public class EditorPanel extends JPanel
 	public boolean isDocumentChanged()
 	{
 		return editor.isDocumentChanged()
-				|| !titleField.getText().equals(initialTitle) || 
-						(priorityCB.getSelectedIndex() != initialPriority);
+				|| !titleField.getText ().equals (initialTitle) || !tagField.getText ().equals (initialTags)|| 
+				(priorityCB.getSelectedIndex () != initialPriority);
 	}
 
 	void importB_actionPerformed(ActionEvent e) 

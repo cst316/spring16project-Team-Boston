@@ -130,20 +130,19 @@ TaskPanel extends JPanel
 			ed = new CalendarDate ((Date) dlg.endDate.getModel ().getValue ());
 		else
 			ed = null;
-		long effort = Util.getMillisFromHours (dlg.effortPredictedField.getText ());
-		// add actual effort
-		long effortActual = Util.getMillisFromHours (dlg.effortActualField.getText ());
+		long effort = Util.getMillisFromHours (dlg.effortField.getText ());
+		long effortPredicted = Util.getMillisFromHours (dlg.effortPredictedField.getText ());
 		Task taskParameterObject = new TaskImpl (new ArrayList<Task> ());
 		taskParameterObject.setStartDate (sd);
 		taskParameterObject.setEndDate (ed);
 		taskParameterObject.setText(dlg.todoField.getText ());
 		taskParameterObject.setPriority (dlg.priorityCB.getSelectedIndex ());
 		taskParameterObject.setEffort (effort);
-		taskParameterObject.setEffortActual (effortActual);
+		taskParameterObject.setPredictedEffort (effortPredicted);
 		taskParameterObject.setDescription (dlg.descriptionField.getText ());
 		taskParameterObject.setParentTask (parent);
 		taskParameterObject.setUpdateSubTasks (dlg.updateChildren);
-		Task newTask = CurrentProject.getTaskList ().cloneTask (taskParameterObject, null);
+		Task newTask = CurrentProject.getTaskList ().cloneTask (taskParameterObject, parentTaskId);
 	
 		if (!dlg.updateChildren)
 		{
@@ -263,9 +262,8 @@ TaskPanel extends JPanel
 		dlg.startDate.getModel ().setValue (t.getStartDate ().getDate ());
 		dlg.endDate.getModel ().setValue (t.getEndDate ().getDate ());
 		dlg.priorityCB.setSelectedIndex (t.getPriority ());
-		dlg.effortPredictedField.setText (Util.getHoursFromMillis (t.getEffort ()));
-		// Add actual effort
-		dlg.effortActualField.setText (Util.getHoursFromMillis (t.getEffortActual ()));
+		dlg.effortField.setText (Util.getHoursFromMillis (t.getEffort ()));
+		dlg.effortPredictedField.setText (Util.getHoursFromMillis (t.getPredictedEffort ()));
 		if ( (t.getStartDate ().getDate ()).after (t.getEndDate ().getDate ()))
 			dlg.chkEndDate.setSelected (false);
 		else
@@ -298,9 +296,8 @@ TaskPanel extends JPanel
 		t.setText (dlg.todoField.getText ());
 		t.setDescription (dlg.descriptionField.getText ());
 		t.setPriority (dlg.priorityCB.getSelectedIndex ());
-		t.setEffort (Util.getMillisFromHours (dlg.effortPredictedField.getText ()));
-		// add actual effort
-		t.setEffortActual (Util.getMillisFromHours (dlg.effortActualField.getText ()));
+		t.setEffort (Util.getMillisFromHours (dlg.effortField.getText ()));
+		t.setPredictedEffort (Util.getMillisFromHours (dlg.effortPredictedField.getText ()));
 		if (!dlg.updateChildren)
 		{
 			t.setProgress ( ((Integer) dlg.progress.getValue ()).intValue ());
@@ -539,7 +536,7 @@ TaskPanel extends JPanel
 		ppNewTask.setIcon (new ImageIcon (net.sf.memoranda.ui.AppFrame.class.getResource ("resources/icons/todo_new.png")));
 	
 		ppCopyTask.setFont (new java.awt.Font ("Dialog", 1, 11));
-		ppCopyTask.setText (Local.getString ("New task") + "...");
+		ppCopyTask.setText (Local.getString ("Copy Task") + "...");
 		ppCopyTask.addActionListener (new java.awt.event.ActionListener ()
 		{
 			public void actionPerformed (ActionEvent e)
@@ -796,9 +793,8 @@ TaskPanel extends JPanel
 			ed = new CalendarDate ((Date) dlg.endDate.getModel ().getValue ());
 		else
 			ed = null;
-		long effort = Util.getMillisFromHours (dlg.effortPredictedField.getText ());
-		// add actual effort
-		long effortActual = Util.getMillisFromHours (dlg.effortActualField.getText ());
+		long effort = Util.getMillisFromHours (dlg.effortField.getText ());
+		long effortPredicted = Util.getMillisFromHours (dlg.effortPredictedField.getText ());
 		// XXX Task newTask =
 		// CurrentProject.getTaskList().createTask(sd, ed,
 		// dlg.todoField.getText(),
@@ -810,11 +806,11 @@ TaskPanel extends JPanel
 		taskParameterObject.setText(dlg.todoField.getText ());
 		taskParameterObject.setPriority (dlg.priorityCB.getSelectedIndex ());
 		taskParameterObject.setEffort (effort);
-		taskParameterObject.setEffortActual (effortActual);
+		taskParameterObject.setPredictedEffort (effortPredicted);
 		taskParameterObject.setDescription (dlg.descriptionField.getText ());
 		taskParameterObject.setParentTask (null);
 		taskParameterObject.setUpdateSubTasks (dlg.updateChildren);
-		Task newTask = CurrentProject.getTaskList ().cloneTask (taskParameterObject, "");
+		Task newTask = CurrentProject.getTaskList ().cloneTask (taskParameterObject, null);
 		// CurrentProject.getTaskList().adjustParentTasks(newTask);
 		if (!dlg.updateChildren)
 		{

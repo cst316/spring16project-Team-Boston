@@ -72,7 +72,7 @@ EffortTest
 	public void 
 	taskTableStringTest () 
 	{
-		//assertTrue(taskTable.getColumnName (8).equals ("Actual Effort(hrs)"));
+		assertTrue(taskTable.getColumnName (8).equals ("Actual Effort(hrs)"));
 	}
 	
 	/**
@@ -82,9 +82,7 @@ EffortTest
 	public void 
 	taskTableValueTest () 
 	{
-		/*
 		task.setEffort ( (long) 3600000);
 		assertTrue ((double) 1 == (double) taskTable.getValueAt (task, 8));
-		*/
 	}
 }
