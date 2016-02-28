@@ -55,7 +55,6 @@ PredictedEffortTest
 	public void 
 	setUp () throws Exception
 	{
-		element = new Element ("task");
 		task = new TaskImpl (null);
 		taskTable = new TaskTableModel ();
 	}
@@ -78,7 +77,6 @@ PredictedEffortTest
 		task.setPredictedEffort ( (long) 3600000);
 		assertTrue ( (double) 1 == (double) taskTable.getValueAt (task, 7));
 	}
-	Element element;
 	Task task;
 	TaskTableModel taskTable;
 }
