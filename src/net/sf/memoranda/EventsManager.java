@@ -248,7 +248,8 @@ public class EventsManager {
 
 	public static void removeEvent(CalendarDate date, int hh, int mm) {
 		Day d = getDay(date);
-		if (d == null)
+		// bug fix
+		if (d != null)
 			d.getElement().removeChild(getEvent(date, hh, mm).getContent());
 	}
 

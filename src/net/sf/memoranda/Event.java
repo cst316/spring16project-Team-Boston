@@ -7,41 +7,40 @@
  * Copyright (c) 2003 Memoranda Team. http://memoranda.sf.net
  *-----------------------------------------------------
  */
+
 package net.sf.memoranda;
-import java.util.Date;
 
 import net.sf.memoranda.date.CalendarDate;
 
-/**
- * 
- */
+import java.util.Date;
+
 /*$Id: Event.java,v 1.4 2004/07/21 17:51:25 ivanrise Exp $*/
-public interface Event {
-    
-    String getId();
+public interface Event 
+{
+	
+    String getId ();
     
     //CalendarDate getDate();
     
-    int getHour();
+    int getHour ();
     
-    int getMinute();
+    int getMinute ();
     
     //Date getTime();
     
-    String getText();
+    String getText ();
     
-    nu.xom.Element getContent();
+    nu.xom.Element getContent ();
     
-    int getRepeat();
+    int getRepeat ();
     
-    CalendarDate getStartDate();
-    CalendarDate getEndDate();
-    int getPeriod();
-    boolean isRepeatable();
+    CalendarDate getStartDate ();
+    CalendarDate getEndDate ();
+    int getPeriod ();
+    boolean isRepeatable ();
     
-    Date getTime();
-    String getTimeString();
+    Date getTime ();
+    String getTimeString ();
     
-	boolean getWorkingDays();
-    
+	boolean getWorkingDays ();
 }
