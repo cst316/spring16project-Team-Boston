@@ -757,6 +757,78 @@ TaskPanel extends JPanel
 				}
 			}
 		);
+		
+		/*
+		THIS IS SUPPOSED TO SUPPORT DRAG AND DROP FUNCTIONALITY:
+		
+		ANYONE WHO WANTS TO FINISH THIS FUNCTIONALITY CAN DO SO
+		
+		
+		taskTable.setDragEnabled (true);
+		taskTable.setDropMode (DropMode.ON_OR_INSERT);
+		taskTable.setTransferHandler
+		(	new TransferHandler ()
+			{				
+				ActivationDataFlavor taskFlavor = new ActivationDataFlavor (Task[].class, DataFlavor.javaJVMLocalObjectMimeType, "Array of Tasks");
+
+				public boolean
+				canImport (TransferHandler.TransferSupport info)
+				{
+					boolean b = info.isDrop ()&&info.isDataFlavorSupported (taskFlavor);
+					info.getComponent ().setCursor (b ? DragSource.DefaultMoveDrop : DragSource.DefaultMoveNoDrop);
+					return b;
+				}
+				
+				protected Transferable
+				createTransferable (JComponent component)
+				{
+					int[] indices;
+					TaskTable table = (TaskTable)component;
+					indices = table.getSelectedRows ();
+					Vector<Task> transferVector = new Vector<Task> ();
+					for (int i = 0; i < indices.length; ++i)
+						transferVector.add (CurrentProject.getTaskList ().getTask (table.getModel ().getValueAt (i, TaskTable.TASK_ID).toString ()));
+					return new DataHandler (transferVector.toArray (), taskFlavor.getMimeType ());
+				}
+				
+				public int
+				getSourceActions (JComponent component)
+				{
+					return TransferHandler.COPY_OR_MOVE;
+				}
+				
+				public boolean
+				importData (TransferHandler.TransferSupport support)
+				{
+					if (!support.isDrop ())
+						return false;
+					if (!canImport (support))
+						return false;					
+					JTable.DropLocation dropLocation = (JTable.DropLocation)support.getDropLocation ();
+					Task[] data;
+					try
+					{
+						data = (Task[]) support.getTransferable ().getTransferData (taskFlavor);
+					}
+					catch (UnsupportedFlavorException e)
+					{
+						return false;
+					}
+					catch (IOException e)
+					{
+						return false;
+					}
+					String parentId = taskTable.getModel ().getValueAt (dropLocation.getRow (), TaskTable.TASK_ID).toString ();
+					for (int i = 0; i < data.length; ++i)
+						CurrentProject.getTaskList ().cloneTask (data[i], parentId);
+					CurrentStorage.get ().storeTaskList (CurrentProject.getTaskList (), CurrentProject.get ());
+					taskTable.tableChanged ();
+					parentPanel.updateIndicators ();
+					return true;
+				}
+			}
+		);
+		 */
 	}
 
 	void
